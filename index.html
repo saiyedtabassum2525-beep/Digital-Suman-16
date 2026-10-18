@@ -301,13 +301,23 @@
           btn.innerText = "Submit Securely";
           btn.disabled = false;
         }
-      } catch (err) {
+            } catch (err) {
         alert("Internet connection error. Please check your data.");
         btn.innerText = "Submit Securely";
         btn.disabled = false;
       }
     }
+
+    // Register Service Worker for GitHub Pages PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/Digital-Suman-16/sw.js', { scope: '/Digital-Suman-16/' })
+          .then((reg) => console.log('SW Registered!', reg))
+          .catch((err) => console.log('SW Error:', err));
+      });
+    }
   </script>
 </body>
-              </html>
+</html>
+
           
