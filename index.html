@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Suman 16</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b1120">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body {
+      background-color: #0b1120;
+      color: #f1f5f9;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 14px;
+    }
+    .container { max-width: 440px; margin: 0 auto; width: 100%; }
+    
+    .lang-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      background: #1e293b;
+      padding: 4px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+    .lang-btn {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      padding: 8px 0;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+    .lang-btn.active { background: #2563eb; color: #ffffff; }
+
+    .action-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      font-size: 12px;
+    }
+    .audio-btn {
+      background: #1e293b;
+      color: #fcd34d;
+      border: 1px solid #334155;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    header { text-align: center; margin-bottom: 16px; }
+    header h1 { font-size: 22px; font-weight: 800; color: #ffffff; }
+    header p { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+
+    .card-box {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+
+    .choice-btn {
+      width: 100%;
+      text-align: inherit;
+      border: 1px solid #334155;
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      margin-bottom: 12px;
+      color: #ffffff;
+      background: #0f172a;
+    }
+    .choice-btn.red { border-color: rgba(244, 63, 94, 0.4); background: linear-gradient(to right, #4c0519, #0f172a); }
+    .choice-btn.green { border-color: rgba(16, 185, 129, 0.4); background: linear-gradient(to right, #022c22, #0f172a); }
+    .choice-icon { font-size: 24px; }
+    .choice-text h3 { font-size: 14px; font-weight: 700; }
+    .choice-text p { font-size: 11px; color: #94a3b8; margin-top: 2px; }
+
+    .notice {
+      background: #0f172a;
+      border: 1px solid #d97706;
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      color: #fef3c7;
+      line-height: 1.5;
+      margin-top: 14px;
+    }
+    .notice-title { color: #f59e0b; font-weight: 700; margin-bottom: 4px; display: block; font-size: 12px; }
+
+    .form-group { margin-bottom: 12px; }
+    label { display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 5px; }
+    input, select, textarea {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 10px;
+      color: #ffffff;
+      font-size: 13px;
+      outline: none;
+      font-family: inherit;
+    }
+    textarea { resize: none; height: 95px; }
+    .submit-btn {
+      width: 100%;
+      background: #2563eb;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+    .back-btn {
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #94a3b8;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 11px;
+      cursor: pointer;
+      margin-bottom: 12px;
+    }
+
+    .hidden { display: none !important; }
+    footer { text-align: center; font-size: 11px; color: #64748b; margin-top: 20px; }
+  </style>
+</head>
+<body id="bodyRoot">
+
+  <div class="container">
+    <div class="lang-bar">
+      <button type="button" id="btnUr" onclick="switchLang('ur')" class="lang-btn active">اردو</button>
+      <button type="button" id="btnGu" onclick="switchLang('gu')" class="lang-btn">ગુજરાતી</button>
+      <button type="button" id="btnHi" onclick="switchLang('hi')" class="lang-btn">हिंदी</button>
+      <button type="button" id="btnEn" onclick="switchLang('en')" class="lang-btn">English</button>
+    </div>
+
+    <div class="action-bar">
+      <button type="button" onclick="playVoice()" class="audio-btn">
+        <span>🔊</span>
+        <span id="txtVoice">سنیں (آواز)</span>
+      </button>
+      <span style="color: #34d399; font-weight: 600;">🔒 <span id="txtSecure">100% خفیہ اور محفوظ</span></span>
+    </div>
+
+    <header>
+      <h1 id="txtTitle">ڈیجیٹل سمن 16</h1>
+      <p id="txtSubtitle">اپنی بات بلا خوف رکھیں • اسکول کو بہتر بنائیں</p>
+    </header>
+
+    <main class="card-box">
+
+      <div id="choiceScreen">
+        <div style="text-align: center; margin-bottom: 14px;">
+          <h2 id="txtChooseHead" style="font-size: 14px; font-weight: 700;">آپ کیا درج کرنا چاہتے ہیں؟</h2>
+        </div>
+
+        <button type="button" onclick="selectMode('شکایت')" class="choice-btn red">
+          <span class="choice-icon">⚠️</span>
+          <div class="choice-text">
+            <h3 id="cardGrievanceTitle">خفیہ شکایت درج کریں</h3>
+            <p id="cardGrievanceDesc">پریشانی، جھگڑا، یا اسکول سہولیات کا مسئلہ</p>
+          </div>
+        </button>
+
+        <button type="button" onclick="selectMode('تجاویز')" class="choice-btn green">
+          <span class="choice-icon">💡</span>
+          <div class="choice-text">
+            <h3 id="cardSuggestTitle">نیا مشورہ یا تجویز دیں</h3>
+            <p id="cardSuggestDesc">کھیل، لائبریری یا اسکول بہتری کا نیا آئیڈیا</p>
+          </div>
+        </button>
+
+        <div class="notice">
+          <span class="notice-title" id="txtNoticeHead">⚠️ اہم ہدایت / ضروری سوچنا</span>
+          <p id="txtNoticeBody">صرف حقیقی مسئلہ یا اسکول کی بہتری کا کام ہونے پر ہی یہاں درج کریں۔ برائے مہربانی مذاق یا بلاوجہ شکایت درج نہ کریں۔</p>
+        </div>
+      </div>
+
+      <div id="formScreen" class="hidden">
+        <button type="button" onclick="goBack()" class="back-btn" id="btnBack">← واپس جائیں</button>
+
+        <form id="complaintForm" onsubmit="handleFormSubmit(event)">
+          <input type="hidden" id="entryType" value="شکایت">
+
+          <div class="form-group">
+            <label id="lblCat">زمرہ منتخب کریں (Category) *</label>
+            <select id="categorySelect" required></select>
+          </div>
+
+          <div class="form-group">
+            <label id="lblClass">کلاس اور سیکشن *</label>
+            <select id="classSelect" required>
+              <option value="">-- اپنی کلاس منتخب کریں --</option>
+              <option value="9th A">9th A (نہم - A)</option>
+              <option value="9th B">9th B (نہم - B)</option>
+              <option value="9th C">9th C (نہم - C)</option>
+              <option value="10th A">10th A (دہم - A)</option>
+              <option value="10th B">10th B (دہم - B)</option>
+              <option value="11th">11th (گیارہویں)</option>
+              <option value="12th">12th (بارہویں)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label id="lblPriority">ترجیح کی سطح (Priority)</label>
+            <select id="prioritySelect">
+              <option value="Normal">🟢 عام (Normal)</option>
+              <option value="Urgent">🟡 ضروری (Urgent)</option>
+              <option value="Emergency">🔴 انتہائی ضروری (Emergency)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label id="lblDesc">تفصیل لکھیں *</label>
+            <textarea id="descText" required placeholder="..."></textarea>
+          </div>
+
+          <button type="submit" id="btnSubmit" class="submit-btn">بھیجیں</button>
+        </form>
+      </div>
+
+      <div id="successBox" class="hidden" style="text-align: center; padding: 15px 0;">
+        <span style="font-size: 40px;">✅</span>
+        <h3 id="txtSuccessTitle" style="font-size: 16px; margin: 8px 0;">کامیابی سے بھیج دیا گیا!</h3>
+        <p id="txtSuccessSub" style="font-size: 12px; color: #94a3b8; margin-bottom: 12px;">آپ کا پیغام محفوظ طریقے سے اسکول تک پہنچ گیا ہے۔</p>
+        <div style="background: #0f172a; padding: 10px; border-radius: 8px; display: inline-block;">
+          <span style="font-size: 11px; color: #94a3b8; display: block;">ٹوکن ID:</span>
+          <span id="trackingCode" style="color: #60a5fa; font-weight: 700; font-family: monospace;"></span>
+        </div>
+        <button type="button" onclick="resetAll()" class="back-btn" style="margin-top: 15px; display: block; margin-left: auto; margin-right: auto;" id="btnReset">مین اسکرین پر واپس جائیں</button>
+      </div>
+
+    </main>
+
+    <footer>
+      Digital Suman 16 • Urdu Suman High School No. 16
+    </footer>
+  </div>
+
+  <script>
+    let activeLang = 'ur';
+    let currentSection = 'choice';
+
+    const langData = {
+      ur: {
+        dir: "rtl",
+        voice: "سنیں (آواز)",
+        secure: "100% خفیہ اور محفوظ",
+        title: "ڈیجیٹل سمن 16",
+        sub: "اپنی بات بلا خوف رکھیں • اسکول کو بہتر بنائیں",
+        chooseHead: "آپ کیا درج کرنا چاہتے ہیں؟",
+        cardGrievanceTitle: "خفیہ شکایت درج کریں",
+        cardGrievanceDesc: "پریشانی، جھگڑا، یا اسکول سہولیات کا مسئلہ",
+        cardSuggestTitle: "نیا مشورہ یا تجویز دیں",
+        cardSuggestDesc: "کھیل، لائبریری یا اسکول بہتری کا نیا آئیڈیا",
+        noticeHead: "⚠️ اہم ہدایت",
+        noticeBody: "صرف حقیقی مسئلہ یا اسکول کی بہتری کا کام ہونے پر ہی یہاں درج کریں۔ برائے مہربانی مذاق یا فضول میں شکایت درج نہ کریں۔",
+        back: "← واپس جائیں",
+        lblCat: "زمرہ منتخب کریں (Category) *",
+        lblClass: "کلاس اور سیکشن *",
+        lblPriority: "ترجیح کی سطح (Priority)",
+        lblDescGrievance: "مسئلہ تفصیل سے لکھیں *",
+        lblDescSuggest: "اپنا مشورہ تفصیل سے لکھیں *",
+        btnSubmit: "محفوظ طریقے سے بھیجیں",
+        successTitle: "کامیابی سے بھیج دیا گیا!",
+        successSub: "آپ کا پیغام محفوظ طریقے سے اسکول تک پہنچ گیا ہے۔",
+        reset: "مین اسکرین پر واپس جائیں",
+        speechChoice: "ڈیجیٹل سمن سولہ میں خوش آمدید۔ شکایت کے لیے لال کارڈ یا مشورہ دینے کے لیے سبز کارڈ منتخب کریں۔ صرف ضروری کام ہونے پر ہی درج کریں۔",
+        speechForm: "اپنی کلاس اور پوری تفصیل لکھ کر محفوظ طریقے سے بھیجیں۔ آپ کی شناخت مکمل خفیہ رہے گی۔"
+      },
+      gu: {
+        dir: "ltr",
+        voice: "સાંભળો (ઓડિયો)",
+        secure: "૧૦૦% ગુપ્ત અને સુરક્ષિત",
+        title: "ડિજિટલ સુમન ૧૬",
+        sub: "તમારી વાત રજૂ કરો • શાળાને વધુ સારી બનાવો",
+        chooseHead: "તમે શું નોંધાવવા માંગો છો?",
+        cardGrievanceTitle: "ગુપ્ત ફરિયાદ નોંધાવો",
+        cardGrievanceDesc: "હેરાનગતિ, મારામારી કે સુવિધાઓ સંબંધિત સમસ્યા",
+        cardSuggestTitle: "નવો વિચાર કે સૂચન આપો",
+        cardSuggestDesc: "રમતગમત, પુસ્તકાલય કે શાળા સુધારણા માટે નવો વિચાર",
+        noticeHead: "⚠️ મહત્વપૂર્ણ સૂચના",
+        noticeBody: "જરૂરી કામ અથવા સાચી સમસ્યા હોય તો જ અહીં નોંધણી કરો. મહેરબાની કરીને મજાકમાં કે ખોટી ફરિયાદ ન નોંધાવો.",
+        back: "← પાછા જાઓ",
+        lblCat: "કેટેગરી પસંદ કરો *",
+        lblClass: "ધોરણ અને વર્ગ *",
+        lblPriority: "પ્રાથમિકતા સ્તર (Priority)",
+        lblDescGrievance: "સમસ્યાની વિગત લખો *",
+        lblDescSuggest: "તમારા સૂચનની વિગત લખો *",
+        btnSubmit: "સુરક્ષિત રીતે મોકલો",
+        successTitle: "સફળતાપૂર્વક મોકલાઈ ગયું!",
+        successSub: "તમારો સંદેશ શાળા પ્રશાસન સુધી પહોંચી ગયો છે.",
+        reset: "મુખ્ય સ્ક્રીન પર પાછા જાઓ",
+        speechChoice: "ડિજિટલ સુમન ૧૬ માં સ્વાગત છે. ફરિયાદ માટે લાલ અથવા સૂચન માટે લીલું બટન દબાવો. માત્ર સાચી સમસ્યા હોય તો જ નોંધાવો.",
+        speechForm: "વિગત લખીને મોકલો. તમારી ઓળખ ગુપ્ત રહેશે."
+      },
+      hi: {
+        dir: "ltr",
+        voice: "बोलकर सुनें",
+        secure: "100% गोपनीय और सुरक्षित",
+        title: "डिजिटल सुमन 16",
+        sub: "अपनी आवाज़ उठाएं • स्कूल को और बेहतर बनाएं",
+        chooseHead: "आप क्या दर्ज करना चाहते हैं?",
+        cardGrievanceTitle: "गोपनीय शिकायत दर्ज करें",
+        cardGrievanceDesc: "रैगिंग, मारपीट या स्कूल सुविधाओं की परेशानी",
+        cardSuggestTitle: "नया सुझाव / आइडिया दें",
+        cardSuggestDesc: "खेलकूद, लाइब्रेरी या स्कूल सुधार का विचार",
+        noticeHead: "⚠️ ज़रूरी सूचना",
+        noticeBody: "केवल आवश्यक काम या वास्तविक समस्या होने पर ही यहाँ अपनी शिकायत या सुझाव दर्ज करें। कृपया मज़ाक में फ़ालतू एंट्री न करें।",
+        back: "← वापस जाएं",
+        lblCat: "श्रेणी चुनें (Category) *",
+        lblClass: "कक्षा एवं सेक्शन *",
+        lblPriority: "प्राथमिकता स्तर (Priority)",
+        lblDescGrievance: "समस्या का पूरा विवरण लिखें *",
+        lblDescSuggest: "अपने सुझाव का विवरण लिखें *",
+        btnSubmit: "सुरक्षित रूप से भेजें",
+        successTitle: "सफलतापूर्वक भेज दिया गया!",
+        successSub: "आपकी बात स्कूल प्रबंधन तक सुरक्षित पहुँच चुकी है।",
+        reset: "मुख्य स्क्रीन पर वापस जाएं",
+        speechChoice: "डिजिटल सुमन 16 में आपका स्वागत है। शिकायत के लिए लाल या सुझाव के लिए हरा कार्ड चुनें। केवल आवश्यक काम होने पर ही दर्ज करें।",
+        speechForm: "विवरण लिखकर भेजें। आपकी पहचान पूरी तरह गुप्त रहेगी।"
+      },
+      en: {
+        dir: "ltr",
+        voice: "Listen (Audio)",
+        secure: "100% Confidential & Secure",
+        title: "Digital Suman 16",
+        sub: "Speak Up • Inspire Change • Build a Better School",
+        chooseHead: "What would you like to submit?",
+        cardGrievanceTitle: "Report an Issue / Grievance",
+        cardGrievanceDesc: "Bullying, peer issues or school facility problems",
+        cardSuggestTitle: "Share an Idea / Suggestion",
+        cardSuggestDesc: "Sports, library, events or improvement ideas",
+        noticeHead: "⚠️ Important Notice",
+        noticeBody: "Submit only if you have a genuine issue or constructive idea. Do not submit false or prank messages.",
+        back: "← Go Back",
+        lblCat: "Select Category *",
+        lblClass: "Class & Section *",
+        lblPriority: "Priority Level",
+        lblDescGrievance: "Describe the issue clearly *",
+        lblDescSuggest: "Describe your suggestion clearly *",
+        btnSubmit: "Submit Securely",
+        successTitle: "Submitted Successfully!",
+        successSub: "Your response has been safely delivered to school management.",
+        reset: "Back to Home Screen",
+        speechChoice: "Welcome to Digital Suman 16. Tap red button to report an issue or green button to share an idea. Submit only for genuine matters.",
+        speechForm: "Fill in the details and submit safely. Your identity remains confidential."
+      }
+    };
+
+    function switchLang(lang) {
+      activeLang = lang;
+      const t = langData[lang];
+
+      document.getElementById('bodyRoot').dir = t.dir;
+      document.getElementById('txtVoice').innerText = t.voice;
+      document.getElementById('txtSecure').innerText = t.secure;
+      document.getElementById('txtTitle').innerText = t.title;
+      document.getElementById('txtSubtitle').innerText = t.sub;
+      document.getElementById('txtChooseHead').innerText = t.chooseHead;
+      document.getElementById('cardGrievanceTitle').innerText = t.cardGrievanceTitle;
+      document.getElementById('cardGrievanceDesc').innerText = t.cardGrievanceDesc;
+      document.getElementById('cardSuggestTitle').innerText = t.cardSuggestTitle;
+      document.getElementById('cardSuggestDesc').innerText = t.cardSuggestDesc;
+      document.getElementById('txtNoticeHead').innerText = t.noticeHead;
+      document.getElementById('txtNoticeBody').innerText = t.noticeBody;
+      document.getElementById('btnBack').innerText = t.back;
+      document.getElementById('lblCat').innerText = t.lblCat;
+      document.getElementById('lblClass').innerText = t.lblClass;
+      document.getElementById('lblPriority').innerText = t.lblPriority;
+      document.getElementById('btnSubmit').innerText = t.btnSubmit;
+      document.getElementById('txtSuccessTitle').innerText = t.successTitle;
+      document.getElementById('txtSuccessSub').innerText = t.successSub;
+      document.getElementById('btnReset').innerText = t.reset;
+
+      ['ur', 'gu', 'hi', 'en'].forEach(function(l) {
+        var b = document.getElementById('btn' + l.charAt(0).toUpperCase() + l.slice(1));
+        if (l === lang) {
+          b.className = 'lang-btn active';
+        } else {
+          b.className = 'lang-btn';
+        }
+      });
+
+      if (currentSection === 'form') {
+        fillCategories(document.getElementById('entryType').value);
+      }
+    }
+
+    function playVoice() {
+      if (!('speechSynthesis' in window)) {
+        alert("Audio speech is not supported on this browser.");
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const t = langData[activeLang];
+      const txt = (currentSection === 'choice') ? t.speechChoice : t.speechForm;
+      const u = new SpeechSynthesisUtterance(txt);
+
+      if (activeLang === 'ur') u.lang = 'ur-PK';
+      else if (activeLang === 'gu') u.lang = 'gu-IN';
+      else if (activeLang === 'hi') u.lang = 'hi-IN';
+      else u.lang = 'en-US';
+
+      u.rate = 0.95;
+      window.speechSynthesis.speak(u);
+    }
+
+    function selectMode(type) {
+      currentSection = 'form';
+      document.getElementById('entryType').value = type;
+      document.getElementById('choiceScreen').classList.add('hidden');
+      document.getElementById('formScreen').classList.remove('hidden');
+      fillCategories(type);
+    }
+
+    function fillCategories(type) {
+      const cat = document.getElementById('categorySelect');
+      const isGrievance = (type === 'شکایت');
+      document.getElementById('lblDesc').innerText = isGrievance ? langData[activeLang].lblDescGrievance : langData[activeLang].lblDescSuggest;
+
+      if (isGrievance) {
+        cat.innerHTML = `
+          <option value="Bullying">Bullying / ہراساں کرنا / હેરાનગતિ / मारपीट</option>
+          <option value="Studies">Studies / پڑھائی / અભ્યાસ / कक्षा संबंधी</option>
+          <option value="Facilities">Facilities / سہولیات / સુવિધાઓ / स्कूल सुविधाएं</option>
+          <option value="Other">Other / دیگر / અન્ય / अन्य</option>
+        `;
+      } else {
+        cat.innerHTML = `
+          <option value="School Improvement">School Improvement / اسکول بہتری / શાળા સુધારણા</option>
+          <option value="Sports">Sports & Activity / کھیل کود / રમતગમત / खेलकूद</option>
+          <option value="Library/Lab">Library & Lab / لائبریری / પુસ્તકાલય / लाइब्रेरी</option>
+          <option value="Appreciation">Appreciation / شکریہ / પ્રશંસા / सराहना</option>
+          <option value="Other">Other / دیگر / અન્ય / अन्य विचार</option>
+        `;
+      }
+    }
+
+    function goBack() {
+      currentSection = 'choice';
+      document.getElementById('formScreen').classList.add('hidden');
+      document.getElementById('choiceScreen').classList.remove('hidden');
+    }
+
+    function resetAll() {
+      currentSection = 'choice';
+      document.getElementById('complaintForm').reset();
+      document.getElementById('btnSubmit').innerText = langData[activeLang].btnSubmit;
+      document.getElementById('btnSubmit').disabled = false;
+      document.getElementById('successBox').classList.add('hidden');
+      document.getElementById('choiceScreen').classList.remove('hidden');
+    }
+
+    async function handleFormSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnSubmit');
+      btn.innerText = "...";
+      btn.disabled = true;
+
+      const randomID = 'SMN-' + Math.floor(1000 + Math.random() * 9000);
+
+      const payload = {
+        tracking_id: randomID,
+        type: document.getElementById('entryType').value,
+        language: activeLang,
+        category: document.getElementById('categorySelect'
