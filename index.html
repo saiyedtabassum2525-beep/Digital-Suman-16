@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>डिजिटल सुमन 16 - होमवर्क पोर्टल</title>
+  <title>डिजिटल सुमन 16 - स्कूल पोर्टल</title>
   <style>
     * {
       box-sizing: border-box;
@@ -22,7 +22,27 @@
       text-align: center;
       padding: 18px;
       border-radius: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
+    }
+    .tab-container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #e0e0e0;
+      color: #333;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      background: #1a73e8;
+      color: white;
     }
     .card {
       background: white;
@@ -45,18 +65,19 @@
       font-weight: bold;
       font-size: 0.9rem;
     }
-    input[type="text"], textarea, input[type="file"] {
+    input[type="text"], input[type="password"], textarea, input[type="file"], select {
       width: 100%;
       padding: 10px;
       border: 1px solid #ccc;
       border-radius: 6px;
       font-size: 1rem;
+      background: white;
     }
     textarea {
       resize: vertical;
       height: 80px;
     }
-    button {
+    .submit-btn {
       background-color: #1a73e8;
       color: white;
       border: none;
@@ -67,33 +88,102 @@
       cursor: pointer;
       width: 100%;
     }
-    button:hover {
-      background-color: #1557b0;
+    .filter-section {
+      background: #eef3fc;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
-    .homework-item {
+    .filter-group {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .filter-group select {
+      flex: 1;
+      padding: 8px;
+    }
+    .filter-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 6px 12px;
+      border: 1px solid #1a73e8;
+      background: white;
+      color: #1a73e8;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .filter-btn.active {
+      background: #1a73e8;
+      color: white;
+    }
+    .item-card {
       background: #ffffff;
       border-left: 5px solid #1a73e8;
       padding: 15px;
       border-radius: 8px;
       margin-bottom: 14px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      position: relative;
     }
-    .homework-item h3 {
+    .category-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      border-radius: 4px;
+      margin-bottom: 6px;
+    }
+    .badge-homework { background: #e8f0fe; color: #1a73e8; }
+    .badge-syllabus { background: #e6f4ea; color: #137333; }
+    .badge-notice { background: #fce8e6; color: #c5221f; }
+    .badge-timetable { background: #fef7e0; color: #b06000; }
+    
+    .item-card h3 {
       font-size: 1.15rem;
       margin-bottom: 6px;
       color: #222;
     }
-    .homework-item p {
+    .item-card p {
       font-size: 0.95rem;
       color: #555;
       line-height: 1.4;
       white-space: pre-wrap;
     }
-    .homework-item img {
+    .item-card img {
       max-width: 100%;
       border-radius: 8px;
       margin-top: 10px;
       display: block;
+    }
+    .pdf-link {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 14px;
+      background: #ea4335;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+    .delete-btn {
+      background: #ff4d4f;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      float: right;
     }
     .timestamp {
       font-size: 0.75rem;
@@ -107,52 +197,227 @@
 
   <div class="header">
     <h1>डिजिटल सुमन 16</h1>
-    <p>शिक्षक एवं छात्र होमवर्क पोर्टल</p>
+    <p>स्कूल ई-पोर्टल (कक्षा 1 से 7)</p>
   </div>
 
-  <!-- होमवर्क पोस्ट करने का फॉर्म (शिक्षकों के लिए) -->
-  <div class="card">
-    <h2>नया होमवर्क जोड़ें</h2>
-    <form id="homeworkForm">
-      <div class="form-group">
-        <label for="title">विषय / शीर्षक:</label>
-        <input type="text" id="title" placeholder="उदा. कक्षा 9 गणित - प्रश्नावली 2.1" required>
-      </div>
-
-      <div class="form-group">
-        <label for="description">विवरण (निर्देश):</label>
-        <textarea id="description" placeholder="सवाल नंबर 1 से 5 हल करें..." required></textarea>
-      </div>
-
-      <div class="form-group">
-        <label for="imageFile">फ़ोटो जोड़ें (वैकल्पिक):</label>
-        <input type="file" id="imageFile" accept="image/*">
-      </div>
-
-      <button type="submit" id="submitBtn">होमवर्क पोस्ट करें</button>
-    </form>
+  <div class="tab-container">
+    <button class="tab-btn active" id="studentTabBtn" onclick="switchView('student')">👨‍🎓 छात्र व्यू (देखें)</button>
+    <button class="tab-btn" id="teacherTabBtn" onclick="switchView('teacher')">👩‍🏫 शिक्षक व्यू (प्रबंधन)</button>
   </div>
 
-  <!-- लाइव होमवर्क की सूची (बच्चों और पालकों के लिए) -->
-  <div class="card">
-    <h2>दिए गए होमवर्क</h2>
-    <div id="homework-list">लोड हो रहा है...</div>
+  <!-- छात्र सेक्शन -->
+  <div id="studentSection">
+    <div class="card">
+      <h2>स्कूल सामग्री</h2>
+      
+      <!-- फ़िल्टर: कक्षा और प्रकार दोनों के आधार पर -->
+      <div class="filter-section">
+        <div class="filter-group">
+          <label style="margin: 0; white-space: nowrap;">कक्षा चुनें:</label>
+          <select id="classFilter" onchange="applyFilters()">
+            <option value="all">सभी कक्षाएँ (1 से 7)</option>
+            <option value="कक्षा 1">कक्षा 1</option>
+            <option value="कक्षा 2">कक्षा 2</option>
+            <option value="कक्षा 3">कक्षा 3</option>
+            <option value="कक्षा 4">कक्षा 4</option>
+            <option value="कक्षा 5">कक्षा 5</option>
+            <option value="कक्षा 6">कक्षा 6</option>
+            <option value="कक्षा 7">कक्षा 7</option>
+          </select>
+        </div>
+
+        <div class="filter-tabs">
+          <button class="filter-btn active" onclick="setTypeFilter('all')">सभी प्रकार</button>
+          <button class="filter-btn" onclick="setTypeFilter('होमवर्क')">होमवर्क</button>
+          <button class="filter-btn" onclick="setTypeFilter('सिलेबस')">सिलेबस</button>
+          <button class="filter-btn" onclick="setTypeFilter('समय सारणी')">समय सारणी</button>
+          <button class="filter-btn" onclick="setTypeFilter('सूचना')">सूचना</button>
+        </div>
+      </div>
+
+      <div id="portal-list">सामग्री लोड हो रही है...</div>
+    </div>
   </div>
 
-  <!-- Firebase और डेटाबेस स्क्रिप्ट -->
+  <!-- शिक्षक सेक्शन (पिन: 791632) -->
+  <div id="teacherSection" style="display: none;">
+    <div class="card" id="lockCard">
+      <h2>शिक्षक लॉगिन</h2>
+      <div class="form-group">
+        <label for="teacherPin">सुरक्षा पिन दर्ज करें:</label>
+        <input type="password" id="teacherPin" placeholder="6 अंकों का गुप्त पिन">
+      </div>
+      <button class="submit-btn" onclick="verifyPin()">पोर्टल खोलें</button>
+    </div>
+
+    <div class="card" id="formCard" style="display: none;">
+      <h2>नयी सामग्री पोस्ट करें</h2>
+      <form id="portalForm">
+        <div class="form-group">
+          <label for="category">प्रकार चुनें:</label>
+          <select id="category" required>
+            <option value="होमवर्क">गृहकार्य (Homework)</option>
+            <option value="सिलेबस">पाठ्यक्रम (Syllabus)</option>
+            <option value="समय सारणी">समय सारणी (Timetable)</option>
+            <option value="सूचना">ज़रूरी सूचना (Notice)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="classSelect">कक्षा चुनें:</label>
+          <select id="classSelect" required>
+            <option value="कक्षा 1">कक्षा 1</option>
+            <option value="कक्षा 2">कक्षा 2</option>
+            <option value="कक्षा 3">कक्षा 3</option>
+            <option value="कक्षा 4">कक्षा 4</option>
+            <option value="कक्षा 5">कक्षा 5</option>
+            <option value="कक्षा 6">कक्षा 6</option>
+            <option value="कक्षा 7">कक्षा 7</option>
+            <option value="सभी कक्षाओं के लिए">सभी कक्षाओं के लिए</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="title">विषय / शीर्षक:</label>
+          <input type="text" id="title" placeholder="उदा. कक्षा 6 समय सारणी या गणित कार्य" required>
+        </div>
+
+        <div class="form-group">
+          <label for="description">विवरण / निर्देश:</label>
+          <textarea id="description" placeholder="पूरी जानकारी या टेबल यहाँ लिखें..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="fileInput">फ़ोटो या PDF फ़ाइल जोड़ें (वैकल्पिक):</label>
+          <input type="file" id="fileInput" accept="image/*,application/pdf">
+        </div>
+
+        <button type="submit" id="submitBtn" class="submit-btn">ऑनलाइन पोस्ट करें</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let isTeacherLoggedIn = false;
+
+    function switchView(role) {
+      const studentBtn = document.getElementById("studentTabBtn");
+      const teacherBtn = document.getElementById("teacherTabBtn");
+      const studentSec = document.getElementById("studentSection");
+      const teacherSec = document.getElementById("teacherSection");
+
+      if (role === 'student') {
+        studentBtn.classList.add("active");
+        teacherBtn.classList.remove("active");
+        studentSec.style.display = "block";
+        teacherSec.style.display = "none";
+      } else {
+        teacherBtn.classList.add("active");
+        studentBtn.classList.remove("active");
+        studentSec.style.display = "none";
+        teacherSec.style.display = "block";
+      }
+      renderPosts();
+    }
+
+    function verifyPin() {
+      const pin = document.getElementById("teacherPin").value;
+      if (pin === "791632") {
+        isTeacherLoggedIn = true;
+        document.getElementById("lockCard").style.display = "none";
+        document.getElementById("formCard").style.display = "block";
+        alert("सफल लॉगिन! अब आप सामग्री पोस्ट कर सकते हैं और पुरानी पोस्ट हटा भी सकते हैं।");
+        renderPosts();
+      } else {
+        alert("गलत पिन! केवल अधिकृत शिक्षक ही इसे खोल सकते हैं।");
+      }
+    }
+
+    let allPosts = [];
+    let currentCategory = 'all';
+    let currentClass = 'all';
+
+    function setTypeFilter(category) {
+      currentCategory = category;
+      const btns = document.querySelectorAll('.filter-btn');
+      btns.forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      renderPosts();
+    }
+
+    function applyFilters() {
+      currentClass = document.getElementById("classFilter").value;
+      renderPosts();
+    }
+
+    function renderPosts() {
+      const listContainer = document.getElementById("portal-list");
+      
+      const filtered = allPosts.filter(item => {
+        const matchesCategory = (currentCategory === 'all' || item.category === currentCategory);
+        const matchesClass = (currentClass === 'all' || item.classGrade === currentClass || item.classGrade === "सभी कक्षाओं के लिए");
+        return matchesCategory && matchesClass;
+      });
+
+      if (filtered.length === 0) {
+        listContainer.innerHTML = "<p style='text-align:center; padding: 20px; color:#777;'>इस श्रेणी में कोई सामग्री उपलब्ध नहीं है।</p>";
+        return;
+      }
+
+      listContainer.innerHTML = "";
+      filtered.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "item-card";
+
+        let badgeClass = "badge-homework";
+        if (item.category === "सिलेबस") badgeClass = "badge-syllabus";
+        if (item.category === "सूचना") badgeClass = "badge-notice";
+        if (item.category === "समय सारणी") badgeClass = "badge-timetable";
+
+        // फ़ाइल रेंडरिंग (इमेज या PDF)
+        let fileHTML = "";
+        if (item.fileData) {
+          if (item.fileType === "pdf") {
+            fileHTML = `<a href="${item.fileData}" download="${item.fileName || 'document.pdf'}" class="pdf-link">📄 PDF डाउनलोड करें / देखें</a>`;
+          } else {
+            fileHTML = `<img src="${item.fileData}" alt="चित्र" />`;
+          }
+        }
+
+        // डिलीट बटन (केवल तभी दिखेगा जब शिक्षक पिन डालकर लॉगिन कर चुके हों)
+        let deleteBtnHTML = "";
+        if (isTeacherLoggedIn) {
+          deleteBtnHTML = `<button class="delete-btn" onclick="deletePost('${item.id}')">हटाएँ (Delete)</button>`;
+        }
+
+        div.innerHTML = `
+          ${deleteBtnHTML}
+          <span class="category-badge ${badgeClass}">${item.category || "सामग्री"} | ${item.classGrade || ""}</span>
+          <h3>${item.title || ""}</h3>
+          <p>${item.description || ""}</p>
+          ${fileHTML}
+          <span class="timestamp">${item.date || ""}</span>
+        `;
+        listContainer.appendChild(div);
+      });
+    }
+  </script>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { 
       getFirestore, 
       collection, 
       addDoc, 
+      deleteDoc,
+      doc,
       onSnapshot, 
       query, 
       orderBy, 
-      serverTimestamp 
+      serverTimestamp,
+      enableIndexedDbPersistence 
     } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    // Firebase कॉन्फ़िगरेशन
     const firebaseConfig = {
       apiKey: "AIzaSyCUfzpo3_JTxMECkbRT",
       authDomain: "digital-suman-16.firebaseapp.com",
@@ -163,30 +428,38 @@
       measurementId: "G-8WHH1SPEPY"
     };
 
-    // डेटाबेस इनिशियलाइज़ करें
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    const form = document.getElementById("homeworkForm");
-    const submitBtn = document.getElementById("submitBtn");
-    const listContainer = document.getElementById("homework-list");
+    // ऑफ़लाइन एक्सेस: बिना इंटरनेट के पुराना डेटा लोड रखने की सुविधा
+    enableIndexedDbPersistence(db).catch((err) => {
+      console.log("ऑफ़लाइन कैशिंग चालू करने में सूचना: ", err.code);
+    });
 
-    // फॉर्म सबमिट हैंडलर
+    const form = document.getElementById("portalForm");
+    const submitBtn = document.getElementById("submitBtn");
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       submitBtn.disabled = true;
       submitBtn.innerText = "सेव हो रहा है...";
 
+      const category = document.getElementById("category").value;
+      const classGrade = document.getElementById("classSelect").value;
       const title = document.getElementById("title").value;
       const description = document.getElementById("description").value;
-      const fileInput = document.getElementById("imageFile");
+      const fileInput = document.getElementById("fileInput");
 
-      let imageBase64 = "";
+      let fileData = "";
+      let fileType = "";
+      let fileName = "";
 
-      // फ़ोटो को बिना किसी खर्चे के डेटाबेस में सुरक्षित रखने के लिए बेस64 में बदलना
       if (fileInput.files && fileInput.files[0]) {
         const file = fileInput.files[0];
-        imageBase64 = await new Promise((resolve) => {
+        fileName = file.name;
+        fileType = file.type.includes("pdf") ? "pdf" : "image";
+        
+        fileData = await new Promise((resolve) => {
           const reader = new FileReader();
           reader.onloadend = () => resolve(reader.result);
           reader.readAsDataURL(file);
@@ -194,54 +467,58 @@
       }
 
       try {
-        await addDoc(collection(db, "homework"), {
+        await addDoc(collection(db, "school_data"), {
+          category: category,
+          classGrade: classGrade,
           title: title,
           description: description,
-          image: imageBase64,
+          fileData: fileData,
+          fileType: fileType,
+          fileName: fileName,
           createdAt: serverTimestamp()
         });
 
-        alert("होमवर्क सफलतापूर्वक पोस्ट हो गया!");
+        alert(category + " सफलतापूर्वक पोस्ट हो गया!");
         form.reset();
+        window.switchView('student');
       } catch (err) {
         console.error("Error: ", err);
-        alert("त्रुटि आई: " + err.message);
+        alert("त्रुटि: " + err.message);
       } finally {
         submitBtn.disabled = false;
-        submitBtn.innerText = "होमवर्क पोस्ट करें";
+        submitBtn.innerText = "ऑनलाइन पोस्ट करें";
       }
     });
 
-    // रीयल-टाइम में डेटा लोड करना
-    const q = query(collection(db, "homework"), orderBy("createdAt", "desc"));
-    onSnapshot(q, (snapshot) => {
-      if (snapshot.empty) {
-        listContainer.innerHTML = "<p>अभी कोई होमवर्क उपलब्ध नहीं है।</p>";
-        return;
-      }
-
-      listContainer.innerHTML = "";
-      snapshot.forEach((doc) => {
-        const item = doc.data();
-        const div = document.createElement("div");
-        div.className = "homework-item";
-
-        let dateStr = "";
-        if (item.createdAt && item.createdAt.toDate) {
-          dateStr = item.createdAt.toDate().toLocaleString("hi-IN");
+    // पोस्ट हटाने (Delete) का फ़ंक्शन
+    window.deletePost = async function(id) {
+      if (confirm("क्या आप वाकई इस पोस्ट को हमेशा के लिए हटाना चाहते हैं?")) {
+        try {
+          await deleteDoc(doc(db, "school_data", id));
+          alert("पोस्ट सफलतापूर्वक हटा दी गई!");
+        } catch (error) {
+          alert("हटाने में त्रुटि आई: " + error.message);
         }
+      }
+    };
 
-        div.innerHTML = `
-          <h3>${item.title || "होमवर्क"}</h3>
-          <p>${item.description || ""}</p>
-          ${item.image ? `<img src="${item.image}" alt="होमवर्क चित्र" />` : ""}
-          ${dateStr ? `<span class="timestamp">दिनांक: ${dateStr}</span>` : ""}
-        `;
-        listContainer.appendChild(div);
+    // लाइव और ऑफ़लाइन डेटा सिंक
+    const q = query(collection(db, "school_data"), orderBy("createdAt", "desc"));
+    onSnapshot(q, (snapshot) => {
+      allPosts = [];
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        let dateStr = "";
+        if (data.createdAt && data.createdAt.toDate) {
+          dateStr = data.createdAt.toDate().toLocaleString("hi-IN");
+        }
+        allPosts.push({
+          id: doc.id,
+          ...data,
+          date: dateStr
+        });
       });
-    }, (error) => {
-      console.error("डेटा लोड करने में त्रुटि: ", error);
-      listContainer.innerHTML = "<p>डेटा लोड करने में समस्या आई। कृपया इंटरनेट चेक करें।</p>";
+      window.renderPosts();
     });
   </script>
 </body>
