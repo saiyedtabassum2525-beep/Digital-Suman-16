@@ -3,508 +3,246 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Digital Suman 16 - School Portal</title>
+  <title>डिजिटल सुमन 16 - होमवर्क पोर्टल</title>
   <style>
-    :root {
-      --primary: #1e3a8a;
-      --secondary: #0284c7;
-      --accent: #f59e0b;
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --text: #0f172a;
-      --muted: #64748b;
-      --border: #e2e8f0;
-      --danger: #ef4444;
-      --success: #10b981;
-    }
-
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-
     body {
-      background-color: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
-      padding-bottom: 60px;
+      background-color: #f4f6f9;
+      color: #333;
+      padding: 16px;
     }
-
-    header {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
+    .header {
+      background-color: #1a73e8;
       color: white;
-      padding: 20px 16px;
       text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-    }
-
-    header h1 {
-      font-size: 1.4rem;
-      font-weight: 700;
-    }
-
-    header p {
-      font-size: 0.85rem;
-      opacity: 0.9;
-    }
-
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 16px;
-    }
-
-    .card {
-      background: var(--card);
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 16px;
-      border: 1px solid var(--border);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    }
-
-    .btn {
-      display: inline-block;
-      width: 100%;
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-align: center;
-      transition: background 0.2s;
-    }
-
-    .btn:active {
-      opacity: 0.9;
-    }
-
-    .btn-secondary {
-      background: var(--secondary);
-    }
-
-    .btn-danger {
-      background: var(--danger);
-    }
-
-    /* Class Selection Grid */
-    .class-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-top: 12px;
-    }
-
-    .class-card {
-      background: #eff6ff;
-      border: 2px solid #bfdbfe;
-      padding: 16px;
+      padding: 18px;
       border-radius: 10px;
-      text-align: center;
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--primary);
-      cursor: pointer;
-      transition: all 0.2s;
+      margin-bottom: 20px;
     }
-
-    .class-card:active {
-      background: var(--secondary);
-      color: white;
-      transform: scale(0.98);
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 24px;
     }
-
-    .warning-box {
-      background: #fffbeb;
-      border-left: 4px solid var(--accent);
-      padding: 12px;
-      margin-bottom: 16px;
-      border-radius: 4px;
-      font-size: 0.85rem;
-      color: #92400e;
+    .card h2 {
+      margin-bottom: 15px;
+      font-size: 1.25rem;
+      color: #1a73e8;
     }
-
-    /* Tabs */
-    .tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-      overflow-x: auto;
+    .form-group {
+      margin-bottom: 14px;
     }
-
-    .tab-btn {
-      flex: 1;
-      padding: 10px;
-      background: #e2e8f0;
-      border: none;
-      border-radius: 6px;
-      font-weight: 600;
-      font-size: 0.85rem;
-      color: var(--muted);
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .tab-btn.active {
-      background: var(--primary);
-      color: white;
-    }
-
-    .badge {
-      display: inline-block;
-      background: #e0f2fe;
-      color: #0369a1;
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-size: 0.75rem;
-      font-weight: 600;
+    label {
+      display: block;
       margin-bottom: 6px;
+      font-weight: bold;
+      font-size: 0.9rem;
     }
-
-    .post-item {
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 12px;
-      margin-bottom: 12px;
-    }
-
-    .post-item:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-      padding-bottom: 0;
-    }
-
-    .post-title {
-      font-size: 1rem;
-      font-weight: 600;
-    }
-
-    .post-meta {
-      font-size: 0.75rem;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    input, textarea, select {
+    input[type="text"], textarea, input[type="file"] {
       width: 100%;
       padding: 10px;
-      margin-bottom: 12px;
-      border: 1px solid var(--border);
+      border: 1px solid #ccc;
       border-radius: 6px;
-      font-size: 0.95rem;
+      font-size: 1rem;
     }
-
-    .hidden {
-      display: none !important;
+    textarea {
+      resize: vertical;
+      height: 80px;
     }
-
-    .footer-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: white;
-      display: flex;
-      border-top: 1px solid var(--border);
-      z-index: 100;
-    }
-
-    .footer-bar button {
-      flex: 1;
-      padding: 12px;
+    button {
+      background-color: #1a73e8;
+      color: white;
       border: none;
-      background: transparent;
-      color: var(--muted);
-      font-size: 0.8rem;
-      font-weight: 600;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: bold;
       cursor: pointer;
+      width: 100%;
     }
-
-    .footer-bar button.active {
-      color: var(--primary);
+    button:hover {
+      background-color: #1557b0;
+    }
+    .homework-item {
+      background: #ffffff;
+      border-left: 5px solid #1a73e8;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+    .homework-item h3 {
+      font-size: 1.15rem;
+      margin-bottom: 6px;
+      color: #222;
+    }
+    .homework-item p {
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.4;
+      white-space: pre-wrap;
+    }
+    .homework-item img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-top: 10px;
+      display: block;
+    }
+    .timestamp {
+      font-size: 0.75rem;
+      color: #888;
+      margin-top: 8px;
+      display: block;
     }
   </style>
 </head>
 <body>
 
-  <header>
+  <div class="header">
     <h1>डिजिटल सुमन 16</h1>
-    <p>उर्दू सुमन हाई स्कूल नं. 16, सूरत</p>
-  </header>
-
-  <div class="container">
-
-    <!-- 1. पहली बार क्लास चुनने वाली स्क्रीन (Locked Screen) -->
-    <div id="screen-select-class" class="card">
-      <h2>अपनी कक्षा चुनें</h2>
-      <div class="warning-box">
-        <strong>⚠️ ध्यान दें:</strong> एक बार अपनी क्लास चुनने के बाद आप इसे दोबारा बदल नहीं सकेंगे। कृपया ध्यानपूर्वक अपनी ही कक्षा चुनें।
-      </div>
-      <div class="class-grid">
-        <div class="class-card" onclick="lockAndSelectClass('कक्षा 9 - A')">9 - A</div>
-        <div class="class-card" onclick="lockAndSelectClass('कक्षा 9 - B')">9 - B</div>
-        <div class="class-card" onclick="lockAndSelectClass('कक्षा 9 - C')">9 - C</div>
-        <div class="class-card" onclick="lockAndSelectClass('कक्षा 10 - A')">10 - A</div>
-        <div class="class-card" onclick="lockAndSelectClass('कक्षा 10 - B')">10 - B</div>
-        <div class="class-card" onclick="lockAndSelectClass('कक्षा 11वीं')">11वीं</div>
-        <div class="class-card" onclick="lockAndSelectClass('कक्षा 12वीं')">12वीं</div>
-      </div>
-    </div>
-
-    <!-- 2. क्लास लॉक होने के बाद छात्र का मुख्य डैशबोर्ड -->
-    <div id="screen-student-dashboard" class="hidden">
-      
-      <!-- स्कूल हेड नोटिस बोर्ड -->
-      <div class="card" style="border-left: 4px solid var(--primary);">
-        <span class="badge" style="background: #fee2e2; color: #b91c1c;">📢 मुख्य स्कूल सूचना</span>
-        <h3 id="school-notice-title">दीपावली अवकाश एवं द्वितीय सत्र सूचना</h3>
-        <p style="font-size: 0.85rem; color: var(--muted); margin-top: 4px;" id="school-notice-body">
-          स्कूल से संबंधित आधिकारिक सूचनाएँ एवं आदेश यहाँ तुरंत अपडेट किए जाते हैं।
-        </p>
-      </div>
-
-      <!-- स्टूडेंट क्लास हेडर -->
-      <div class="card" style="background: #f0fdf4; border-color: #bbf7d0;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <span class="badge" style="background: #dcfce7; color: #15803d;">लॉक्ड कक्षा</span>
-            <h2 id="student-assigned-class" style="color: #166534;">-</h2>
-          </div>
-          <span style="font-size: 1.5rem;">🔒</span>
-        </div>
-      </div>
-
-      <!-- सब-टैब्स -->
-      <div class="tabs">
-        <button class="tab-btn active" onclick="switchStudentTab('homework')">📚 आज का होमवर्क</button>
-        <button class="tab-btn" onclick="switchStudentTab('syllabus')">🎯 मासिक सिलेबस</button>
-        <button class="tab-btn" onclick="switchStudentTab('teachers')">👨‍🏫 शिक्षक विवरण</button>
-      </div>
-
-      <!-- टैब 1: होमवर्क -->
-      <div id="tab-homework" class="card">
-        <h3>आज का गृहकार्य एवं नोट्स</h3>
-        <div id="homework-list" style="margin-top: 12px;">
-          <div class="post-item">
-            <span class="badge">उर्दू</span>
-            <div class="post-title">सबक नंबर 8 के सवाल-जवाब पूरे करें</div>
-            <div class="post-meta">आज • सर द्वारा पोस्ट किया गया</div>
-            <p style="font-size: 0.9rem;">किताब के पेज 42 से 44 तक के सभी मश्की सवालात अपनी कॉपी में लिखकर लाएँ।</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- टैब 2: सिलेबस -->
-      <div id="tab-syllabus" class="card hidden">
-        <h3>नवंबर - मासिक टारगेट (Syllabus)</h3>
-        <ul style="padding-left: 20px; font-size: 0.9rem; margin-top: 8px;">
-          <li><strong>उर्दू:</strong> नज़्म 4 और सबक 6 पूरा करना है।</li>
-          <li><strong>गणित:</strong> अध्याय 5 (समान्तर श्रेढ़ी) का रिवीजन।</li>
-          <li><strong>विज्ञान:</strong> अध्याय 8 (जीव जनन कैसे करते हैं)।</li>
-        </ul>
-      </div>
-
-      <!-- टैब 3: शिक्षक विवरण -->
-      <div id="tab-teachers" class="card hidden">
-        <h3>विषय शिक्षक सूची</h3>
-        <div style="font-size: 0.9rem; margin-top: 8px;">
-          <p><strong>क्लास टीचर:</strong> क्लास इंचार्ज सर</p>
-          <p><strong>गणित / विज्ञान:</strong> संबंधित विषय शिक्षक</p>
-          <p><strong>भाषा:</strong> उर्दू / गुजराती / अंग्रेज़ी शिक्षक</p>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- 3. सीक्रेट कंप्लेंट / ग्रीवेंस बॉक्स (सुमन 16 बॉक्स) -->
-    <div id="screen-complaint-box" class="card hidden">
-      <h2>🔒 सुमन 16 - गोपनीय शिकायत बॉक्स</h2>
-      <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 12px;">
-        यह 100% गोपनीय है। आपका नाम किसी को नहीं बताया जाएगा। बेझिझक अपनी समस्या या सुझाव भेजें।
-      </p>
-      <input type="text" placeholder="समस्या का विषय (उदा: क्लासरूम, लाइब्रेरी, लाइट)" id="comp-subject">
-      <textarea rows="4" placeholder="अपनी बात या परेशानी यहाँ विस्तार से लिखें..." id="comp-message"></textarea>
-      <button class="btn btn-secondary" onclick="submitAnonymousComplaint()">गोपनीय रूप से सबमिट करें</button>
-    </div>
-
-    <!-- 4. शिक्षक पिन पोर्टल -->
-    <div id="screen-teacher-portal" class="card hidden">
-      <h2>👨‍🏫 शिक्षक लॉगिन</h2>
-      <div id="teacher-auth">
-        <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 8px;">कंटेंट पोस्ट करने के लिए 4 अंकों का गुप्त पिन दर्ज करें:</p>
-        <input type="password" id="teacher-pin" maxlength="4" placeholder="गुप्त पिन (1234)">
-        <button class="btn" onclick="verifyTeacherPin()">लॉगिन करें</button>
-      </div>
-
-      <div id="teacher-panel" class="hidden">
-        <h3 style="margin-top: 12px;">नया होमवर्क / नोटिस पोस्ट करें</h3>
-        <select id="post-target-class" style="margin-top: 8px;">
-          <option value="कक्षा 9 - A">कक्षा 9 - A</option>
-          <option value="कक्षा 9 - B">कक्षा 9 - B</option>
-          <option value="कक्षा 9 - C">कक्षा 9 - C</option>
-          <option value="कक्षा 10 - A">कक्षा 10 - A</option>
-          <option value="कक्षा 10 - B">कक्षा 10 - B</option>
-          <option value="कक्षा 11वीं">कक्षा 11वीं</option>
-          <option value="कक्षा 12वीं">कक्षा 12वीं</option>
-        </select>
-        <input type="text" id="post-subject" placeholder="विषय (उदा: गणित, उर्दू, विज्ञान)">
-        <textarea id="post-text" rows="3" placeholder="होमवर्क या सूचना का पूरा विवरण..."></textarea>
-        <button class="btn" onclick="publishClassPost()">तुरंत प्रकाशित करें</button>
-      </div>
-    </div>
-
+    <p>शिक्षक एवं छात्र होमवर्क पोर्टल</p>
   </div>
 
-  <!-- बॉटम नेविगेशन -->
-  <div class="footer-bar">
-    <button id="nav-dash" class="active" onclick="switchNav('dash')">🏠 मेरी क्लास</button>
-    <button id="nav-box" onclick="switchNav('box')">🔒 गुप्त बॉक्स</button>
-    <button id="nav-teach" onclick="switchNav('teach')">👨‍🏫 शिक्षक</button>
+  <!-- होमवर्क पोस्ट करने का फॉर्म (शिक्षकों के लिए) -->
+  <div class="card">
+    <h2>नया होमवर्क जोड़ें</h2>
+    <form id="homeworkForm">
+      <div class="form-group">
+        <label for="title">विषय / शीर्षक:</label>
+        <input type="text" id="title" placeholder="उदा. कक्षा 9 गणित - प्रश्नावली 2.1" required>
+      </div>
+
+      <div class="form-group">
+        <label for="description">विवरण (निर्देश):</label>
+        <textarea id="description" placeholder="सवाल नंबर 1 से 5 हल करें..." required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="imageFile">फ़ोटो जोड़ें (वैकल्पिक):</label>
+        <input type="file" id="imageFile" accept="image/*">
+      </div>
+
+      <button type="submit" id="submitBtn">होमवर्क पोस्ट करें</button>
+    </form>
   </div>
 
-  <script>
-    const TEACHER_PIN = "1234"; // शिक्षकों का डिफ़ॉल्ट सीक्रेट पिन
+  <!-- लाइव होमवर्क की सूची (बच्चों और पालकों के लिए) -->
+  <div class="card">
+    <h2>दिए गए होमवर्क</h2>
+    <div id="homework-list">लोड हो रहा है...</div>
+  </div>
 
-    // पेज लोड होने पर चेक करें कि क्लास पहले से लॉक है या नहीं
-    window.onload = function() {
-      const savedClass = localStorage.getItem("suman16_locked_class");
-      if (savedClass) {
-        showStudentDashboard(savedClass);
-      } else {
-        document.getElementById("screen-select-class").classList.remove("hidden");
-        document.getElementById("screen-student-dashboard").classList.add("hidden");
-      }
+  <!-- Firebase और डेटाबेस स्क्रिप्ट -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { 
+      getFirestore, 
+      collection, 
+      addDoc, 
+      onSnapshot, 
+      query, 
+      orderBy, 
+      serverTimestamp 
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // Firebase कॉन्फ़िगरेशन
+    const firebaseConfig = {
+      apiKey: "AIzaSyCUfzpo3_JTxMECkbRT",
+      authDomain: "digital-suman-16.firebaseapp.com",
+      projectId: "digital-suman-16",
+      storageBucket: "digital-suman-16.firebasestorage.app",
+      messagingSenderId: "9523225964",
+      appId: "1:9523225964:web:8a6c393d",
+      measurementId: "G-8WHH1SPEPY"
     };
 
-    // क्लास चुनकर हमेशा के लिए लॉक करना
-    function lockAndSelectClass(className) {
-      if (confirm("क्या आप वाकई " + className + " को चुनना चाहते हैं? इसके बाद आप इसे बदल नहीं सकेंगे।")) {
-        localStorage.setItem("suman16_locked_class", className);
-        showStudentDashboard(className);
-      }
-    }
+    // डेटाबेस इनिशियलाइज़ करें
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-    function showStudentDashboard(className) {
-      document.getElementById("screen-select-class").classList.add("hidden");
-      document.getElementById("screen-student-dashboard").classList.remove("hidden");
-      document.getElementById("student-assigned-class").innerText = className;
-      loadSavedPosts(className);
-    }
+    const form = document.getElementById("homeworkForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const listContainer = document.getElementById("homework-list");
 
-    // स्टूडेंट टैब स्विचिंग
-    function switchStudentTab(tabName) {
-      document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
-      event.target.classList.add("active");
+    // फॉर्म सबमिट हैंडलर
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.innerText = "सेव हो रहा है...";
 
-      document.getElementById("tab-homework").classList.add("hidden");
-      document.getElementById("tab-syllabus").classList.add("hidden");
-      document.getElementById("tab-teachers").classList.add("hidden");
+      const title = document.getElementById("title").value;
+      const description = document.getElementById("description").value;
+      const fileInput = document.getElementById("imageFile");
 
-      document.getElementById("tab-" + tabName).classList.remove("hidden");
-    }
+      let imageBase64 = "";
 
-    // बॉटम नेविगेशन
-    function switchNav(nav) {
-      document.querySelectorAll(".footer-bar button").forEach(b => b.classList.remove("active"));
-      document.getElementById("screen-complaint-box").classList.add("hidden");
-      document.getElementById("screen-teacher-portal").classList.add("hidden");
-
-      const savedClass = localStorage.getItem("suman16_locked_class");
-
-      if (nav === 'dash') {
-        document.getElementById("nav-dash").classList.add("active");
-        if (savedClass) {
-          document.getElementById("screen-student-dashboard").classList.remove("hidden");
-        } else {
-          document.getElementById("screen-select-class").classList.remove("hidden");
-        }
-      } else if (nav === 'box') {
-        document.getElementById("nav-box").classList.add("active");
-        document.getElementById("screen-student-dashboard").classList.add("hidden");
-        document.getElementById("screen-select-class").classList.add("hidden");
-        document.getElementById("screen-complaint-box").classList.remove("hidden");
-      } else if (nav === 'teach') {
-        document.getElementById("nav-teach").classList.add("active");
-        document.getElementById("screen-student-dashboard").classList.add("hidden");
-        document.getElementById("screen-select-class").classList.add("hidden");
-        document.getElementById("screen-teacher-portal").classList.remove("hidden");
-      }
-    }
-
-    // गुप्त शिकायत भेजना
-    function submitAnonymousComplaint() {
-      const sub = document.getElementById("comp-subject").value;
-      const msg = document.getElementById("comp-message").value;
-      if (!sub || !msg) {
-        alert("कृपया विषय और संदेश दोनों लिखें।");
-        return;
-      }
-      alert("आपकी बात स्कूल प्रशासन को पूरी तरह से गोपनीय रूप से पहुँचा दी गई है। धन्यवाद!");
-      document.getElementById("comp-subject").value = "";
-      document.getElementById("comp-message").value = "";
-      switchNav('dash');
-    }
-
-    // शिक्षक पिन वेरिफाई करना
-    function verifyTeacherPin() {
-      const pin = document.getElementById("teacher-pin").value;
-      if (pin === TEACHER_PIN) {
-        document.getElementById("teacher-auth").classList.add("hidden");
-        document.getElementById("teacher-panel").classList.remove("hidden");
-      } else {
-        alert("गलत पिन! कृपया सही 4 अंकों का शिक्षक पिन दर्ज करें।");
-      }
-    }
-
-    // शिक्षक द्वारा पोस्ट करना
-    function publishClassPost() {
-      const targetClass = document.getElementById("post-target-class").value;
-      const subject = document.getElementById("post-subject").value;
-      const text = document.getElementById("post-text").value;
-
-      if (!subject || !text) {
-        alert("कृपया विषय और विवरण दोनों भरें।");
-        return;
-      }
-
-      const postObj = { targetClass, subject, text, date: "आज" };
-      let posts = JSON.parse(localStorage.getItem("suman16_posts") || "[]");
-      posts.unshift(postObj);
-      localStorage.setItem("suman16_posts", JSON.stringify(posts));
-
-      alert(targetClass + " के लिए होमवर्क सफलतापूर्वक पोस्ट हो गया!");
-      document.getElementById("post-subject").value = "";
-      document.getElementById("post-text").value = "";
-      switchNav('dash');
-    }
-
-    // क्लास के हिसाब से होमवर्क लोड करना
-    function loadSavedPosts(currentClass) {
-      const posts = JSON.parse(localStorage.getItem("suman16_posts") || "[]");
-      const list = document.getElementById("homework-list");
-      const filtered = posts.filter(p => p.targetClass === currentClass);
-
-      if (filtered.length > 0) {
-        list.innerHTML = "";
-        filtered.forEach(p => {
-          list.innerHTML += `
-            <div class="post-item">
-              <span class="badge">${p.subject}</span>
-              <div class="post-title">${p.text}</div>
-              <div class="post-meta">${p.date} • शिक्षक द्वारा पोस्ट</div>
-            </div>
-          `;
+      // फ़ोटो को बिना किसी खर्चे के डेटाबेस में सुरक्षित रखने के लिए बेस64 में बदलना
+      if (fileInput.files && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        imageBase64 = await new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.readAsDataURL(file);
         });
       }
-    }
+
+      try {
+        await addDoc(collection(db, "homework"), {
+          title: title,
+          description: description,
+          image: imageBase64,
+          createdAt: serverTimestamp()
+        });
+
+        alert("होमवर्क सफलतापूर्वक पोस्ट हो गया!");
+        form.reset();
+      } catch (err) {
+        console.error("Error: ", err);
+        alert("त्रुटि आई: " + err.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = "होमवर्क पोस्ट करें";
+      }
+    });
+
+    // रीयल-टाइम में डेटा लोड करना
+    const q = query(collection(db, "homework"), orderBy("createdAt", "desc"));
+    onSnapshot(q, (snapshot) => {
+      if (snapshot.empty) {
+        listContainer.innerHTML = "<p>अभी कोई होमवर्क उपलब्ध नहीं है।</p>";
+        return;
+      }
+
+      listContainer.innerHTML = "";
+      snapshot.forEach((doc) => {
+        const item = doc.data();
+        const div = document.createElement("div");
+        div.className = "homework-item";
+
+        let dateStr = "";
+        if (item.createdAt && item.createdAt.toDate) {
+          dateStr = item.createdAt.toDate().toLocaleString("hi-IN");
+        }
+
+        div.innerHTML = `
+          <h3>${item.title || "होमवर्क"}</h3>
+          <p>${item.description || ""}</p>
+          ${item.image ? `<img src="${item.image}" alt="होमवर्क चित्र" />` : ""}
+          ${dateStr ? `<span class="timestamp">दिनांक: ${dateStr}</span>` : ""}
+        `;
+        listContainer.appendChild(div);
+      });
+    }, (error) => {
+      console.error("डेटा लोड करने में त्रुटि: ", error);
+      listContainer.innerHTML = "<p>डेटा लोड करने में समस्या आई। कृपया इंटरनेट चेक करें।</p>";
+    });
   </script>
 </body>
-  </html>
-  
+</html>
