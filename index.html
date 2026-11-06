@@ -2,211 +2,336 @@
 <html lang="hi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>डिजिटल सुमन 16</title>
   <style>
+    :root {
+      --primary: #1a73e8;
+      --primary-dark: #0d47a1;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+    }
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
     body {
-      background-color: #f3f4f6;
-      color: #1f2937;
+      background-color: var(--bg);
+      color: var(--text);
+      padding-bottom: 85px;
+    }
+
+    /* टॉप हेडर */
+    header {
+      background: linear-gradient(135deg, #1a73e8, #0d47a1);
+      color: white;
+      padding: 16px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    header h1 { font-size: 1.25rem; font-weight: 700; }
+    header p { font-size: 0.8rem; opacity: 0.9; margin-top: 2px; }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
       padding: 14px;
     }
-    header {
-      background: #1a73e8;
-      color: white;
-      text-align: center;
-      padding: 16px;
-      border-radius: 12px;
-      margin-bottom: 16px;
-    }
-    header h1 { font-size: 1.35rem; }
-    header p { font-size: 0.85rem; opacity: 0.9; }
 
-    .box {
-      background: white;
+    /* वन-टाइम सेटअप स्क्रीन */
+    .setup-screen {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
       padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-      margin-bottom: 16px;
     }
-    .box h2 {
-      font-size: 1.15rem;
-      margin-bottom: 12px;
-      color: #1a73e8;
-      text-align: center;
-    }
-
-    /* बटन और इनपुट */
-    .btn {
-      width: 100%;
-      padding: 13px;
-      background: #1a73e8;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-    .btn-secondary {
-      background: #4b5563;
-    }
-    .btn-outline {
+    .setup-card {
       background: white;
-      color: #1a73e8;
-      border: 1.5px solid #1a73e8;
-      padding: 8px 12px;
-      font-size: 0.85rem;
-      width: auto;
-      margin-top: 0;
+      padding: 26px 20px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+      width: 100%;
+      max-width: 400px;
+      border: 1px solid var(--border);
     }
-    .btn:active {
+    .setup-card h2 {
+      font-size: 1.3rem;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .setup-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .role-btn {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border);
+      background: #f8fafc;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .role-btn:active {
+      background: #e2e8f0;
       transform: scale(0.98);
     }
+
+    /* इनपुट्स और फॉर्म्स */
     select, input, textarea {
       width: 100%;
       padding: 12px;
-      border: 1.5px solid #cbd5e1;
-      border-radius: 8px;
-      font-size: 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      background: white;
       margin-top: 6px;
       margin-bottom: 12px;
-      background: white;
+      outline: none;
     }
-    textarea { height: 80px; resize: vertical; }
+    select:focus, input:focus, textarea:focus {
+      border-color: var(--primary);
+    }
+    textarea { height: 85px; resize: vertical; }
 
-    /* सामग्री कार्ड */
-    .item-card {
-      background: white;
-      border-left: 5px solid #1a73e8;
+    .btn-main {
+      width: 100%;
+      padding: 13px;
+      background: var(--primary);
+      color: white;
+      border: none;
       border-radius: 10px;
-      padding: 14px;
-      margin-bottom: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
     }
-    .tag {
-      font-size: 0.72rem;
-      font-weight: bold;
-      padding: 3px 8px;
-      border-radius: 6px;
-      display: inline-block;
-      margin-bottom: 6px;
-      background: #e0e7ff;
-      color: #3730a3;
-    }
-    .item-card h3 { font-size: 1.05rem; margin-bottom: 4px; }
-    .item-card p { font-size: 0.9rem; color: #4b5563; line-height: 1.4; white-space: pre-wrap; }
-    .item-card img { width: 100%; border-radius: 8px; margin-top: 8px; }
-    
-    .table-wrap {
-      overflow-x: auto;
-      margin-top: 8px;
-      border: 1px solid #e5e7eb;
-      border-radius: 6px;
-    }
-    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-    th, td { padding: 8px; border-bottom: 1px solid #e5e7eb; text-align: left; }
-    th { background: #f8fafc; }
+    .btn-main:active { transform: scale(0.98); }
 
-    .top-bar {
+    /* टीचर एक्शन बार */
+    .teacher-action-banner {
+      background: white;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin-bottom: 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
-      padding: 10px 14px;
-      background: white;
-      border-radius: 8px;
-      font-weight: bold;
+      border: 1px solid #bfdbfe;
+      background: #eff6ff;
     }
+    .post-add-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* कंटेंट कार्ड्स */
+    .card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--primary);
+      position: relative;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      background: #e0e7ff;
+      color: #3730a3;
+    }
+    .card h3 {
+      font-size: 1.1rem;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+    .card p {
+      font-size: 0.92rem;
+      color: #334155;
+      line-height: 1.45;
+      white-space: pre-wrap;
+    }
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+    .pdf-link {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 14px;
+      background: #ef4444;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .card-date {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 10px;
+      display: block;
+    }
+    .del-btn {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: #fee2e2;
+      color: #dc2626;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* टाइम-टेबल तालिका */
+    .tt-table-wrap {
+      overflow-x: auto;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th, td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; }
+    th { background: #f8fafc; color: var(--muted); }
+
+    /* बॉटम नेविगेशन बार */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 65px;
+      background: white;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 40;
+    }
+    .tab-btn {
+      flex: 1;
+      height: 100%;
+      background: none;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      color: var(--primary);
+    }
+    .tab-btn svg { width: 22px; height: 22px; fill: currentColor; }
+
+    /* मोडल पॉपअप */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      justify-content: center;
+      align-items: flex-end;
+      z-index: 100;
+    }
+    .modal.open { display: flex; }
+    .modal-sheet {
+      background: white;
+      width: 100%;
+      max-width: 600px;
+      max-height: 85vh;
+      overflow-y: auto;
+      border-radius: 20px 20px 0 0;
+      padding: 20px;
+      animation: slideUp 0.2s ease-out;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .modal-head h3 { font-size: 1.15rem; }
+    .close-x {
+      background: #f1f5f9;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
     .hidden { display: none !important; }
   </style>
 </head>
 <body>
 
+  <!-- हेडर -->
   <header>
     <h1>डिजिटल सुमन 16</h1>
-    <p>विद्यालय ई-पोर्टल</p>
+    <p id="subHeaderTitle">ई-विद्या एवं सूचना पोर्टल</p>
   </header>
 
-  <!-- 1. पहली स्क्रीन: स्टूडेंट या टीचर चुनें -->
-  <div class="box" id="stepRole">
-    <h2>आप कौन हैं?</h2>
-    <button type="button" class="btn" onclick="goToStep('studentClass')">👨‍🎓 मैं छात्र / पालक हूँ (Student)</button>
-    <button type="button" class="btn btn-secondary" onclick="goToStep('teacherLogin')">👩‍🏫 मैं शिक्षक हूँ (Teacher)</button>
-  </div>
-
-  <!-- 2. स्क्रीन (छात्र के लिए): क्लास सेलेक्ट करें -->
-  <div class="box hidden" id="stepStudentClass">
-    <h2>अपनी क्लास चुनें</h2>
-    <label>कक्षा चुनिए:</label>
-    <select id="studentClassSelect">
-      <option value="" disabled selected>-- यहाँ दबाकर क्लास चुनें --</option>
-      <option value="9th A">9th A</option>
-      <option value="9th B">9th B</option>
-      <option value="9th C">9th C</option>
-      <option value="10th A">10th A</option>
-      <option value="10th B">10th B</option>
-      <option value="11th">11th</option>
-      <option value="12th">12th</option>
-    </select>
-    <button type="button" class="btn" onclick="submitStudentClass()">पोर्टल खोलें</button>
-    <button type="button" class="btn btn-secondary" onclick="goToStep('role')">← वापस</button>
-  </div>
-
-  <!-- 3. स्क्रीन (शिक्षक के लिए): गुप्त पिन दर्ज करें -->
-  <div class="box hidden" id="stepTeacherLogin">
-    <h2>शिक्षक सत्यापन</h2>
-    <label>6 अंकों का गुप्त पिन दर्ज करें:</label>
-    <input type="password" id="teacherPinInput" placeholder="पिन डालें" maxlength="6">
-    <button type="button" class="btn" onclick="verifyTeacherPin()">लॉगिन करें</button>
-    <button type="button" class="btn btn-secondary" onclick="goToStep('role')">← वापस</button>
-  </div>
-
-  <!-- 4. मुख्य छात्र पोर्टल (डेटा डिस्प्ले) -->
-  <div class="hidden" id="studentPortal">
-    <div class="top-bar">
-      <span>🎓 कक्षा: <span id="displayStudentClass" style="color:#1a73e8;"></span></span>
-      <button type="button" class="btn-outline" onclick="logout()">बदलें / बाहर निकलें</button>
+  <!-- 1. पहली बार ऐप खोलने पर दिखने वाली स्क्रीन (One-Time Setup) -->
+  <div id="setupContainer" class="container setup-screen hidden">
+    <!-- रोल चुनना -->
+    <div id="stepRole" class="setup-card">
+      <h2>स्वागत है!</h2>
+      <p>शुरू करने के लिए अपना पद चुनें:</p>
+      <button type="button" class="role-btn" onclick="chooseRole('student')">👨‍🎓 मैं छात्र / पालक हूँ</button>
+      <button type="button" class="role-btn" onclick="chooseRole('teacher')">👩‍🏫 मैं शिक्षक हूँ</button>
     </div>
 
-    <!-- समस्या / सलाह भेजने का फॉर्म -->
-    <div class="box">
-      <h3 style="font-size: 1rem; color:#1a73e8; margin-bottom:8px;">💬 शिक्षक को अपनी बात / समस्या भेजें</h3>
-      <input type="text" id="fbName" placeholder="आपका नाम (चाहें तो खाली छोड़ें)">
-      <textarea id="fbText" placeholder="अपनी समस्या या सलाह यहाँ लिखें..."></textarea>
-      <button type="button" class="btn" onclick="sendFeedback()">संदेश भेजें</button>
-    </div>
-
-    <h2 style="font-size: 1.1rem; margin: 14px 4px 8px;">📚 स्कूल सामग्री (होमवर्क / सिलेबस / टाइम टेबल)</h2>
-    <div id="postsContainer">लोड हो रहा है...</div>
-  </div>
-
-  <!-- 5. मुख्य शिक्षक पोर्टल -->
-  <div class="hidden" id="teacherPortal">
-    <div class="top-bar">
-      <span>👩‍🏫 शिक्षक पैनल</span>
-      <button type="button" class="btn-outline" onclick="logout()">लॉगआउट</button>
-    </div>
-
-    <!-- पोस्टिंग फ़ॉर्म -->
-    <div class="box">
-      <h2>नयी सामग्री पोस्ट करें</h2>
-      <label>प्रकार:</label>
-      <select id="postCat" onchange="toggleTTForm()">
-        <option value="होमवर्क">होमवर्क (Homework)</option>
-        <option value="सिलेबस">सिलेबस (Syllabus)</option>
-        <option value="समय सारणी">समय सारणी (Timetable)</option>
-        <option value="सूचना">सूचना (Notice)</option>
-      </select>
-
-      <label>कक्षा:</label>
-      <select id="postClass">
+    <!-- छात्र के लिए क्लास चुनना -->
+    <div id="stepClass" class="setup-card hidden">
+      <h2>अपनी कक्षा चुनें</h2>
+      <p>यह केवल एक बार सेट होगी:</p>
+      <select id="userClassChoice">
+        <option value="" disabled selected>-- यहाँ से कक्षा चुनें --</option>
         <option value="9th A">9th A</option>
         <option value="9th B">9th B</option>
         <option value="9th C">9th C</option>
@@ -214,33 +339,128 @@
         <option value="10th B">10th B</option>
         <option value="11th">11th</option>
         <option value="12th">12th</option>
-        <option value="सभी कक्षाओं के लिए">सभी कक्षाओं के लिए</option>
       </select>
-
-      <label>विषय / शीर्षक:</label>
-      <input type="text" id="postTitle" placeholder="उदा. गणित या सामान्य सूचना">
-
-      <!-- टाइम टेबल पंक्तियाँ -->
-      <div id="ttSection" class="hidden">
-        <label>समय सारणी (1. पीरियड | समय | विषय | शिक्षक):</label>
-        <input type="text" id="ttRow1" placeholder="1 | 10:00-10:45 | गणित | शर्मा सर">
-        <input type="text" id="ttRow2" placeholder="2 | 10:45-11:30 | विज्ञान | वर्मा सर">
-        <input type="text" id="ttRow3" placeholder="3 | 11:30-12:15 | अंग्रेज़ी | जोशी सर">
-      </div>
-
-      <label>विवरण / निर्देश:</label>
-      <textarea id="postDesc" placeholder="निर्देश यहाँ लिखें..."></textarea>
-
-      <label>फ़ोटो या PDF जोड़ें (वैकल्पिक):</label>
-      <input type="file" id="postFile" accept="image/*,application/pdf">
-
-      <button type="button" class="btn" id="postBtn" onclick="savePost()">ऑनलाइन पोस्ट करें</button>
+      <button type="button" class="btn-main" onclick="finalizeStudentClass()">जारी रखें</button>
     </div>
 
-    <!-- छात्रों की समस्याएँ -->
-    <div class="box">
-      <h2>📩 छात्रों की समस्याएँ एवं सलाह</h2>
-      <div id="feedbacksContainer">लोड हो रहा है...</div>
+    <!-- शिक्षक के लिए पिन डालना -->
+    <div id="stepPin" class="setup-card hidden">
+      <h2>शिक्षक लॉगिन</h2>
+      <p>6 अंकों का गुप्त सुरक्षा पिन दर्ज करें:</p>
+      <input type="password" id="pinInput" placeholder="गुप्त पिन डालें" maxlength="6">
+      <button type="button" class="btn-main" onclick="finalizeTeacherAuth()">लॉगिन करें</button>
+    </div>
+  </div>
+
+  <!-- 2. मुख्य पोर्टल (हमेशा खुला रहेगा) -->
+  <div id="appContainer" class="container hidden">
+    <!-- शिक्षक के लिए पोस्ट बटन बैनर -->
+    <div id="teacherBanner" class="teacher-action-banner hidden">
+      <span style="font-size:0.85rem; font-weight:700; color:#1e40af;">👩‍🏫 शिक्षक पैनल</span>
+      <button type="button" class="post-add-btn" onclick="openPostModal()">+ नया पोस्ट करें</button>
+    </div>
+
+    <!-- सामग्री सूची -->
+    <div id="contentArea">
+      <p style="text-align:center; padding:30px; color:var(--muted);">लोड हो रहा है...</p>
+    </div>
+
+    <!-- छात्र समस्या / सलाह टैब का व्यू -->
+    <div id="issueArea" class="hidden">
+      <!-- छात्र के लिए फॉर्म -->
+      <div id="studentIssueBox" class="card" style="border-left-color: #f59e0b;">
+        <h3 style="color:#b45309;">💬 शिक्षक को अपनी समस्या / सलाह भेजें</h3>
+        <p style="font-size:0.85rem; color:var(--muted); margin-bottom:10px;">यह संदेश सीधे शिक्षकों के पास जाएगा और किसी अन्य छात्र को नहीं दिखेगा।</p>
+        <input type="text" id="fbStudentName" placeholder="आपका नाम (वैकल्पिक)">
+        <select id="fbCategory">
+          <option value="पढ़ाई संबंधी समस्या">पढ़ाई संबंधी समस्या</option>
+          <option value="स्कूल सुधार सुझाव">स्कूल सुधार सुझाव</option>
+          <option value="अन्य शिकायत / बात">अन्य शिकायत / बात</option>
+        </select>
+        <textarea id="fbMessage" placeholder="अपनी बात यहाँ विस्तार से लिखें..."></textarea>
+        <button type="button" class="btn-main" id="fbSendBtn" onclick="sendStudentFeedback()">शिक्षक को भेजें</button>
+      </div>
+
+      <!-- शिक्षक के लिए इनबॉक्स -->
+      <div id="teacherInbox" class="hidden">
+        <h3 style="margin-bottom:12px; font-size:1.05rem;">📩 छात्रों द्वारा भेजे गए संदेश:</h3>
+        <div id="inboxList">लोड हो रहा है...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- नीचे का नेविगेशन बार -->
+  <nav id="bottomBar" class="bottom-bar hidden">
+    <button type="button" class="tab-btn active" onclick="switchNavTab('होमवर्क', this)">
+      <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+      <span>होमवर्क</span>
+    </button>
+    <button type="button" class="tab-btn" onclick="switchNavTab('सिलेबस', this)">
+      <svg viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+      <span>सिलेबस</span>
+    </button>
+    <button type="button" class="tab-btn" onclick="switchNavTab('समय सारणी', this)">
+      <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"/></svg>
+      <span>टाइम-टेबल</span>
+    </button>
+    <button type="button" class="tab-btn" onclick="switchNavTab('सूचना', this)">
+      <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+      <span>सूचना</span>
+    </button>
+    <button type="button" class="tab-btn" onclick="switchNavTab('समस्या', this)">
+      <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+      <span>सलाह/समस्या</span>
+    </button>
+  </nav>
+
+  <!-- शिक्षक पोस्टिंग मोडल -->
+  <div id="postModal" class="modal">
+    <div class="modal-sheet">
+      <div class="modal-head">
+        <h3 id="modalHeading">नयी सामग्री पोस्ट करें</h3>
+        <button type="button" class="close-x" onclick="closePostModal()">×</button>
+      </div>
+
+      <form id="postForm">
+        <label>प्रकार:</label>
+        <select id="modalCategory" onchange="toggleFormFields()">
+          <option value="होमवर्क">होमवर्क (Homework)</option>
+          <option value="सिलेबस">सिलेबस (Syllabus)</option>
+          <option value="समय सारणी">समय सारणी (Timetable)</option>
+          <option value="सूचना">सूचना (Notice)</option>
+        </select>
+
+        <label>कक्षा चुनें:</label>
+        <select id="modalClass" required>
+          <option value="9th A">9th A</option>
+          <option value="9th B">9th B</option>
+          <option value="9th C">9th C</option>
+          <option value="10th A">10th A</option>
+          <option value="10th B">10th B</option>
+          <option value="11th">11th</option>
+          <option value="12th">12th</option>
+          <option value="सभी कक्षाओं के लिए">सभी कक्षाओं के लिए</option>
+        </select>
+
+        <label>शीर्षक / विषय:</label>
+        <input type="text" id="modalTitle" placeholder="उदा. गणित या नोटिस" required>
+
+        <!-- टाइम-टेबल बॉक्स -->
+        <div id="ttFormSection" class="hidden">
+          <label>समय सारणी पंक्तियाँ (पीरियड | समय | विषय | शिक्षक):</label>
+          <input type="text" id="tt1" placeholder="1 | 10:00 - 10:45 | गणित | शर्मा सर">
+          <input type="text" id="tt2" placeholder="2 | 10:45 - 11:30 | विज्ञान | वर्मा सर">
+          <input type="text" id="tt3" placeholder="3 | 11:30 - 12:15 | अंग्रेज़ी | जोशी सर">
+        </div>
+
+        <label>विवरण / निर्देश:</label>
+        <textarea id="modalDesc" placeholder="निर्देश यहाँ लिखें..."></textarea>
+
+        <label>फ़ोटो या PDF फ़ाइल जोड़ें:</label>
+        <input type="file" id="modalFile" accept="image/*,application/pdf">
+
+        <button type="submit" id="savePostBtn" class="btn-main" style="margin-top:10px;">ऑनलाइन पोस्ट करें</button>
+      </form>
     </div>
   </div>
 
@@ -272,242 +492,124 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    let activeClass = localStorage.getItem("myClass") || "";
-    let isTeacherAuth = false;
-    let allPosts = [];
+    // लोकल स्टोरेज स्टेट (स्थायी सेविंग)
+    let savedRole = localStorage.getItem("appUserRole"); // 'student' या 'teacher'
+    let savedClass = localStorage.getItem("appUserClass"); // '9th A' आदि
+    let currentTab = 'होमवर्क';
+    let allPostsData = [];
+    let allFeedbacks = [];
 
-    // स्क्रीन नेविगेशन
-    window.goToStep = function(step) {
-      document.getElementById("stepRole").classList.add("hidden");
-      document.getElementById("stepStudentClass").classList.add("hidden");
-      document.getElementById("stepTeacherLogin").classList.add("hidden");
-      document.getElementById("studentPortal").classList.add("hidden");
-      document.getElementById("teacherPortal").classList.add("hidden");
-
-      if (step === 'role') document.getElementById("stepRole").classList.remove("hidden");
-      if (step === 'studentClass') document.getElementById("stepStudentClass").classList.remove("hidden");
-      if (step === 'teacherLogin') document.getElementById("stepTeacherLogin").classList.remove("hidden");
-      if (step === 'studentPortal') document.getElementById("studentPortal").classList.remove("hidden");
-      if (step === 'teacherPortal') document.getElementById("teacherPortal").classList.remove("hidden");
-    };
-
-    window.submitStudentClass = function() {
-      const cls = document.getElementById("studentClassSelect").value;
-      if (!cls) {
-        alert("कृपया लिस्ट में से क्लास चुनें!");
-        return;
-      }
-      activeClass = cls;
-      localStorage.setItem("myClass", cls);
-      document.getElementById("displayStudentClass").innerText = cls;
-      window.goToStep('studentPortal');
-      renderPosts();
-    };
-
-    window.verifyTeacherPin = function() {
-      const pin = document.getElementById("teacherPinInput").value;
-      if (pin === "791632") {
-        isTeacherAuth = true;
-        window.goToStep('teacherPortal');
+    // शुरुआत की जांच
+    window.addEventListener("DOMContentLoaded", () => {
+      if (!savedRole || (savedRole === 'student' && !savedClass)) {
+        // अगर सेटअप नहीं हुआ है तो सेटअप स्क्रीन दिखाएँ
+        document.getElementById("setupContainer").classList.remove("hidden");
+        document.getElementById("stepRole").classList.remove("hidden");
       } else {
-        alert("गलत पिन! केवल शिक्षक ही लॉगिन कर सकते हैं।");
+        // सीधे मुख्य ऐप खोलें
+        launchApp();
+      }
+    });
+
+    // सेटअप फ्लो
+    window.chooseRole = function(role) {
+      if (role === 'student') {
+        document.getElementById("stepRole").classList.add("hidden");
+        document.getElementById("stepClass").classList.remove("hidden");
+      } else {
+        document.getElementById("stepRole").classList.add("hidden");
+        document.getElementById("stepPin").classList.remove("hidden");
       }
     };
 
-    window.logout = function() {
-      localStorage.removeItem("myClass");
-      activeClass = "";
-      isTeacherAuth = false;
-      document.getElementById("studentClassSelect").value = "";
-      document.getElementById("teacherPinInput").value = "";
-      window.goToStep('role');
-    };
-
-    window.toggleTTForm = function() {
-      const cat = document.getElementById("postCat").value;
-      const ttSec = document.getElementById("ttSection");
-      if (cat === "समय सारणी") ttSec.classList.remove("hidden");
-      else ttSec.classList.add("hidden");
-    };
-
-    // शिक्षक सामग्री पोस्ट करना
-    window.savePost = async function() {
-      const btn = document.getElementById("postBtn");
-      const cat = document.getElementById("postCat").value;
-      const cls = document.getElementById("postClass").value;
-      const title = document.getElementById("postTitle").value.trim();
-      const desc = document.getElementById("postDesc").value.trim();
-      const fileInput = document.getElementById("postFile");
-
-      if (!title) {
-        alert("कृपया शीर्षक दर्ज करें!");
+    window.finalizeStudentClass = function() {
+      const cls = document.getElementById("userClassChoice").value;
+      if (!cls) {
+        alert("कृपया लिस्ट में से अपनी कक्षा चुनें!");
         return;
       }
+      localStorage.setItem("appUserRole", "student");
+      localStorage.setItem("appUserClass", cls);
+      savedRole = "student";
+      savedClass = cls;
+      launchApp();
+    };
 
-      btn.disabled = true;
-      btn.innerText = "पोस्ट हो रहा है...";
+    window.finalizeTeacherAuth = function() {
+      const pin = document.getElementById("pinInput").value;
+      if (pin === "791632") {
+        localStorage.setItem("appUserRole", "teacher");
+        savedRole = "teacher";
+        launchApp();
+      } else {
+        alert("गलत पिन! केवल शिक्षक ही इस पोर्टल को खोल सकते हैं।");
+      }
+    };
 
-      let ttArr = [];
-      if (cat === "समय सारणी") {
-        ["ttRow1", "ttRow2", "ttRow3"].forEach(id => {
-          const val = document.getElementById(id).value.trim();
-          if (val) {
-            const parts = val.split("|");
-            ttArr.push({
-              period: parts[0]?.trim() || "",
-              time: parts[1]?.trim() || "",
-              sub: parts[2]?.trim() || "",
-              teacher: parts[3]?.trim() || ""
-            });
-          }
-        });
+    // मुख्य ऐप लॉन्च करना
+    function launchApp() {
+      document.getElementById("setupContainer").classList.add("hidden");
+      document.getElementById("appContainer").classList.remove("hidden");
+      document.getElementById("bottomBar").classList.remove("hidden");
+
+      if (savedRole === 'teacher') {
+        document.getElementById("subHeaderTitle").innerText = "शिक्षक नियंत्रण केंद्र";
+        document.getElementById("teacherBanner").classList.remove("hidden");
+        document.getElementById("studentIssueBox").classList.add("hidden");
+        document.getElementById("teacherInbox").classList.remove("hidden");
+      } else {
+        document.getElementById("subHeaderTitle").innerText = "कक्षा: " + savedClass;
+        document.getElementById("teacherBanner").classList.add("hidden");
+        document.getElementById("studentIssueBox").classList.remove("hidden");
+        document.getElementById("teacherInbox").classList.add("hidden");
       }
 
-      let fileData = "";
-      let fileType = "";
-      if (fileInput.files[0]) {
-        const f = fileInput.files[0];
-        fileType = f.type.includes("pdf") ? "pdf" : "image";
-        fileData = await new Promise(res => {
-          const r = new FileReader();
-          r.onloadend = () => res(r.result);
-          r.readAsDataURL(f);
-        });
-      }
+      renderContent();
+      listenData();
+    }
 
-      try {
-        await addDoc(collection(db, "school_data"), {
-          category: cat,
-          classGrade: cls,
-          title: title,
-          description: desc,
-          timetable: ttArr,
-          fileData: fileData,
-          fileType: fileType,
-          createdAt: serverTimestamp()
-        });
-        alert("सफलतापूर्वक पोस्ट हो गया!");
-        document.getElementById("postTitle").value = "";
-        document.getElementById("postDesc").value = "";
-        document.getElementById("postFile").value = "";
-      } catch (err) {
-        alert("त्रुटि: " + err.message);
-      } finally {
-        btn.disabled = false;
-        btn.innerText = "ऑनलाइन पोस्ट करें";
+    // नेविगेशन टैब्स
+    window.switchNavTab = function(tabName, el) {
+      currentTab = tabName;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+
+      if (tabName === 'समस्या') {
+        document.getElementById("contentArea").classList.add("hidden");
+        document.getElementById("issueArea").classList.remove("hidden");
+      } else {
+        document.getElementById("contentArea").classList.remove("hidden");
+        document.getElementById("issueArea").classList.add("hidden");
+        renderContent();
       }
     };
 
     // सामग्री स्क्रीन पर दिखाना
-    function renderPosts() {
-      const box = document.getElementById("postsContainer");
-      if (!box) return;
+    function renderContent() {
+      const container = document.getElementById("contentArea");
+      if (!container) return;
 
-      const filtered = allPosts.filter(p => p.classGrade === activeClass || p.classGrade === "सभी कक्षाओं के लिए");
+      const filtered = allPostsData.filter(item => {
+        const matchesCategory = item.category === currentTab;
+        const matchesClass = (savedRole === 'teacher') || (item.classGrade === savedClass || item.classGrade === "सभी कक्षाओं के लिए");
+        return matchesCategory && matchesClass;
+      });
 
       if (filtered.length === 0) {
-        box.innerHTML = `<p style="text-align:center; padding:20px; color:#6b7280;">कक्षा ${activeClass} के लिए अभी कोई सामग्री नहीं है।</p>`;
-        return;
-      }
-
-      box.innerHTML = "";
-      filtered.forEach(p => {
-        let ttHTML = "";
-        if (p.timetable && p.timetable.length > 0) {
-          ttHTML = `<div class="table-wrap"><table><tr><th>क्र.</th><th>समय</th><th>विषय</th><th>शिक्षक</th></tr>
-            ${p.timetable.map(t => `<tr><td>${t.period}</td><td>${t.time}</td><td>${t.sub}</td><td>${t.teacher}</td></tr>`).join('')}
-          </table></div>`;
-        }
-
-        let fileHTML = "";
-        if (p.fileData) {
-          if (p.fileType === "pdf") {
-            fileHTML = `<a href="${p.fileData}" download="school.pdf" style="display:inline-block; margin-top:8px; padding:6px 12px; background:#dc2626; color:white; border-radius:6px; text-decoration:none; font-size:0.85rem;">📄 PDF डाउनलोड करें</a>`;
-          } else {
-            fileHTML = `<img src="${p.fileData}" alt="तस्वीर">`;
-          }
-        }
-
-        const div = document.createElement("div");
-        div.className = "item-card";
-        div.innerHTML = `
-          <span class="tag">${p.category} | ${p.classGrade}</span>
-          <h3>${p.title}</h3>
-          ${p.description ? `<p>${p.description}</p>` : ""}
-          ${ttHTML}
-          ${fileHTML}
-          <div style="font-size:0.75rem; color:#9ca3af; margin-top:6px;">${p.date || ""}</div>
+        container.innerHTML = `
+          <div style="text-align:center; padding:50px 10px; color:var(--muted);">
+            <div style="font-size:2rem; margin-bottom:8px;">📂</div>
+            <p>यहाँ अभी कोई ${currentTab} उपलब्ध नहीं है।</p>
+          </div>
         `;
-        box.appendChild(div);
-      });
-    }
-
-    // छात्र संदेश भेजना
-    window.sendFeedback = async function() {
-      const name = document.getElementById("fbName").value.trim() || "गुमनाम";
-      const text = document.getElementById("fbText").value.trim();
-      if (!text) {
-        alert("कृपया अपनी बात लिखें!");
         return;
       }
-      try {
-        await addDoc(collection(db, "student_feedbacks"), {
-          studentName: name,
-          classGrade: activeClass,
-          message: text,
-          createdAt: serverTimestamp()
-        });
-        alert("संदेश शिक्षक तक पहुँच गया!");
-        document.getElementById("fbText").value = "";
-      } catch (err) {
-        alert("त्रुटि: " + err.message);
-      }
-    };
 
-    // रीयलटाइम डेटाबेस लिसनर
-    const qPosts = query(collection(db, "school_data"), orderBy("createdAt", "desc"));
-    onSnapshot(qPosts, snap => {
-      allPosts = [];
-      snap.forEach(d => {
-        const data = d.data();
-        let dt = "";
-        if (data.createdAt && data.createdAt.toDate) {
-          dt = data.createdAt.toDate().toLocaleDateString("hi-IN", { day: 'numeric', month: 'short' });
-        }
-        allPosts.push({ id: d.id, ...data, date: dt });
-      });
-      if (activeClass) renderPosts();
-    });
-
-    const qFb = query(collection(db, "student_feedbacks"), orderBy("createdAt", "desc"));
-    onSnapshot(qFb, snap => {
-      const fbBox = document.getElementById("feedbacksContainer");
-      if (!fbBox) return;
-      if (snap.empty) {
-        fbBox.innerHTML = "<p style='color:#6b7280;'>कोई संदेश नहीं है।</p>";
-        return;
-      }
-      fbBox.innerHTML = "";
-      snap.forEach(d => {
-        const f = d.data();
+      container.innerHTML = "";
+      filtered.forEach(item => {
         const card = document.createElement("div");
-        card.style = "background:#f9fafb; padding:10px; border-radius:8px; margin-bottom:8px; border:1px solid #e5e7eb;";
-        card.innerHTML = `
-          <div style="font-size:0.8rem; font-weight:bold; color:#1a73e8;">कक्षा: ${f.classGrade} | प्रेषक: ${f.studentName}</div>
-          <p style="font-size:0.9rem; margin-top:4px;">${f.message}</p>
-        `;
-        fbBox.appendChild(card);
-      });
-    });
+        card.className = "card";
 
-    // अगर पहले से क्लास चुनी है तो सीधे स्टूडेंट पोर्टल खोलें
-    if (activeClass) {
-      document.getElementById("displayStudentClass").innerText = activeClass;
-      window.goToStep('studentPortal');
-    } else {
-      window.goToStep('role');
-    }
-  </script>
-</body>
-        </html>
-        
+        let deleteBtn = "";
+        if (savedRole === 'teacher') {
+          deleteBtn = `<button type="button" class="del-btn" onclick="deleteSch
