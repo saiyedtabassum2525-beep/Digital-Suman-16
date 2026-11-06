@@ -1,323 +1,510 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Digital Suman 16</title>
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0b1120">
+  <title>Digital Suman 16 - School Portal</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    :root {
+      --primary: #1e3a8a;
+      --secondary: #0284c7;
+      --accent: #f59e0b;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --danger: #ef4444;
+      --success: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
     body {
-      background-color: #0b1120;
-      color: #f1f5f9;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 60px;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 20px 16px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    header p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
       padding: 16px;
     }
-    .container { max-width: 440px; margin: 0 auto; width: 100%; }
-    
-    .security-badge {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      color: #34d399;
+
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .btn {
+      display: inline-block;
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.2s;
+    }
+
+    .btn:active {
+      opacity: 0.9;
+    }
+
+    .btn-secondary {
+      background: var(--secondary);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+    }
+
+    /* Class Selection Grid */
+    .class-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .class-card {
+      background: #eff6ff;
+      border: 2px solid #bfdbfe;
+      padding: 16px;
+      border-radius: 10px;
+      text-align: center;
       font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--primary);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .class-card:active {
+      background: var(--secondary);
+      color: white;
+      transform: scale(0.98);
+    }
+
+    .warning-box {
+      background: #fffbeb;
+      border-left: 4px solid var(--accent);
+      padding: 12px;
+      margin-bottom: 16px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      color: #92400e;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 10px;
+      background: #e2e8f0;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--muted);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .post-item {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
       margin-bottom: 12px;
     }
 
-    header { text-align: center; margin-bottom: 20px; }
-    header h1 { font-size: 24px; font-weight: 800; color: #ffffff; }
-    header p { font-size: 13px; color: #94a3b8; margin-top: 4px; }
-
-    .card-box {
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 20px;
-      padding: 20px;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    .post-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
     }
 
-    .choice-btn {
+    .post-title {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .post-meta {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    input, textarea, select {
       width: 100%;
-      text-align: left;
-      border: 1px solid #334155;
-      border-radius: 14px;
-      padding: 16px;
+      padding: 10px;
+      margin-bottom: 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .footer-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
       display: flex;
-      align-items: center;
-      gap: 14px;
-      cursor: pointer;
-      margin-bottom: 14px;
-      color: #ffffff;
-      transition: all 0.2s;
+      border-top: 1px solid var(--border);
+      z-index: 100;
     }
-    .choice-btn.red { border-color: rgba(244, 63, 94, 0.4); background: linear-gradient(to right, #4c0519, #0f172a); }
-    .choice-btn.green { border-color: rgba(16, 185, 129, 0.4); background: linear-gradient(to right, #022c22, #0f172a); }
-    .choice-btn:active { transform: scale(0.98); }
-    .choice-icon { font-size: 28px; }
-    .choice-text h3 { font-size: 15px; font-weight: 700; }
-    .choice-text p { font-size: 12px; color: #94a3b8; margin-top: 3px; }
 
-    /* Warning Notice Box */
-    .warning-box {
-      background: #18181b;
-      border: 1px solid #ef4444;
-      border-left: 4px solid #ef4444;
-      padding: 12px 14px;
-      border-radius: 10px;
-      margin-top: 16px;
-      font-size: 12px;
-      color: #fca5a5;
-      line-height: 1.5;
-    }
-    .warning-box strong { color: #ffffff; display: block; margin-bottom: 3px; font-size: 13px; }
-
-    .form-group { margin-bottom: 14px; }
-    label { display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px; }
-    input, select, textarea {
-      width: 100%;
-      background: #0f172a;
-      border: 1px solid #334155;
-      border-radius: 10px;
+    .footer-bar button {
+      flex: 1;
       padding: 12px;
-      color: #ffffff;
-      font-size: 14px;
-      outline: none;
-      font-family: inherit;
-    }
-    input:focus, select:focus, textarea:focus { border-color: #38bdf8; }
-    textarea { resize: none; height: 110px; }
-
-    .submit-btn {
-      width: 100%;
-      background: #2563eb;
-      color: #ffffff;
       border: none;
-      border-radius: 10px;
-      padding: 14px;
-      font-size: 14px;
-      font-weight: 700;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 600;
       cursor: pointer;
-      margin-top: 8px;
-    }
-    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-
-    .back-btn {
-      background: #0f172a;
-      border: 1px solid #334155;
-      color: #94a3b8;
-      padding: 8px 14px;
-      border-radius: 8px;
-      font-size: 12px;
-      cursor: pointer;
-      margin-bottom: 14px;
-      display: inline-block;
     }
 
-    .hidden { display: none !important; }
-    footer { text-align: center; font-size: 11px; color: #64748b; margin-top: 24px; }
+    .footer-bar button.active {
+      color: var(--primary);
+    }
   </style>
 </head>
 <body>
 
+  <header>
+    <h1>डिजिटल सुमन 16</h1>
+    <p>उर्दू सुमन हाई स्कूल नं. 16, सूरत</p>
+  </header>
+
   <div class="container">
-    <div class="security-badge">
-      <span>🔒 100% Anonymous & Secure</span>
+
+    <!-- 1. पहली बार क्लास चुनने वाली स्क्रीन (Locked Screen) -->
+    <div id="screen-select-class" class="card">
+      <h2>अपनी कक्षा चुनें</h2>
+      <div class="warning-box">
+        <strong>⚠️ ध्यान दें:</strong> एक बार अपनी क्लास चुनने के बाद आप इसे दोबारा बदल नहीं सकेंगे। कृपया ध्यानपूर्वक अपनी ही कक्षा चुनें।
+      </div>
+      <div class="class-grid">
+        <div class="class-card" onclick="lockAndSelectClass('कक्षा 9 - A')">9 - A</div>
+        <div class="class-card" onclick="lockAndSelectClass('कक्षा 9 - B')">9 - B</div>
+        <div class="class-card" onclick="lockAndSelectClass('कक्षा 9 - C')">9 - C</div>
+        <div class="class-card" onclick="lockAndSelectClass('कक्षा 10 - A')">10 - A</div>
+        <div class="class-card" onclick="lockAndSelectClass('कक्षा 10 - B')">10 - B</div>
+        <div class="class-card" onclick="lockAndSelectClass('कक्षा 11वीं')">11वीं</div>
+        <div class="class-card" onclick="lockAndSelectClass('कक्षा 12वीं')">12वीं</div>
+      </div>
     </div>
 
-    <header>
-      <h1>Digital Suman 16</h1>
-      <p>Speak Up Fearlessly • Improve Our School</p>
-    </header>
+    <!-- 2. क्लास लॉक होने के बाद छात्र का मुख्य डैशबोर्ड -->
+    <div id="screen-student-dashboard" class="hidden">
+      
+      <!-- स्कूल हेड नोटिस बोर्ड -->
+      <div class="card" style="border-left: 4px solid var(--primary);">
+        <span class="badge" style="background: #fee2e2; color: #b91c1c;">📢 मुख्य स्कूल सूचना</span>
+        <h3 id="school-notice-title">दीपावली अवकाश एवं द्वितीय सत्र सूचना</h3>
+        <p style="font-size: 0.85rem; color: var(--muted); margin-top: 4px;" id="school-notice-body">
+          स्कूल से संबंधित आधिकारिक सूचनाएँ एवं आदेश यहाँ तुरंत अपडेट किए जाते हैं।
+        </p>
+      </div>
 
-    <main class="card-box">
-
-      <!-- Screen 1: Options -->
-      <div id="choiceScreen">
-        <button type="button" onclick="openForm('Grievance')" class="choice-btn red">
-          <span class="choice-icon">⚠️</span>
-          <div class="choice-text">
-            <h3>Report Grievance / Complaint</h3>
-            <p>Bullying, harassment, or facility issues</p>
+      <!-- स्टूडेंट क्लास हेडर -->
+      <div class="card" style="background: #f0fdf4; border-color: #bbf7d0;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <span class="badge" style="background: #dcfce7; color: #15803d;">लॉक्ड कक्षा</span>
+            <h2 id="student-assigned-class" style="color: #166534;">-</h2>
           </div>
-        </button>
-
-        <button type="button" onclick="openForm('Suggestion')" class="choice-btn green">
-          <span class="choice-icon">💡</span>
-          <div class="choice-text">
-            <h3>Submit a Suggestion / Idea</h3>
-            <p>Ideas for sports, library, labs, or school events</p>
-          </div>
-        </button>
-
-        <!-- Warning / Strict Rules Notice -->
-        <div class="warning-box">
-          <strong>⚠️ Strict Warning:</strong>
-          Submit only genuine issues or meaningful ideas. Fake submissions, pranks, abusive language, or inappropriate content are strictly prohibited.
+          <span style="font-size: 1.5rem;">🔒</span>
         </div>
       </div>
 
-      <!-- Screen 2: Form -->
-      <div id="formScreen" class="hidden">
-        <button type="button" onclick="goBack()" class="back-btn">← Back to Options</button>
-
-        <form id="submissionForm" onsubmit="submitData(event)">
-          <input type="hidden" id="entryType" value="Grievance">
-
-          <div class="form-group">
-            <label id="lblCategory">Select Category *</label>
-            <select id="selCategory" required></select>
-          </div>
-
-          <div class="form-group">
-            <label>Select Your Class *</label>
-            <select id="selClass" required>
-              <option value="">-- Choose Class --</option>
-              <option value="Class 9th A">Class 9th A</option>
-              <option value="Class 9th B">Class 9th B</option>
-              <option value="Class 9th C">Class 9th C</option>
-              <option value="Class 10th A">Class 10th A</option>
-              <option value="Class 10th B">Class 10th B</option>
-              <option value="Class 11th">Class 11th</option>
-              <option value="Class 12th">Class 12th</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label>Priority Level</label>
-            <select id="selPriority">
-              <option value="Normal">🟢 Normal (General Issue)</option>
-              <option value="Urgent">🟡 Urgent (Needs Quick Action)</option>
-              <option value="Emergency">🔴 Emergency (Severe / Critical)</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label id="lblDescription">Description *</label>
-            <textarea id="txtDescription" required placeholder="Write full details here..."></textarea>
-          </div>
-
-          <button type="submit" id="btnSubmit" class="submit-btn">Submit Securely</button>
-        </form>
+      <!-- सब-टैब्स -->
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchStudentTab('homework')">📚 आज का होमवर्क</button>
+        <button class="tab-btn" onclick="switchStudentTab('syllabus')">🎯 मासिक सिलेबस</button>
+        <button class="tab-btn" onclick="switchStudentTab('teachers')">👨‍🏫 शिक्षक विवरण</button>
       </div>
 
-      <!-- Screen 3: Success Confirmation -->
-      <div id="successBox" class="hidden" style="text-align: center; padding: 20px 0;">
-        <span style="font-size: 45px;">✅</span>
-        <h3 style="font-size: 18px; margin: 10px 0; color: #34d399;">Submitted Successfully!</h3>
-        <p style="font-size: 13px; color: #94a3b8; margin-bottom: 16px;">Your response has been sent securely to school administration.</p>
-        <div style="background: #0f172a; padding: 12px; border-radius: 8px; display: inline-block;">
-          <span style="font-size: 11px; color: #94a3b8; display: block;">Tracking Token:</span>
-          <span id="trackingToken" style="color: #38bdf8; font-weight: 700; font-family: monospace; font-size: 14px;"></span>
+      <!-- टैब 1: होमवर्क -->
+      <div id="tab-homework" class="card">
+        <h3>आज का गृहकार्य एवं नोट्स</h3>
+        <div id="homework-list" style="margin-top: 12px;">
+          <div class="post-item">
+            <span class="badge">उर्दू</span>
+            <div class="post-title">सबक नंबर 8 के सवाल-जवाब पूरे करें</div>
+            <div class="post-meta">आज • सर द्वारा पोस्ट किया गया</div>
+            <p style="font-size: 0.9rem;">किताब के पेज 42 से 44 तक के सभी मश्की सवालात अपनी कॉपी में लिखकर लाएँ।</p>
+          </div>
         </div>
-        <button type="button" onclick="resetForm()" class="back-btn" style="margin-top: 20px; display: block; margin-left: auto; margin-right: auto;">Back to Home</button>
       </div>
 
-    </main>
+      <!-- टैब 2: सिलेबस -->
+      <div id="tab-syllabus" class="card hidden">
+        <h3>नवंबर - मासिक टारगेट (Syllabus)</h3>
+        <ul style="padding-left: 20px; font-size: 0.9rem; margin-top: 8px;">
+          <li><strong>उर्दू:</strong> नज़्म 4 और सबक 6 पूरा करना है।</li>
+          <li><strong>गणित:</strong> अध्याय 5 (समान्तर श्रेढ़ी) का रिवीजन।</li>
+          <li><strong>विज्ञान:</strong> अध्याय 8 (जीव जनन कैसे करते हैं)।</li>
+        </ul>
+      </div>
 
-    <footer>
-      Digital Suman 16 • Urdu Suman High School No. 16
-    </footer>
+      <!-- टैब 3: शिक्षक विवरण -->
+      <div id="tab-teachers" class="card hidden">
+        <h3>विषय शिक्षक सूची</h3>
+        <div style="font-size: 0.9rem; margin-top: 8px;">
+          <p><strong>क्लास टीचर:</strong> क्लास इंचार्ज सर</p>
+          <p><strong>गणित / विज्ञान:</strong> संबंधित विषय शिक्षक</p>
+          <p><strong>भाषा:</strong> उर्दू / गुजराती / अंग्रेज़ी शिक्षक</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 3. सीक्रेट कंप्लेंट / ग्रीवेंस बॉक्स (सुमन 16 बॉक्स) -->
+    <div id="screen-complaint-box" class="card hidden">
+      <h2>🔒 सुमन 16 - गोपनीय शिकायत बॉक्स</h2>
+      <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 12px;">
+        यह 100% गोपनीय है। आपका नाम किसी को नहीं बताया जाएगा। बेझिझक अपनी समस्या या सुझाव भेजें।
+      </p>
+      <input type="text" placeholder="समस्या का विषय (उदा: क्लासरूम, लाइब्रेरी, लाइट)" id="comp-subject">
+      <textarea rows="4" placeholder="अपनी बात या परेशानी यहाँ विस्तार से लिखें..." id="comp-message"></textarea>
+      <button class="btn btn-secondary" onclick="submitAnonymousComplaint()">गोपनीय रूप से सबमिट करें</button>
+    </div>
+
+    <!-- 4. शिक्षक पिन पोर्टल -->
+    <div id="screen-teacher-portal" class="card hidden">
+      <h2>👨‍🏫 शिक्षक लॉगिन</h2>
+      <div id="teacher-auth">
+        <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 8px;">कंटेंट पोस्ट करने के लिए 4 अंकों का गुप्त पिन दर्ज करें:</p>
+        <input type="password" id="teacher-pin" maxlength="4" placeholder="गुप्त पिन (1234)">
+        <button class="btn" onclick="verifyTeacherPin()">लॉगिन करें</button>
+      </div>
+
+      <div id="teacher-panel" class="hidden">
+        <h3 style="margin-top: 12px;">नया होमवर्क / नोटिस पोस्ट करें</h3>
+        <select id="post-target-class" style="margin-top: 8px;">
+          <option value="कक्षा 9 - A">कक्षा 9 - A</option>
+          <option value="कक्षा 9 - B">कक्षा 9 - B</option>
+          <option value="कक्षा 9 - C">कक्षा 9 - C</option>
+          <option value="कक्षा 10 - A">कक्षा 10 - A</option>
+          <option value="कक्षा 10 - B">कक्षा 10 - B</option>
+          <option value="कक्षा 11वीं">कक्षा 11वीं</option>
+          <option value="कक्षा 12वीं">कक्षा 12वीं</option>
+        </select>
+        <input type="text" id="post-subject" placeholder="विषय (उदा: गणित, उर्दू, विज्ञान)">
+        <textarea id="post-text" rows="3" placeholder="होमवर्क या सूचना का पूरा विवरण..."></textarea>
+        <button class="btn" onclick="publishClassPost()">तुरंत प्रकाशित करें</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- बॉटम नेविगेशन -->
+  <div class="footer-bar">
+    <button id="nav-dash" class="active" onclick="switchNav('dash')">🏠 मेरी क्लास</button>
+    <button id="nav-box" onclick="switchNav('box')">🔒 गुप्त बॉक्स</button>
+    <button id="nav-teach" onclick="switchNav('teach')">👨‍🏫 शिक्षक</button>
   </div>
 
   <script>
-    function openForm(type) {
-      document.getElementById('entryType').value = type;
-      document.getElementById('choiceScreen').classList.add('hidden');
-      document.getElementById('formScreen').classList.remove('hidden');
+    const TEACHER_PIN = "1234"; // शिक्षकों का डिफ़ॉल्ट सीक्रेट पिन
 
-      const cat = document.getElementById('selCategory');
-      const descLabel = document.getElementById('lblDescription');
-
-      if (type === 'Grievance') {
-        descLabel.innerText = "Describe Your Grievance / Problem *";
-        cat.innerHTML = `
-          <option value="Bullying / Harassment">Bullying / Harassment / Fighting</option>
-          <option value="Studies / Teachers">Classroom / Studies Related</option>
-          <option value="School Facilities">School Facilities (Water, Washroom, Cleanliness)</option>
-          <option value="Other Issue">Other Issue</option>
-        `;
+    // पेज लोड होने पर चेक करें कि क्लास पहले से लॉक है या नहीं
+    window.onload = function() {
+      const savedClass = localStorage.getItem("suman16_locked_class");
+      if (savedClass) {
+        showStudentDashboard(savedClass);
       } else {
-        descLabel.innerText = "Describe Your Suggestion / Idea *";
-        cat.innerHTML = `
-          <option value="School Improvement">General School Improvement</option>
-          <option value="Sports & Activities">Sports & Extracurricular Activities</option>
-          <option value="Library & Labs">Library, Computer Lab or Science Lab</option>
-          <option value="Appreciation">Appreciation & Thank You Note</option>
-          <option value="Other Idea">Other Idea</option>
-        `;
+        document.getElementById("screen-select-class").classList.remove("hidden");
+        document.getElementById("screen-student-dashboard").classList.add("hidden");
+      }
+    };
+
+    // क्लास चुनकर हमेशा के लिए लॉक करना
+    function lockAndSelectClass(className) {
+      if (confirm("क्या आप वाकई " + className + " को चुनना चाहते हैं? इसके बाद आप इसे बदल नहीं सकेंगे।")) {
+        localStorage.setItem("suman16_locked_class", className);
+        showStudentDashboard(className);
       }
     }
 
-    function goBack() {
-      document.getElementById('formScreen').classList.add('hidden');
-      document.getElementById('choiceScreen').classList.remove('hidden');
+    function showStudentDashboard(className) {
+      document.getElementById("screen-select-class").classList.add("hidden");
+      document.getElementById("screen-student-dashboard").classList.remove("hidden");
+      document.getElementById("student-assigned-class").innerText = className;
+      loadSavedPosts(className);
     }
 
-    function resetForm() {
-      document.getElementById('submissionForm').reset();
-      document.getElementById('btnSubmit').innerText = "Submit Securely";
-      document.getElementById('btnSubmit').disabled = false;
-      document.getElementById('successBox').classList.add('hidden');
-      document.getElementById('choiceScreen').classList.remove('hidden');
+    // स्टूडेंट टैब स्विचिंग
+    function switchStudentTab(tabName) {
+      document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+      event.target.classList.add("active");
+
+      document.getElementById("tab-homework").classList.add("hidden");
+      document.getElementById("tab-syllabus").classList.add("hidden");
+      document.getElementById("tab-teachers").classList.add("hidden");
+
+      document.getElementById("tab-" + tabName).classList.remove("hidden");
     }
 
-    async function submitData(e) {
-      e.preventDefault();
-      const btn = document.getElementById('btnSubmit');
-      btn.innerText = "Submitting...";
-      btn.disabled = true;
+    // बॉटम नेविगेशन
+    function switchNav(nav) {
+      document.querySelectorAll(".footer-bar button").forEach(b => b.classList.remove("active"));
+      document.getElementById("screen-complaint-box").classList.add("hidden");
+      document.getElementById("screen-teacher-portal").classList.add("hidden");
 
-      const randomToken = 'SMN-' + Math.floor(1000 + Math.random() * 9000);
+      const savedClass = localStorage.getItem("suman16_locked_class");
 
-      const data = {
-        tracking_id: randomToken,
-        submission_type: document.getElementById('entryType').value,
-        category: document.getElementById('selCategory').value,
-        class_section: document.getElementById('selClass').value,
-        priority: document.getElementById('selPriority').value,
-        description: document.getElementById('txtDescription').value
-      };
-
-      try {
-        const res = await fetch("https://formspree.io/f/mvkzvqza", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", "Accept": "application/json" },
-          body: JSON.stringify(data)
-        });
-
-        if (res.ok) {
-          document.getElementById('formScreen').classList.add('hidden');
-          document.getElementById('trackingToken').innerText = randomToken;
-          document.getElementById('successBox').classList.remove('hidden');
+      if (nav === 'dash') {
+        document.getElementById("nav-dash").classList.add("active");
+        if (savedClass) {
+          document.getElementById("screen-student-dashboard").classList.remove("hidden");
         } else {
-          alert("Submission failed. Please try again.");
-          btn.innerText = "Submit Securely";
-          btn.disabled = false;
+          document.getElementById("screen-select-class").classList.remove("hidden");
         }
-            } catch (err) {
-        alert("Internet connection error. Please check your data.");
-        btn.innerText = "Submit Securely";
-        btn.disabled = false;
+      } else if (nav === 'box') {
+        document.getElementById("nav-box").classList.add("active");
+        document.getElementById("screen-student-dashboard").classList.add("hidden");
+        document.getElementById("screen-select-class").classList.add("hidden");
+        document.getElementById("screen-complaint-box").classList.remove("hidden");
+      } else if (nav === 'teach') {
+        document.getElementById("nav-teach").classList.add("active");
+        document.getElementById("screen-student-dashboard").classList.add("hidden");
+        document.getElementById("screen-select-class").classList.add("hidden");
+        document.getElementById("screen-teacher-portal").classList.remove("hidden");
       }
     }
 
-    // Register Service Worker for GitHub Pages PWA
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/Digital-Suman-16/sw.js', { scope: '/Digital-Suman-16/' })
-          .then((reg) => console.log('SW Registered!', reg))
-          .catch((err) => console.log('SW Error:', err));
-      });
+    // गुप्त शिकायत भेजना
+    function submitAnonymousComplaint() {
+      const sub = document.getElementById("comp-subject").value;
+      const msg = document.getElementById("comp-message").value;
+      if (!sub || !msg) {
+        alert("कृपया विषय और संदेश दोनों लिखें।");
+        return;
+      }
+      alert("आपकी बात स्कूल प्रशासन को पूरी तरह से गोपनीय रूप से पहुँचा दी गई है। धन्यवाद!");
+      document.getElementById("comp-subject").value = "";
+      document.getElementById("comp-message").value = "";
+      switchNav('dash');
+    }
+
+    // शिक्षक पिन वेरिफाई करना
+    function verifyTeacherPin() {
+      const pin = document.getElementById("teacher-pin").value;
+      if (pin === TEACHER_PIN) {
+        document.getElementById("teacher-auth").classList.add("hidden");
+        document.getElementById("teacher-panel").classList.remove("hidden");
+      } else {
+        alert("गलत पिन! कृपया सही 4 अंकों का शिक्षक पिन दर्ज करें।");
+      }
+    }
+
+    // शिक्षक द्वारा पोस्ट करना
+    function publishClassPost() {
+      const targetClass = document.getElementById("post-target-class").value;
+      const subject = document.getElementById("post-subject").value;
+      const text = document.getElementById("post-text").value;
+
+      if (!subject || !text) {
+        alert("कृपया विषय और विवरण दोनों भरें।");
+        return;
+      }
+
+      const postObj = { targetClass, subject, text, date: "आज" };
+      let posts = JSON.parse(localStorage.getItem("suman16_posts") || "[]");
+      posts.unshift(postObj);
+      localStorage.setItem("suman16_posts", JSON.stringify(posts));
+
+      alert(targetClass + " के लिए होमवर्क सफलतापूर्वक पोस्ट हो गया!");
+      document.getElementById("post-subject").value = "";
+      document.getElementById("post-text").value = "";
+      switchNav('dash');
+    }
+
+    // क्लास के हिसाब से होमवर्क लोड करना
+    function loadSavedPosts(currentClass) {
+      const posts = JSON.parse(localStorage.getItem("suman16_posts") || "[]");
+      const list = document.getElementById("homework-list");
+      const filtered = posts.filter(p => p.targetClass === currentClass);
+
+      if (filtered.length > 0) {
+        list.innerHTML = "";
+        filtered.forEach(p => {
+          list.innerHTML += `
+            <div class="post-item">
+              <span class="badge">${p.subject}</span>
+              <div class="post-title">${p.text}</div>
+              <div class="post-meta">${p.date} • शिक्षक द्वारा पोस्ट</div>
+            </div>
+          `;
+        });
+      }
     }
   </script>
 </body>
-</html>
-
-          
+  </html>
+  
