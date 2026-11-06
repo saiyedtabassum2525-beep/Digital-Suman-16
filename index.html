@@ -3,663 +3,260 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>डिजिटल सुमन 16 - ई-विद्या पोर्टल</title>
+  <title>डिजिटल सुमन 16</title>
   <style>
-    :root {
-      --primary: #1a73e8;
-      --primary-dark: #0d47a1;
-      --bg: #f0f4f9;
-      --card-bg: #ffffff;
-      --text: #1f2937;
-      --text-muted: #6b7280;
-    }
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
     body {
-      background-color: var(--bg);
-      color: var(--text);
-      padding-bottom: 90px;
+      background-color: #f3f4f6;
+      color: #1f2937;
+      padding: 14px;
     }
     header {
-      background: linear-gradient(135deg, #1a73e8, #0d47a1);
+      background: #1a73e8;
       color: white;
       text-align: center;
-      padding: 20px 16px;
-      border-radius: 0 0 20px 20px;
-      box-shadow: 0 4px 12px rgba(26,115,232,0.25);
-    }
-    header h1 {
-      font-size: 1.45rem;
-      font-weight: 700;
-    }
-    header p {
-      font-size: 0.85rem;
-      opacity: 0.9;
-      margin-top: 4px;
-    }
-
-    .container {
-      max-width: 650px;
-      margin: 0 auto;
       padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 16px;
     }
+    header h1 { font-size: 1.35rem; }
+    header p { font-size: 0.85rem; opacity: 0.9; }
 
-    /* पहली बार कक्षा चुनने का बॉक्स */
-    .class-selection-box {
+    .box {
       background: white;
-      padding: 16px;
+      padding: 20px;
       border-radius: 12px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
       margin-bottom: 16px;
+    }
+    .box h2 {
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+      color: #1a73e8;
       text-align: center;
     }
-    .class-selection-box h3 {
-      font-size: 1rem;
-      color: var(--primary-dark);
-      margin-bottom: 6px;
-    }
-    .class-selection-box p {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-    }
-    .class-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      justify-content: center;
-    }
-    .pill {
-      padding: 10px 18px;
-      background: #f3f4f6;
-      border: 1.5px solid #d1d5db;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--text);
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .pill:active {
-      transform: scale(0.95);
-      background: #e5e7eb;
-    }
 
-    /* लॉक होने के बाद बार */
-    .locked-class-bar {
-      display: none;
-      justify-content: space-between;
-      align-items: center;
-      background: white;
-      padding: 12px 16px;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      margin-bottom: 16px;
-      border-left: 4px solid var(--primary);
-    }
-    .locked-class-info {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-    .reset-class-btn {
-      background: #eef3fc;
-      border: 1px solid var(--primary);
-      color: var(--primary);
-      padding: 5px 12px;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      font-weight: 600;
+    /* बटन और इनपुट */
+    .btn {
+      width: 100%;
+      padding: 13px;
+      background: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
       cursor: pointer;
+      margin-top: 10px;
     }
+    .btn-secondary {
+      background: #4b5563;
+    }
+    .btn-outline {
+      background: white;
+      color: #1a73e8;
+      border: 1.5px solid #1a73e8;
+      padding: 8px 12px;
+      font-size: 0.85rem;
+      width: auto;
+      margin-top: 0;
+    }
+    .btn:active {
+      transform: scale(0.98);
+    }
+    select, input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-top: 6px;
+      margin-bottom: 12px;
+      background: white;
+    }
+    textarea { height: 80px; resize: vertical; }
 
     /* सामग्री कार्ड */
     .item-card {
-      background: var(--card-bg);
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      border-left: 5px solid var(--primary);
-      position: relative;
-    }
-    .badge-wrapper {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
+      background: white;
+      border-left: 5px solid #1a73e8;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
     .tag {
       font-size: 0.72rem;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 12px;
-      text-transform: uppercase;
-    }
-    .tag-homework { background: #e8f0fe; color: #1a73e8; }
-    .tag-syllabus { background: #e6f4ea; color: #137333; }
-    .tag-timetable { background: #fef7e0; color: #b06000; }
-    .tag-notice { background: #fce8e6; color: #c5221f; }
-
-    .item-card h3 {
-      font-size: 1.15rem;
-      color: #111827;
-      margin-bottom: 6px;
-    }
-    .item-card p {
-      font-size: 0.94rem;
-      color: #4b5563;
-      line-height: 1.45;
-      white-space: pre-wrap;
-    }
-    .item-card img {
-      width: 100%;
-      border-radius: 10px;
-      margin-top: 10px;
-      object-fit: cover;
-    }
-    .pdf-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 10px;
-      padding: 9px 16px;
-      background: #dc2626;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-
-    .timetable-table-wrap {
-      margin-top: 12px;
-      overflow-x: auto;
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
-    }
-    .timetable-table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 0.88rem;
-    }
-    .timetable-table th {
-      background-color: #f8fafc;
-      color: #374151;
-      padding: 10px;
-      border-bottom: 2px solid #e2e8f0;
-      font-weight: 700;
-    }
-    .timetable-table td {
-      padding: 10px;
-      border-bottom: 1px solid #e2e8f0;
-      color: #4b5563;
-    }
-    .timetable-table tr:last-child td {
-      border-bottom: none;
-    }
-
-    .card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 12px;
-      padding-top: 8px;
-      border-top: 1px solid #f3f4f6;
-    }
-    .timestamp {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-    .delete-action {
-      background: #fee2e2;
-      color: #dc2626;
-      border: none;
-      padding: 5px 12px;
-      border-radius: 6px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    /* छात्र समस्या बॉक्स */
-    .issue-box-wrapper {
-      background: white;
-      border-radius: 14px;
-      padding: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
-    .issue-box-wrapper h2 {
-      font-size: 1.2rem;
-      color: var(--primary-dark);
-      margin-bottom: 6px;
-    }
-    .issue-box-wrapper p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-      line-height: 1.4;
-    }
-
-    /* शिक्षक समस्या कार्ड */
-    .feedback-card {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-left: 4px solid #f59e0b;
-      padding: 14px;
-      border-radius: 8px;
-      margin-bottom: 12px;
-    }
-    .feedback-meta {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-
-    /* बॉटम नेविगेशन */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: white;
-      display: flex;
-      border-top: 1px solid #e5e7eb;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.06);
-      z-index: 100;
-    }
-    .nav-item {
-      flex: 1;
-      text-align: center;
-      padding: 8px 0;
-      font-size: 0.68rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-    }
-    .nav-item.active {
-      color: var(--primary);
-    }
-    .nav-icon {
-      font-size: 1.25rem;
-    }
-
-    /* शिक्षक बटन */
-    .teacher-fab {
-      position: fixed;
-      bottom: 74px;
-      right: 18px;
-      background: #111827;
-      color: white;
-      padding: 12px 18px;
-      border-radius: 30px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.88rem;
-      font-weight: 700;
-      border: none;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
-      cursor: pointer;
-      z-index: 99;
-    }
-
-    /* शिक्षक मोडल */
-    .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.6);
-      display: none;
-      justify-content: center;
-      align-items: flex-end;
-      z-index: 200;
-    }
-    .modal-overlay.open {
-      display: flex !important;
-    }
-    .modal-content {
-      background: white;
-      width: 100%;
-      max-width: 650px;
-      max-height: 88vh;
-      overflow-y: auto;
-      border-radius: 20px 20px 0 0;
-      padding: 20px;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
-    }
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-    .modal-header h2 {
-      font-size: 1.2rem;
-      color: #111827;
-    }
-    .close-btn {
-      background: #f3f4f6;
-      border: none;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      font-size: 1.1rem;
       font-weight: bold;
-      cursor: pointer;
-    }
-
-    /* शिक्षक टैब स्विच */
-    .teacher-tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-    .teacher-tab-btn {
-      flex: 1;
-      padding: 10px;
-      background: #f3f4f6;
-      border: none;
-      border-radius: 8px;
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      cursor: pointer;
-    }
-    .teacher-tab-btn.active {
-      background: var(--primary);
-      color: white;
-    }
-
-    .form-group {
-      margin-bottom: 12px;
-    }
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #374151;
-    }
-    input[type="text"], input[type="password"], textarea, select, input[type="file"] {
-      width: 100%;
-      padding: 10px;
-      border: 1.5px solid #d1d5db;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      background: white;
-    }
-    textarea {
-      resize: vertical;
-      height: 75px;
-    }
-    .action-btn {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      width: 100%;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 8px;
-    }
-
-    .tt-builder {
-      background: #f9fafb;
-      border: 1px dashed #cbd5e1;
-      padding: 12px;
-      border-radius: 8px;
-      margin-top: 8px;
-    }
-    .tt-row {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 8px;
-      align-items: center;
-    }
-    .tt-row input {
-      padding: 6px 8px;
-      font-size: 0.85rem;
-    }
-    .tt-period { width: 45px; text-align: center; }
-    .tt-time { width: 110px; }
-    .tt-sub { flex: 1; }
-    .tt-teacher { flex: 1; }
-    .tt-del {
-      background: #fee2e2;
-      color: #dc2626;
-      border: none;
-      padding: 6px 9px;
+      padding: 3px 8px;
       border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .add-row-btn {
+      display: inline-block;
+      margin-bottom: 6px;
       background: #e0e7ff;
       color: #3730a3;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 4px;
     }
+    .item-card h3 { font-size: 1.05rem; margin-bottom: 4px; }
+    .item-card p { font-size: 0.9rem; color: #4b5563; line-height: 1.4; white-space: pre-wrap; }
+    .item-card img { width: 100%; border-radius: 8px; margin-top: 8px; }
+    
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 8px;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th, td { padding: 8px; border-bottom: 1px solid #e5e7eb; text-align: left; }
+    th { background: #f8fafc; }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 10px 14px;
+      background: white;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
 
   <header>
     <h1>डिजिटल सुमन 16</h1>
-    <p>विद्यालय ई-लर्निंग एवं सूचना पोर्टल</p>
+    <p>विद्यालय ई-पोर्टल</p>
   </header>
 
-  <div class="container">
-    <!-- 1. पहली बार कक्षा चुनने का बॉक्स -->
-    <div class="class-selection-box" id="classSelectionBox">
-      <h3>कृपया अपनी कक्षा चुनें</h3>
-      <p>एक बार चुनने के बाद आपकी कक्षा सेट हो जाएगी</p>
-      <div class="class-grid">
-        <button type="button" class="pill" onclick="window.lockClass('9th A')">9th A</button>
-        <button type="button" class="pill" onclick="window.lockClass('9th B')">9th B</button>
-        <button type="button" class="pill" onclick="window.lockClass('9th C')">9th C</button>
-        <button type="button" class="pill" onclick="window.lockClass('10th A')">10th A</button>
-        <button type="button" class="pill" onclick="window.lockClass('10th B')">10th B</button>
-        <button type="button" class="pill" onclick="window.lockClass('11th')">11th</button>
-        <button type="button" class="pill" onclick="window.lockClass('12th')">12th</button>
-      </div>
+  <!-- 1. पहली स्क्रीन: स्टूडेंट या टीचर चुनें -->
+  <div class="box" id="stepRole">
+    <h2>आप कौन हैं?</h2>
+    <button type="button" class="btn" onclick="goToStep('studentClass')">👨‍🎓 मैं छात्र / पालक हूँ (Student)</button>
+    <button type="button" class="btn btn-secondary" onclick="goToStep('teacherLogin')">👩‍🏫 मैं शिक्षक हूँ (Teacher)</button>
+  </div>
+
+  <!-- 2. स्क्रीन (छात्र के लिए): क्लास सेलेक्ट करें -->
+  <div class="box hidden" id="stepStudentClass">
+    <h2>अपनी क्लास चुनें</h2>
+    <label>कक्षा चुनिए:</label>
+    <select id="studentClassSelect">
+      <option value="" disabled selected>-- यहाँ दबाकर क्लास चुनें --</option>
+      <option value="9th A">9th A</option>
+      <option value="9th B">9th B</option>
+      <option value="9th C">9th C</option>
+      <option value="10th A">10th A</option>
+      <option value="10th B">10th B</option>
+      <option value="11th">11th</option>
+      <option value="12th">12th</option>
+    </select>
+    <button type="button" class="btn" onclick="submitStudentClass()">पोर्टल खोलें</button>
+    <button type="button" class="btn btn-secondary" onclick="goToStep('role')">← वापस</button>
+  </div>
+
+  <!-- 3. स्क्रीन (शिक्षक के लिए): गुप्त पिन दर्ज करें -->
+  <div class="box hidden" id="stepTeacherLogin">
+    <h2>शिक्षक सत्यापन</h2>
+    <label>6 अंकों का गुप्त पिन दर्ज करें:</label>
+    <input type="password" id="teacherPinInput" placeholder="पिन डालें" maxlength="6">
+    <button type="button" class="btn" onclick="verifyTeacherPin()">लॉगिन करें</button>
+    <button type="button" class="btn btn-secondary" onclick="goToStep('role')">← वापस</button>
+  </div>
+
+  <!-- 4. मुख्य छात्र पोर्टल (डेटा डिस्प्ले) -->
+  <div class="hidden" id="studentPortal">
+    <div class="top-bar">
+      <span>🎓 कक्षा: <span id="displayStudentClass" style="color:#1a73e8;"></span></span>
+      <button type="button" class="btn-outline" onclick="logout()">बदलें / बाहर निकलें</button>
     </div>
 
-    <!-- 2. कक्षा लॉक होने के बाद बार -->
-    <div class="locked-class-bar" id="lockedClassBar">
-      <div class="locked-class-info">
-        🎓 आपकी कक्षा: <span id="currentClassName" style="color: var(--primary);"></span>
-      </div>
-      <button type="button" class="reset-class-btn" onclick="window.unlockClass()">बदलें</button>
+    <!-- समस्या / सलाह भेजने का फॉर्म -->
+    <div class="box">
+      <h3 style="font-size: 1rem; color:#1a73e8; margin-bottom:8px;">💬 शिक्षक को अपनी बात / समस्या भेजें</h3>
+      <input type="text" id="fbName" placeholder="आपका नाम (चाहें तो खाली छोड़ें)">
+      <textarea id="fbText" placeholder="अपनी समस्या या सलाह यहाँ लिखें..."></textarea>
+      <button type="button" class="btn" onclick="sendFeedback()">संदेश भेजें</button>
     </div>
 
-    <!-- 3. मुख्य सामग्री सूची -->
-    <div id="contentList">
-      <p style="text-align: center; color: var(--text-muted); padding: 30px;">सामग्री लोड हो रही है...</p>
+    <h2 style="font-size: 1.1rem; margin: 14px 4px 8px;">📚 स्कूल सामग्री (होमवर्क / सिलेबस / टाइम टेबल)</h2>
+    <div id="postsContainer">लोड हो रहा है...</div>
+  </div>
+
+  <!-- 5. मुख्य शिक्षक पोर्टल -->
+  <div class="hidden" id="teacherPortal">
+    <div class="top-bar">
+      <span>👩‍🏫 शिक्षक पैनल</span>
+      <button type="button" class="btn-outline" onclick="logout()">लॉगआउट</button>
     </div>
 
-    <!-- 4. छात्र सलाह/समस्या बॉक्स (अलग टैब) -->
-    <div id="studentIssueSection" style="display: none;">
-      <div class="issue-box-wrapper">
-        <h2>💬 अपनी बात / समस्या शिक्षक तक पहुँचाएँ</h2>
-        <p>यहाँ आप अपनी कोई भी परेशानी, पढ़ाई से जुड़ा सवाल या स्कूल सुधार हेतु सलाह सीधे शिक्षकों को भेज सकते हैं।</p>
-        
-        <form id="studentFeedbackForm">
-          <div class="form-group">
-            <label>आपका नाम (वैकल्पिक - चाहें तो खाली छोड़ें):</label>
-            <input type="text" id="feedbackStudentName" placeholder="उदा. गुप्त या अपना नाम">
-          </div>
-          <div class="form-group">
-            <label>विषय / प्रकार:</label>
-            <select id="feedbackType" required>
-              <option value="पढ़ाई संबंधी समस्या">पढ़ाई संबंधी समस्या</option>
-              <option value="स्कूल सुधार सलाह">स्कूल सुधार सलाह</option>
-              <option value="अन्य शिकायत / बात">अन्य शिकायत / बात</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>अपनी बात विस्तार से लिखें:</label>
-            <textarea id="feedbackText" placeholder="अपनी समस्या या सलाह यहाँ लिखें..." style="height: 110px;" required></textarea>
-          </div>
-          <button type="submit" id="submitFeedbackBtn" class="action-btn">शिक्षक को संदेश भेजें</button>
-        </form>
+    <!-- पोस्टिंग फ़ॉर्म -->
+    <div class="box">
+      <h2>नयी सामग्री पोस्ट करें</h2>
+      <label>प्रकार:</label>
+      <select id="postCat" onchange="toggleTTForm()">
+        <option value="होमवर्क">होमवर्क (Homework)</option>
+        <option value="सिलेबस">सिलेबस (Syllabus)</option>
+        <option value="समय सारणी">समय सारणी (Timetable)</option>
+        <option value="सूचना">सूचना (Notice)</option>
+      </select>
+
+      <label>कक्षा:</label>
+      <select id="postClass">
+        <option value="9th A">9th A</option>
+        <option value="9th B">9th B</option>
+        <option value="9th C">9th C</option>
+        <option value="10th A">10th A</option>
+        <option value="10th B">10th B</option>
+        <option value="11th">11th</option>
+        <option value="12th">12th</option>
+        <option value="सभी कक्षाओं के लिए">सभी कक्षाओं के लिए</option>
+      </select>
+
+      <label>विषय / शीर्षक:</label>
+      <input type="text" id="postTitle" placeholder="उदा. गणित या सामान्य सूचना">
+
+      <!-- टाइम टेबल पंक्तियाँ -->
+      <div id="ttSection" class="hidden">
+        <label>समय सारणी (1. पीरियड | समय | विषय | शिक्षक):</label>
+        <input type="text" id="ttRow1" placeholder="1 | 10:00-10:45 | गणित | शर्मा सर">
+        <input type="text" id="ttRow2" placeholder="2 | 10:45-11:30 | विज्ञान | वर्मा सर">
+        <input type="text" id="ttRow3" placeholder="3 | 11:30-12:15 | अंग्रेज़ी | जोशी सर">
       </div>
+
+      <label>विवरण / निर्देश:</label>
+      <textarea id="postDesc" placeholder="निर्देश यहाँ लिखें..."></textarea>
+
+      <label>फ़ोटो या PDF जोड़ें (वैकल्पिक):</label>
+      <input type="file" id="postFile" accept="image/*,application/pdf">
+
+      <button type="button" class="btn" id="postBtn" onclick="savePost()">ऑनलाइन पोस्ट करें</button>
+    </div>
+
+    <!-- छात्रों की समस्याएँ -->
+    <div class="box">
+      <h2>📩 छात्रों की समस्याएँ एवं सलाह</h2>
+      <div id="feedbacksContainer">लोड हो रहा है...</div>
     </div>
   </div>
 
-  <!-- शिक्षक लॉगिन बटन -->
-  <button type="button" class="teacher-fab" onclick="window.openTeacherModal()">
-    <span>🔒</span> शिक्षक पैनल
-  </button>
-
-  <!-- नीचे का नेविगेशन बार -->
-  <nav class="bottom-nav">
-    <div class="nav-item active" onclick="window.setCategoryFilter('all', this)">
-      <span class="nav-icon">📚</span>
-      <span>सभी</span>
-    </div>
-    <div class="nav-item" onclick="window.setCategoryFilter('होमवर्क', this)">
-      <span class="nav-icon">📝</span>
-      <span>होमवर्क</span>
-    </div>
-    <div class="nav-item" onclick="window.setCategoryFilter('सिलेबस', this)">
-      <span class="nav-icon">📖</span>
-      <span>सिलेबस</span>
-    </div>
-    <div class="nav-item" onclick="window.setCategoryFilter('समय सारणी', this)">
-      <span class="nav-icon">📅</span>
-      <span>टाइम-टेबल</span>
-    </div>
-    <div class="nav-item" onclick="window.setCategoryFilter('सूचना', this)">
-      <span class="nav-icon">📢</span>
-      <span>सूचना</span>
-    </div>
-    <div class="nav-item" onclick="window.showFeedbackSection(this)">
-      <span class="nav-icon">💬</span>
-      <span>सलाह/समस्या</span>
-    </div>
-  </nav>
-
-  <!-- शिक्षक मोडल / फ़ॉर्म -->
-  <div class="modal-overlay" id="teacherModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 id="modalTitle">शिक्षक प्रमाणीकरण</h2>
-        <button type="button" class="close-btn" onclick="window.closeTeacherModal()">×</button>
-      </div>
-
-      <!-- पिन बॉक्स -->
-      <div id="pinBox">
-        <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:12px;">नया कार्य पोस्ट करने, हटाने या छात्रों की सलाह देखने हेतु 6 अंकों का गुप्त पिन दर्ज करें:</p>
-        <div class="form-group">
-          <input type="password" id="inputPin" placeholder="गुप्त पिन दर्ज करें" maxlength="6">
-        </div>
-        <button type="button" class="action-btn" onclick="window.checkPin()">पोर्टल खोलें</button>
-      </div>
-
-      <!-- शिक्षक इनर पोर्टल (पिन डालने के बाद) -->
-      <div id="teacherPortalInner" style="display: none;">
-        <!-- शिक्षक टैब्स -->
-        <div class="teacher-tabs">
-          <button type="button" class="teacher-tab-btn active" id="tabPostBtn" onclick="window.switchTeacherSubTab('post')">सामग्री पोस्ट करें</button>
-          <button type="button" class="teacher-tab-btn" id="tabFeedbackBtn" onclick="window.switchTeacherSubTab('feedback')">छात्र समस्या / सलाह 💬</button>
-        </div>
-
-        <!-- सामग्री पोस्ट करने का फ़ॉर्म -->
-        <form id="teacherForm">
-          <div class="form-group">
-            <label>प्रकार चुनें:</label>
-            <select id="formCategory" onchange="window.toggleCategoryFields()" required>
-              <option value="होमवर्क">होमवर्क (Homework)</option>
-              <option value="सिलेबस">सिलेबस (Syllabus)</option>
-              <option value="समय सारणी">समय सारणी (Timetable)</option>
-              <option value="सूचना">सूचना (Notice)</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label>कक्षा चुनें:</label>
-            <select id="formClass" required>
-              <option value="9th A">9th A</option>
-              <option value="9th B">9th B</option>
-              <option value="9th C">9th C</option>
-              <option value="10th A">10th A</option>
-              <option value="10th B">10th B</option>
-              <option value="11th">11th</option>
-              <option value="12th">12th</option>
-              <option value="सभी कक्षाओं के लिए">सभी कक्षाओं के लिए</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label>शीर्षक / विषय:</label>
-            <input type="text" id="formTitle" placeholder="उदा. सोमवार समय सारणी या गणित" required>
-          </div>
-
-          <div class="form-group" id="timetableBuilder" style="display: none;">
-            <label>समय सारणी विवरण (पीरियड, समय, विषय, शिक्षक):</label>
-            <div class="tt-builder">
-              <div id="ttRows"></div>
-              <button type="button" class="add-row-btn" onclick="window.addTimetableRow()">+ नया पीरियड जोड़ें</button>
-            </div>
-          </div>
-
-          <div class="form-group" id="descGroup">
-            <label>विवरण / निर्देश:</label>
-            <textarea id="formDesc" placeholder="निर्देश या पूरा विवरण यहाँ लिखें..."></textarea>
-          </div>
-
-          <div class="form-group">
-            <label>फ़ोटो या PDF जोड़ें (वैकल्पिक):</label>
-            <input type="file" id="formFile" accept="image/*,application/pdf">
-          </div>
-
-          <button type="submit" id="submitPostBtn" class="action-btn">ऑनलाइन पोस्ट करें</button>
-        </form>
-
-        <!-- छात्रों की समस्या / सलाह देखने का सेक्शन -->
-        <div id="teacherFeedbackView" style="display: none;">
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">छात्रों द्वारा भेजी गई समस्याएँ एवं सुझाव:</p>
-          <div id="feedbackListContainer">
-            <p style="text-align: center; color: var(--text-muted); padding: 15px;">लोड हो रहा है...</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- मुख्य एकीकृत स्क्रिप्ट -->
+  <!-- Firebase Script -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { 
       getFirestore, 
       collection, 
       addDoc, 
-      deleteDoc,
-      doc,
+      deleteDoc, 
+      doc, 
       onSnapshot, 
       query, 
       orderBy, 
-      serverTimestamp,
-      enableIndexedDbPersistence 
+      serverTimestamp 
     } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -675,22 +272,242 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    enableIndexedDbPersistence(db).catch(() => {});
+    let activeClass = localStorage.getItem("myClass") || "";
+    let isTeacherAuth = false;
+    let allPosts = [];
 
-    let isTeacher = false;
-    let selectedClass = localStorage.getItem("userClass") || "";
-    let selectedCategory = 'all';
-    let allPostsData = [];
-    let allFeedbacksData = [];
+    // स्क्रीन नेविगेशन
+    window.goToStep = function(step) {
+      document.getElementById("stepRole").classList.add("hidden");
+      document.getElementById("stepStudentClass").classList.add("hidden");
+      document.getElementById("stepTeacherLogin").classList.add("hidden");
+      document.getElementById("studentPortal").classList.add("hidden");
+      document.getElementById("teacherPortal").classList.add("hidden");
 
-    // क्लास लॉकिंग
-    window.lockClass = function(className) {
-      selectedClass = className;
-      localStorage.setItem("userClass", className);
-      initClassView();
+      if (step === 'role') document.getElementById("stepRole").classList.remove("hidden");
+      if (step === 'studentClass') document.getElementById("stepStudentClass").classList.remove("hidden");
+      if (step === 'teacherLogin') document.getElementById("stepTeacherLogin").classList.remove("hidden");
+      if (step === 'studentPortal') document.getElementById("studentPortal").classList.remove("hidden");
+      if (step === 'teacherPortal') document.getElementById("teacherPortal").classList.remove("hidden");
     };
 
-    window.unlockClass = function() {
-      if (confirm("क्या आप अपनी कक्षा बदलना चाहते हैं?")) {
-        selectedClass = "";
-        localStorage.removeI
+    window.submitStudentClass = function() {
+      const cls = document.getElementById("studentClassSelect").value;
+      if (!cls) {
+        alert("कृपया लिस्ट में से क्लास चुनें!");
+        return;
+      }
+      activeClass = cls;
+      localStorage.setItem("myClass", cls);
+      document.getElementById("displayStudentClass").innerText = cls;
+      window.goToStep('studentPortal');
+      renderPosts();
+    };
+
+    window.verifyTeacherPin = function() {
+      const pin = document.getElementById("teacherPinInput").value;
+      if (pin === "791632") {
+        isTeacherAuth = true;
+        window.goToStep('teacherPortal');
+      } else {
+        alert("गलत पिन! केवल शिक्षक ही लॉगिन कर सकते हैं।");
+      }
+    };
+
+    window.logout = function() {
+      localStorage.removeItem("myClass");
+      activeClass = "";
+      isTeacherAuth = false;
+      document.getElementById("studentClassSelect").value = "";
+      document.getElementById("teacherPinInput").value = "";
+      window.goToStep('role');
+    };
+
+    window.toggleTTForm = function() {
+      const cat = document.getElementById("postCat").value;
+      const ttSec = document.getElementById("ttSection");
+      if (cat === "समय सारणी") ttSec.classList.remove("hidden");
+      else ttSec.classList.add("hidden");
+    };
+
+    // शिक्षक सामग्री पोस्ट करना
+    window.savePost = async function() {
+      const btn = document.getElementById("postBtn");
+      const cat = document.getElementById("postCat").value;
+      const cls = document.getElementById("postClass").value;
+      const title = document.getElementById("postTitle").value.trim();
+      const desc = document.getElementById("postDesc").value.trim();
+      const fileInput = document.getElementById("postFile");
+
+      if (!title) {
+        alert("कृपया शीर्षक दर्ज करें!");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerText = "पोस्ट हो रहा है...";
+
+      let ttArr = [];
+      if (cat === "समय सारणी") {
+        ["ttRow1", "ttRow2", "ttRow3"].forEach(id => {
+          const val = document.getElementById(id).value.trim();
+          if (val) {
+            const parts = val.split("|");
+            ttArr.push({
+              period: parts[0]?.trim() || "",
+              time: parts[1]?.trim() || "",
+              sub: parts[2]?.trim() || "",
+              teacher: parts[3]?.trim() || ""
+            });
+          }
+        });
+      }
+
+      let fileData = "";
+      let fileType = "";
+      if (fileInput.files[0]) {
+        const f = fileInput.files[0];
+        fileType = f.type.includes("pdf") ? "pdf" : "image";
+        fileData = await new Promise(res => {
+          const r = new FileReader();
+          r.onloadend = () => res(r.result);
+          r.readAsDataURL(f);
+        });
+      }
+
+      try {
+        await addDoc(collection(db, "school_data"), {
+          category: cat,
+          classGrade: cls,
+          title: title,
+          description: desc,
+          timetable: ttArr,
+          fileData: fileData,
+          fileType: fileType,
+          createdAt: serverTimestamp()
+        });
+        alert("सफलतापूर्वक पोस्ट हो गया!");
+        document.getElementById("postTitle").value = "";
+        document.getElementById("postDesc").value = "";
+        document.getElementById("postFile").value = "";
+      } catch (err) {
+        alert("त्रुटि: " + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "ऑनलाइन पोस्ट करें";
+      }
+    };
+
+    // सामग्री स्क्रीन पर दिखाना
+    function renderPosts() {
+      const box = document.getElementById("postsContainer");
+      if (!box) return;
+
+      const filtered = allPosts.filter(p => p.classGrade === activeClass || p.classGrade === "सभी कक्षाओं के लिए");
+
+      if (filtered.length === 0) {
+        box.innerHTML = `<p style="text-align:center; padding:20px; color:#6b7280;">कक्षा ${activeClass} के लिए अभी कोई सामग्री नहीं है।</p>`;
+        return;
+      }
+
+      box.innerHTML = "";
+      filtered.forEach(p => {
+        let ttHTML = "";
+        if (p.timetable && p.timetable.length > 0) {
+          ttHTML = `<div class="table-wrap"><table><tr><th>क्र.</th><th>समय</th><th>विषय</th><th>शिक्षक</th></tr>
+            ${p.timetable.map(t => `<tr><td>${t.period}</td><td>${t.time}</td><td>${t.sub}</td><td>${t.teacher}</td></tr>`).join('')}
+          </table></div>`;
+        }
+
+        let fileHTML = "";
+        if (p.fileData) {
+          if (p.fileType === "pdf") {
+            fileHTML = `<a href="${p.fileData}" download="school.pdf" style="display:inline-block; margin-top:8px; padding:6px 12px; background:#dc2626; color:white; border-radius:6px; text-decoration:none; font-size:0.85rem;">📄 PDF डाउनलोड करें</a>`;
+          } else {
+            fileHTML = `<img src="${p.fileData}" alt="तस्वीर">`;
+          }
+        }
+
+        const div = document.createElement("div");
+        div.className = "item-card";
+        div.innerHTML = `
+          <span class="tag">${p.category} | ${p.classGrade}</span>
+          <h3>${p.title}</h3>
+          ${p.description ? `<p>${p.description}</p>` : ""}
+          ${ttHTML}
+          ${fileHTML}
+          <div style="font-size:0.75rem; color:#9ca3af; margin-top:6px;">${p.date || ""}</div>
+        `;
+        box.appendChild(div);
+      });
+    }
+
+    // छात्र संदेश भेजना
+    window.sendFeedback = async function() {
+      const name = document.getElementById("fbName").value.trim() || "गुमनाम";
+      const text = document.getElementById("fbText").value.trim();
+      if (!text) {
+        alert("कृपया अपनी बात लिखें!");
+        return;
+      }
+      try {
+        await addDoc(collection(db, "student_feedbacks"), {
+          studentName: name,
+          classGrade: activeClass,
+          message: text,
+          createdAt: serverTimestamp()
+        });
+        alert("संदेश शिक्षक तक पहुँच गया!");
+        document.getElementById("fbText").value = "";
+      } catch (err) {
+        alert("त्रुटि: " + err.message);
+      }
+    };
+
+    // रीयलटाइम डेटाबेस लिसनर
+    const qPosts = query(collection(db, "school_data"), orderBy("createdAt", "desc"));
+    onSnapshot(qPosts, snap => {
+      allPosts = [];
+      snap.forEach(d => {
+        const data = d.data();
+        let dt = "";
+        if (data.createdAt && data.createdAt.toDate) {
+          dt = data.createdAt.toDate().toLocaleDateString("hi-IN", { day: 'numeric', month: 'short' });
+        }
+        allPosts.push({ id: d.id, ...data, date: dt });
+      });
+      if (activeClass) renderPosts();
+    });
+
+    const qFb = query(collection(db, "student_feedbacks"), orderBy("createdAt", "desc"));
+    onSnapshot(qFb, snap => {
+      const fbBox = document.getElementById("feedbacksContainer");
+      if (!fbBox) return;
+      if (snap.empty) {
+        fbBox.innerHTML = "<p style='color:#6b7280;'>कोई संदेश नहीं है।</p>";
+        return;
+      }
+      fbBox.innerHTML = "";
+      snap.forEach(d => {
+        const f = d.data();
+        const card = document.createElement("div");
+        card.style = "background:#f9fafb; padding:10px; border-radius:8px; margin-bottom:8px; border:1px solid #e5e7eb;";
+        card.innerHTML = `
+          <div style="font-size:0.8rem; font-weight:bold; color:#1a73e8;">कक्षा: ${f.classGrade} | प्रेषक: ${f.studentName}</div>
+          <p style="font-size:0.9rem; margin-top:4px;">${f.message}</p>
+        `;
+        fbBox.appendChild(card);
+      });
+    });
+
+    // अगर पहले से क्लास चुनी है तो सीधे स्टूडेंट पोर्टल खोलें
+    if (activeClass) {
+      document.getElementById("displayStudentClass").innerText = activeClass;
+      window.goToStep('studentPortal');
+    } else {
+      window.goToStep('role');
+    }
+  </script>
+</body>
+        </html>
+        
