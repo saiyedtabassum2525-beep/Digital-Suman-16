@@ -48,34 +48,32 @@
       padding: 16px;
     }
 
-    /* कक्षा चुनने का बार */
+    /* कक्षा चयन बॉक्स (पहली बार के लिए) */
     .class-selection-box {
       background: white;
-      padding: 14px;
+      padding: 16px;
       border-radius: 12px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
       margin-bottom: 16px;
+      text-align: center;
     }
-    .class-selection-box label {
-      display: block;
-      font-size: 0.85rem;
-      font-weight: 700;
+    .class-selection-box h3 {
+      font-size: 1rem;
+      color: var(--primary-dark);
+      margin-bottom: 6px;
+    }
+    .class-selection-box p {
+      font-size: 0.8rem;
       color: var(--text-muted);
-      margin-bottom: 8px;
-      text-transform: uppercase;
+      margin-bottom: 12px;
     }
-    .class-pills {
+    .class-grid {
       display: flex;
+      flex-wrap: wrap;
       gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-      scrollbar-width: none;
-    }
-    .class-pills::-webkit-scrollbar {
-      display: none;
+      justify-content: center;
     }
     .pill {
-      flex: 0 0 auto;
       padding: 8px 16px;
       background: #f3f4f6;
       border: 1.5px solid #d1d5db;
@@ -86,14 +84,38 @@
       cursor: pointer;
       transition: all 0.2s ease;
     }
-    .pill.active {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
-      box-shadow: 0 2px 6px rgba(26,115,232,0.3);
+    .pill:hover {
+      background: #e5e7eb;
     }
 
-    /* कार्ड डिजाइन */
+    /* जब कक्षा फ़िक्स हो जाए तब दिखने वाला छोटा बार */
+    .locked-class-bar {
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      padding: 12px 16px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      margin-bottom: 16px;
+      border-left: 4px solid var(--primary);
+    }
+    .locked-class-info {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .reset-class-btn {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    /* सामग्री कार्ड */
     .item-card {
       background: var(--card-bg);
       border-radius: 14px;
@@ -152,7 +174,6 @@
       font-weight: 600;
     }
 
-    /* टाइम टेबल बॉक्स (टेबल स्टाइल) */
     .timetable-table-wrap {
       margin-top: 12px;
       overflow-x: auto;
@@ -204,7 +225,6 @@
       cursor: pointer;
     }
 
-    /* नीचे का नेविगेशन बार */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -236,7 +256,6 @@
       font-size: 1.25rem;
     }
 
-    /* शिक्षक बटन */
     .teacher-fab {
       position: fixed;
       bottom: 74px;
@@ -256,7 +275,6 @@
       z-index: 99;
     }
 
-    /* मोडल पॉपअप */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -339,7 +357,6 @@
       margin-top: 8px;
     }
 
-    /* शिक्षक के टाइम टेबल एडिटर का स्टाइल */
     .tt-builder {
       background: #f9fafb;
       border: 1px dashed #cbd5e1;
@@ -391,19 +408,27 @@
   </header>
 
   <div class="container">
-    <!-- 7 कक्षाओं के चयन का बार -->
-    <div class="class-selection-box">
-      <label>अपनी कक्षा चुनें:</label>
-      <div class="class-pills">
-        <button class="pill active" onclick="setClassFilter('all')">सभी कक्षाएँ</button>
-        <button class="pill" onclick="setClassFilter('9th A')">9th A</button>
-        <button class="pill" onclick="setClassFilter('9th B')">9th B</button>
-        <button class="pill" onclick="setClassFilter('9th C')">9th C</button>
-        <button class="pill" onclick="setClassFilter('10th A')">10th A</button>
-        <button class="pill" onclick="setClassFilter('10th B')">10th B</button>
-        <button class="pill" onclick="setClassFilter('11th')">11th</button>
-        <button class="pill" onclick="setClassFilter('12th')">12th</button>
+    <!-- 1. पहली बार कक्षा चुनने का बॉक्स -->
+    <div class="class-selection-box" id="classSelectionBox">
+      <h3>कृपया अपनी कक्षा चुनें</h3>
+      <p>एक बार चुनने के बाद आपकी कक्षा सेट हो जाएगी</p>
+      <div class="class-grid">
+        <button class="pill" onclick="lockClass('9th A')">9th A</button>
+        <button class="pill" onclick="lockClass('9th B')">9th B</button>
+        <button class="pill" onclick="lockClass('9th C')">9th C</button>
+        <button class="pill" onclick="lockClass('10th A')">10th A</button>
+        <button class="pill" onclick="lockClass('10th B')">10th B</button>
+        <button class="pill" onclick="lockClass('11th')">11th</button>
+        <button class="pill" onclick="lockClass('12th')">12th</button>
       </div>
+    </div>
+
+    <!-- 2. कक्षा लॉक होने के बाद दिखने वाला बार -->
+    <div class="locked-class-bar" id="lockedClassBar">
+      <div class="locked-class-info">
+        🎓 आपकी कक्षा: <span id="currentClassName" style="color: var(--primary);"></span>
+      </div>
+      <button class="reset-class-btn" onclick="unlockClass()">बदलें</button>
     </div>
 
     <!-- सामग्री सूची -->
@@ -449,7 +474,6 @@
         <button class="close-btn" onclick="closeTeacherModal()">×</button>
       </div>
 
-      <!-- पिन बॉक्स -->
       <div id="pinBox">
         <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:12px;">नया कार्य पोस्ट करने या हटाने के लिए 6 अंकों का गुप्त पिन दर्ज करें:</p>
         <div class="form-group">
@@ -458,7 +482,6 @@
         <button class="action-btn" onclick="checkPin()">पोर्टल खोलें</button>
       </div>
 
-      <!-- शिक्षक पोस्टिंग फ़ॉर्म -->
       <form id="teacherForm" style="display: none;">
         <div class="form-group">
           <label>प्रकार चुनें:</label>
@@ -489,13 +512,10 @@
           <input type="text" id="formTitle" placeholder="उदा. सोमवार समय सारणी या गणित" required>
         </div>
 
-        <!-- समय सारणी (टाइम-टेबल बिल्डर) -->
         <div class="form-group" id="timetableBuilder" style="display: none;">
           <label>समय सारणी विवरण (पीरियड, समय, विषय, शिक्षक):</label>
           <div class="tt-builder">
-            <div id="ttRows">
-              <!-- पंक्तियाँ जावास्क्रिप्ट से जुड़ेंगी -->
-            </div>
+            <div id="ttRows"></div>
             <button type="button" class="add-row-btn" onclick="addTimetableRow()">+ नया पीरियड जोड़ें</button>
           </div>
         </div>
@@ -517,9 +537,46 @@
 
   <script>
     let isTeacher = false;
-    let selectedClass = 'all';
+    let selectedClass = localStorage.getItem("userClass") || "";
     let selectedCategory = 'all';
     let allPostsData = [];
+
+    // पेज खुलते ही चेक करना कि क्या पहले से क्लास चुनी हुई है
+    window.addEventListener("DOMContentLoaded", () => {
+      initClassView();
+    });
+
+    function initClassView() {
+      const selectBox = document.getElementById("classSelectionBox");
+      const lockedBar = document.getElementById("lockedClassBar");
+      const nameSpan = document.getElementById("currentClassName");
+
+      if (selectedClass) {
+        selectBox.style.display = "none";
+        lockedBar.style.display = "flex";
+        nameSpan.innerText = selectedClass;
+      } else {
+        selectBox.style.display = "block";
+        lockedBar.style.display = "none";
+      }
+      renderContent();
+    }
+
+    // कक्षा चुनकर हमेशा के लिए लॉक करना
+    function lockClass(className) {
+      selectedClass = className;
+      localStorage.setItem("userClass", className);
+      initClassView();
+    }
+
+    // अगर कभी बदलना चाहें
+    function unlockClass() {
+      if (confirm("क्या आप अपनी कक्षा बदलना चाहते हैं?")) {
+        selectedClass = "";
+        localStorage.removeItem("userClass");
+        initClassView();
+      }
+    }
 
     function openTeacherModal() {
       document.getElementById('teacherModal').classList.add('open');
@@ -543,12 +600,9 @@
       }
     }
 
-    // टाइम-टेबल चुनने पर टेबल एडिटर चालू करना
     function toggleCategoryFields() {
       const cat = document.getElementById("formCategory").value;
       const ttBox = document.getElementById("timetableBuilder");
-      const descInput = document.getElementById("formDesc");
-
       if (cat === "समय सारणी") {
         ttBox.style.display = "block";
         if (document.getElementById("ttRows").children.length === 0) {
@@ -575,13 +629,6 @@
       rows.appendChild(rowDiv);
     }
 
-    function setClassFilter(className) {
-      selectedClass = className;
-      document.querySelectorAll('.pill').forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
-      renderContent();
-    }
-
     function setCategoryFilter(category, element) {
       selectedCategory = category;
       document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
@@ -592,9 +639,19 @@
     function renderContent() {
       const container = document.getElementById("contentList");
 
+      if (!selectedClass) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 40px 10px; color: var(--text-muted);">
+            <div style="font-size: 2.2rem; margin-bottom: 8px;">👆</div>
+            <p>सामग्री देखने के लिए कृपया ऊपर अपनी कक्षा चुनें।</p>
+          </div>
+        `;
+        return;
+      }
+
       const filtered = allPostsData.filter(item => {
         const matchCategory = (selectedCategory === 'all' || item.category === selectedCategory);
-        const matchClass = (selectedClass === 'all' || item.classGrade === selectedClass || item.classGrade === "सभी कक्षाओं के लिए");
+        const matchClass = (item.classGrade === selectedClass || item.classGrade === "सभी कक्षाओं के लिए");
         return matchCategory && matchClass;
       });
 
@@ -602,7 +659,7 @@
         container.innerHTML = `
           <div style="text-align: center; padding: 40px 10px; color: var(--text-muted);">
             <div style="font-size: 2.2rem; margin-bottom: 8px;">📂</div>
-            <p>इस कक्षा या श्रेणी में कोई सामग्री उपलब्ध नहीं है।</p>
+            <p>आपकी कक्षा (${selectedClass}) के लिए इस श्रेणी में अभी कोई सामग्री नहीं है।</p>
           </div>
         `;
         return;
@@ -618,7 +675,6 @@
         if (item.category === "समय सारणी") tagClass = "tag-timetable";
         if (item.category === "सूचना") tagClass = "tag-notice";
 
-        // टाइम टेबल डेटा को बॉक्स/टेबल में रेंडर करना
         let timetableHTML = "";
         if (item.timetable && item.timetable.length > 0) {
           timetableHTML = `
@@ -634,50 +690,3 @@
                 </thead>
                 <tbody>
                   ${item.timetable.map(row => `
-                    <tr>
-                      <td><strong>${row.period}</strong></td>
-                      <td>${row.time}</td>
-                      <td><strong>${row.subject}</strong></td>
-                      <td>${row.teacher}</td>
-                    </tr>
-                  `).join('')}
-                </tbody>
-              </table>
-            </div>
-          `;
-        }
-
-        let fileAttachment = "";
-        if (item.fileData) {
-          if (item.fileType === "pdf") {
-            fileAttachment = `<a href="${item.fileData}" download="${item.fileName || 'document.pdf'}" class="pdf-btn">📄 PDF देखें / डाउनलोड करें</a>`;
-          } else {
-            fileAttachment = `<img src="${item.fileData}" alt="सामग्री चित्र" loading="lazy" />`;
-          }
-        }
-
-        let deleteOption = "";
-        if (isTeacher) {
-          deleteOption = `<button class="delete-action" onclick="deletePost('${item.id}')">हटाएँ</button>`;
-        }
-
-        card.innerHTML = `
-          <div class="badge-wrapper">
-            <span class="tag ${tagClass}">${item.category} • ${item.classGrade}</span>
-            ${deleteOption}
-          </div>
-          <h3>${item.title}</h3>
-          ${item.description ? `<p>${item.description}</p>` : ""}
-          ${timetableHTML}
-          ${fileAttachment}
-          <div class="card-footer">
-            <span class="timestamp">${item.date || ""}</span>
-          </div>
-        `;
-        container.appendChild(card);
-      });
-    }
-  </script>
-
-  <script type="module">
-    import { initializeApp } from "https://www
