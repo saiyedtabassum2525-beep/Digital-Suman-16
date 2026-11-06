@@ -48,7 +48,7 @@
       padding: 16px;
     }
 
-    /* कक्षा चयन बॉक्स (पहली बार के लिए) */
+    /* पहली बार कक्षा चुनने का बॉक्स */
     .class-selection-box {
       background: white;
       padding: 16px;
@@ -74,21 +74,22 @@
       justify-content: center;
     }
     .pill {
-      padding: 8px 16px;
+      padding: 10px 18px;
       background: #f3f4f6;
       border: 1.5px solid #d1d5db;
       border-radius: 20px;
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       font-weight: 600;
       color: var(--text);
       cursor: pointer;
       transition: all 0.2s ease;
     }
-    .pill:hover {
+    .pill:active {
+      transform: scale(0.95);
       background: #e5e7eb;
     }
 
-    /* जब कक्षा फ़िक्स हो जाए तब दिखने वाला छोटा बार */
+    /* लॉक होने के बाद बार */
     .locked-class-bar {
       display: none;
       justify-content: space-between;
@@ -101,18 +102,19 @@
       border-left: 4px solid var(--primary);
     }
     .locked-class-info {
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       font-weight: 700;
       color: var(--text);
     }
     .reset-class-btn {
-      background: none;
-      border: none;
+      background: #eef3fc;
+      border: 1px solid var(--primary);
       color: var(--primary);
+      padding: 5px 12px;
+      border-radius: 6px;
       font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
-      text-decoration: underline;
     }
 
     /* सामग्री कार्ड */
@@ -218,13 +220,51 @@
       background: #fee2e2;
       color: #dc2626;
       border: none;
-      padding: 4px 10px;
+      padding: 5px 12px;
       border-radius: 6px;
       font-size: 0.78rem;
       font-weight: 700;
       cursor: pointer;
     }
 
+    /* छात्र समस्या बॉक्स */
+    .issue-box-wrapper {
+      background: white;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .issue-box-wrapper h2 {
+      font-size: 1.2rem;
+      color: var(--primary-dark);
+      margin-bottom: 6px;
+    }
+    .issue-box-wrapper p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+
+    /* शिक्षक समस्या कार्ड */
+    .feedback-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #f59e0b;
+      padding: 14px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+    .feedback-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    /* बॉटम नेविगेशन */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -239,8 +279,8 @@
     .nav-item {
       flex: 1;
       text-align: center;
-      padding: 10px 0;
-      font-size: 0.72rem;
+      padding: 8px 0;
+      font-size: 0.68rem;
       font-weight: 600;
       color: var(--text-muted);
       cursor: pointer;
@@ -256,36 +296,38 @@
       font-size: 1.25rem;
     }
 
+    /* शिक्षक बटन */
     .teacher-fab {
       position: fixed;
       bottom: 74px;
       right: 18px;
       background: #111827;
       color: white;
-      padding: 10px 16px;
+      padding: 12px 18px;
       border-radius: 30px;
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       font-weight: 700;
       border: none;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
       cursor: pointer;
       z-index: 99;
     }
 
+    /* शिक्षक मोडल */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.6);
       display: none;
       justify-content: center;
       align-items: flex-end;
       z-index: 200;
     }
     .modal-overlay.open {
-      display: flex;
+      display: flex !important;
     }
     .modal-content {
       background: white;
@@ -296,11 +338,6 @@
       border-radius: 20px 20px 0 0;
       padding: 20px;
       box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
-      animation: slideUp 0.25s ease-out;
-    }
-    @keyframes slideUp {
-      from { transform: translateY(100%); }
-      to { transform: translateY(0); }
     }
     .modal-header {
       display: flex;
@@ -322,6 +359,29 @@
       font-weight: bold;
       cursor: pointer;
     }
+
+    /* शिक्षक टैब स्विच */
+    .teacher-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .teacher-tab-btn {
+      flex: 1;
+      padding: 10px;
+      background: #f3f4f6;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .teacher-tab-btn.active {
+      background: var(--primary);
+      color: white;
+    }
+
     .form-group {
       margin-bottom: 12px;
     }
@@ -413,56 +473,88 @@
       <h3>कृपया अपनी कक्षा चुनें</h3>
       <p>एक बार चुनने के बाद आपकी कक्षा सेट हो जाएगी</p>
       <div class="class-grid">
-        <button class="pill" onclick="lockClass('9th A')">9th A</button>
-        <button class="pill" onclick="lockClass('9th B')">9th B</button>
-        <button class="pill" onclick="lockClass('9th C')">9th C</button>
-        <button class="pill" onclick="lockClass('10th A')">10th A</button>
-        <button class="pill" onclick="lockClass('10th B')">10th B</button>
-        <button class="pill" onclick="lockClass('11th')">11th</button>
-        <button class="pill" onclick="lockClass('12th')">12th</button>
+        <button type="button" class="pill" onclick="window.lockClass('9th A')">9th A</button>
+        <button type="button" class="pill" onclick="window.lockClass('9th B')">9th B</button>
+        <button type="button" class="pill" onclick="window.lockClass('9th C')">9th C</button>
+        <button type="button" class="pill" onclick="window.lockClass('10th A')">10th A</button>
+        <button type="button" class="pill" onclick="window.lockClass('10th B')">10th B</button>
+        <button type="button" class="pill" onclick="window.lockClass('11th')">11th</button>
+        <button type="button" class="pill" onclick="window.lockClass('12th')">12th</button>
       </div>
     </div>
 
-    <!-- 2. कक्षा लॉक होने के बाद दिखने वाला बार -->
+    <!-- 2. कक्षा लॉक होने के बाद बार -->
     <div class="locked-class-bar" id="lockedClassBar">
       <div class="locked-class-info">
         🎓 आपकी कक्षा: <span id="currentClassName" style="color: var(--primary);"></span>
       </div>
-      <button class="reset-class-btn" onclick="unlockClass()">बदलें</button>
+      <button type="button" class="reset-class-btn" onclick="window.unlockClass()">बदलें</button>
     </div>
 
-    <!-- सामग्री सूची -->
+    <!-- 3. मुख्य सामग्री सूची -->
     <div id="contentList">
       <p style="text-align: center; color: var(--text-muted); padding: 30px;">सामग्री लोड हो रही है...</p>
+    </div>
+
+    <!-- 4. छात्र सलाह/समस्या बॉक्स (अलग टैब) -->
+    <div id="studentIssueSection" style="display: none;">
+      <div class="issue-box-wrapper">
+        <h2>💬 अपनी बात / समस्या शिक्षक तक पहुँचाएँ</h2>
+        <p>यहाँ आप अपनी कोई भी परेशानी, पढ़ाई से जुड़ा सवाल या स्कूल सुधार हेतु सलाह सीधे शिक्षकों को भेज सकते हैं।</p>
+        
+        <form id="studentFeedbackForm">
+          <div class="form-group">
+            <label>आपका नाम (वैकल्पिक - चाहें तो खाली छोड़ें):</label>
+            <input type="text" id="feedbackStudentName" placeholder="उदा. गुप्त या अपना नाम">
+          </div>
+          <div class="form-group">
+            <label>विषय / प्रकार:</label>
+            <select id="feedbackType" required>
+              <option value="पढ़ाई संबंधी समस्या">पढ़ाई संबंधी समस्या</option>
+              <option value="स्कूल सुधार सलाह">स्कूल सुधार सलाह</option>
+              <option value="अन्य शिकायत / बात">अन्य शिकायत / बात</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>अपनी बात विस्तार से लिखें:</label>
+            <textarea id="feedbackText" placeholder="अपनी समस्या या सलाह यहाँ लिखें..." style="height: 110px;" required></textarea>
+          </div>
+          <button type="submit" id="submitFeedbackBtn" class="action-btn">शिक्षक को संदेश भेजें</button>
+        </form>
+      </div>
     </div>
   </div>
 
   <!-- शिक्षक लॉगिन बटन -->
-  <button class="teacher-fab" onclick="openTeacherModal()">
+  <button type="button" class="teacher-fab" onclick="window.openTeacherModal()">
     <span>🔒</span> शिक्षक पैनल
   </button>
 
-  <!-- नेविगेशन बार -->
+  <!-- नीचे का नेविगेशन बार -->
   <nav class="bottom-nav">
-    <div class="nav-item active" onclick="setCategoryFilter('all', this)">
+    <div class="nav-item active" onclick="window.setCategoryFilter('all', this)">
       <span class="nav-icon">📚</span>
       <span>सभी</span>
     </div>
-    <div class="nav-item" onclick="setCategoryFilter('होमवर्क', this)">
+    <div class="nav-item" onclick="window.setCategoryFilter('होमवर्क', this)">
       <span class="nav-icon">📝</span>
       <span>होमवर्क</span>
     </div>
-    <div class="nav-item" onclick="setCategoryFilter('सिलेबस', this)">
+    <div class="nav-item" onclick="window.setCategoryFilter('सिलेबस', this)">
       <span class="nav-icon">📖</span>
       <span>सिलेबस</span>
     </div>
-    <div class="nav-item" onclick="setCategoryFilter('समय सारणी', this)">
+    <div class="nav-item" onclick="window.setCategoryFilter('समय सारणी', this)">
       <span class="nav-icon">📅</span>
       <span>टाइम-टेबल</span>
     </div>
-    <div class="nav-item" onclick="setCategoryFilter('सूचना', this)">
+    <div class="nav-item" onclick="window.setCategoryFilter('सूचना', this)">
       <span class="nav-icon">📢</span>
       <span>सूचना</span>
+    </div>
+    <div class="nav-item" onclick="window.showFeedbackSection(this)">
+      <span class="nav-icon">💬</span>
+      <span>सलाह/समस्या</span>
     </div>
   </nav>
 
@@ -471,222 +563,134 @@
     <div class="modal-content">
       <div class="modal-header">
         <h2 id="modalTitle">शिक्षक प्रमाणीकरण</h2>
-        <button class="close-btn" onclick="closeTeacherModal()">×</button>
+        <button type="button" class="close-btn" onclick="window.closeTeacherModal()">×</button>
       </div>
 
+      <!-- पिन बॉक्स -->
       <div id="pinBox">
-        <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:12px;">नया कार्य पोस्ट करने या हटाने के लिए 6 अंकों का गुप्त पिन दर्ज करें:</p>
+        <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:12px;">नया कार्य पोस्ट करने, हटाने या छात्रों की सलाह देखने हेतु 6 अंकों का गुप्त पिन दर्ज करें:</p>
         <div class="form-group">
           <input type="password" id="inputPin" placeholder="गुप्त पिन दर्ज करें" maxlength="6">
         </div>
-        <button class="action-btn" onclick="checkPin()">पोर्टल खोलें</button>
+        <button type="button" class="action-btn" onclick="window.checkPin()">पोर्टल खोलें</button>
       </div>
 
-      <form id="teacherForm" style="display: none;">
-        <div class="form-group">
-          <label>प्रकार चुनें:</label>
-          <select id="formCategory" onchange="toggleCategoryFields()" required>
-            <option value="होमवर्क">होमवर्क (Homework)</option>
-            <option value="सिलेबस">सिलेबस (Syllabus)</option>
-            <option value="समय सारणी">समय सारणी (Timetable)</option>
-            <option value="सूचना">सूचना (Notice)</option>
-          </select>
+      <!-- शिक्षक इनर पोर्टल (पिन डालने के बाद) -->
+      <div id="teacherPortalInner" style="display: none;">
+        <!-- शिक्षक टैब्स -->
+        <div class="teacher-tabs">
+          <button type="button" class="teacher-tab-btn active" id="tabPostBtn" onclick="window.switchTeacherSubTab('post')">सामग्री पोस्ट करें</button>
+          <button type="button" class="teacher-tab-btn" id="tabFeedbackBtn" onclick="window.switchTeacherSubTab('feedback')">छात्र समस्या / सलाह 💬</button>
         </div>
 
-        <div class="form-group">
-          <label>कक्षा चुनें:</label>
-          <select id="formClass" required>
-            <option value="9th A">9th A</option>
-            <option value="9th B">9th B</option>
-            <option value="9th C">9th C</option>
-            <option value="10th A">10th A</option>
-            <option value="10th B">10th B</option>
-            <option value="11th">11th</option>
-            <option value="12th">12th</option>
-            <option value="सभी कक्षाओं के लिए">सभी कक्षाओं के लिए</option>
-          </select>
-        </div>
+        <!-- सामग्री पोस्ट करने का फ़ॉर्म -->
+        <form id="teacherForm">
+          <div class="form-group">
+            <label>प्रकार चुनें:</label>
+            <select id="formCategory" onchange="window.toggleCategoryFields()" required>
+              <option value="होमवर्क">होमवर्क (Homework)</option>
+              <option value="सिलेबस">सिलेबस (Syllabus)</option>
+              <option value="समय सारणी">समय सारणी (Timetable)</option>
+              <option value="सूचना">सूचना (Notice)</option>
+            </select>
+          </div>
 
-        <div class="form-group">
-          <label>शीर्षक / विषय:</label>
-          <input type="text" id="formTitle" placeholder="उदा. सोमवार समय सारणी या गणित" required>
-        </div>
+          <div class="form-group">
+            <label>कक्षा चुनें:</label>
+            <select id="formClass" required>
+              <option value="9th A">9th A</option>
+              <option value="9th B">9th B</option>
+              <option value="9th C">9th C</option>
+              <option value="10th A">10th A</option>
+              <option value="10th B">10th B</option>
+              <option value="11th">11th</option>
+              <option value="12th">12th</option>
+              <option value="सभी कक्षाओं के लिए">सभी कक्षाओं के लिए</option>
+            </select>
+          </div>
 
-        <div class="form-group" id="timetableBuilder" style="display: none;">
-          <label>समय सारणी विवरण (पीरियड, समय, विषय, शिक्षक):</label>
-          <div class="tt-builder">
-            <div id="ttRows"></div>
-            <button type="button" class="add-row-btn" onclick="addTimetableRow()">+ नया पीरियड जोड़ें</button>
+          <div class="form-group">
+            <label>शीर्षक / विषय:</label>
+            <input type="text" id="formTitle" placeholder="उदा. सोमवार समय सारणी या गणित" required>
+          </div>
+
+          <div class="form-group" id="timetableBuilder" style="display: none;">
+            <label>समय सारणी विवरण (पीरियड, समय, विषय, शिक्षक):</label>
+            <div class="tt-builder">
+              <div id="ttRows"></div>
+              <button type="button" class="add-row-btn" onclick="window.addTimetableRow()">+ नया पीरियड जोड़ें</button>
+            </div>
+          </div>
+
+          <div class="form-group" id="descGroup">
+            <label>विवरण / निर्देश:</label>
+            <textarea id="formDesc" placeholder="निर्देश या पूरा विवरण यहाँ लिखें..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>फ़ोटो या PDF जोड़ें (वैकल्पिक):</label>
+            <input type="file" id="formFile" accept="image/*,application/pdf">
+          </div>
+
+          <button type="submit" id="submitPostBtn" class="action-btn">ऑनलाइन पोस्ट करें</button>
+        </form>
+
+        <!-- छात्रों की समस्या / सलाह देखने का सेक्शन -->
+        <div id="teacherFeedbackView" style="display: none;">
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">छात्रों द्वारा भेजी गई समस्याएँ एवं सुझाव:</p>
+          <div id="feedbackListContainer">
+            <p style="text-align: center; color: var(--text-muted); padding: 15px;">लोड हो रहा है...</p>
           </div>
         </div>
-
-        <div class="form-group" id="descGroup">
-          <label>विवरण / निर्देश:</label>
-          <textarea id="formDesc" placeholder="निर्देश या पूरा विवरण यहाँ लिखें..."></textarea>
-        </div>
-
-        <div class="form-group">
-          <label>फ़ोटो या PDF जोड़ें (वैकल्पिक):</label>
-          <input type="file" id="formFile" accept="image/*,application/pdf">
-        </div>
-
-        <button type="submit" id="submitPostBtn" class="action-btn">ऑनलाइन पोस्ट करें</button>
-      </form>
+      </div>
     </div>
   </div>
 
-  <script>
+  <!-- मुख्य एकीकृत स्क्रिप्ट -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { 
+      getFirestore, 
+      collection, 
+      addDoc, 
+      deleteDoc,
+      doc,
+      onSnapshot, 
+      query, 
+      orderBy, 
+      serverTimestamp,
+      enableIndexedDbPersistence 
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCUfzpo3_JTxMECkbRT",
+      authDomain: "digital-suman-16.firebaseapp.com",
+      projectId: "digital-suman-16",
+      storageBucket: "digital-suman-16.firebasestorage.app",
+      messagingSenderId: "9523225964",
+      appId: "1:9523225964:web:8a6c393d",
+      measurementId: "G-8WHH1SPEPY"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    enableIndexedDbPersistence(db).catch(() => {});
+
     let isTeacher = false;
     let selectedClass = localStorage.getItem("userClass") || "";
     let selectedCategory = 'all';
     let allPostsData = [];
+    let allFeedbacksData = [];
 
-    // पेज खुलते ही चेक करना कि क्या पहले से क्लास चुनी हुई है
-    window.addEventListener("DOMContentLoaded", () => {
-      initClassView();
-    });
-
-    function initClassView() {
-      const selectBox = document.getElementById("classSelectionBox");
-      const lockedBar = document.getElementById("lockedClassBar");
-      const nameSpan = document.getElementById("currentClassName");
-
-      if (selectedClass) {
-        selectBox.style.display = "none";
-        lockedBar.style.display = "flex";
-        nameSpan.innerText = selectedClass;
-      } else {
-        selectBox.style.display = "block";
-        lockedBar.style.display = "none";
-      }
-      renderContent();
-    }
-
-    // कक्षा चुनकर हमेशा के लिए लॉक करना
-    function lockClass(className) {
+    // क्लास लॉकिंग
+    window.lockClass = function(className) {
       selectedClass = className;
       localStorage.setItem("userClass", className);
       initClassView();
-    }
+    };
 
-    // अगर कभी बदलना चाहें
-    function unlockClass() {
+    window.unlockClass = function() {
       if (confirm("क्या आप अपनी कक्षा बदलना चाहते हैं?")) {
         selectedClass = "";
-        localStorage.removeItem("userClass");
-        initClassView();
-      }
-    }
-
-    function openTeacherModal() {
-      document.getElementById('teacherModal').classList.add('open');
-    }
-
-    function closeTeacherModal() {
-      document.getElementById('teacherModal').classList.remove('open');
-    }
-
-    function checkPin() {
-      const pin = document.getElementById("inputPin").value;
-      if (pin === "791632") {
-        isTeacher = true;
-        document.getElementById("pinBox").style.display = "none";
-        document.getElementById("teacherForm").style.display = "block";
-        document.getElementById("modalTitle").innerText = "नयी सामग्री पोस्ट करें";
-        toggleCategoryFields();
-        renderContent();
-      } else {
-        alert("गलत पिन! केवल शिक्षक ही इसे खोल सकते हैं।");
-      }
-    }
-
-    function toggleCategoryFields() {
-      const cat = document.getElementById("formCategory").value;
-      const ttBox = document.getElementById("timetableBuilder");
-      if (cat === "समय सारणी") {
-        ttBox.style.display = "block";
-        if (document.getElementById("ttRows").children.length === 0) {
-          addTimetableRow("1", "10:00 - 10:45", "गणित", "शर्मा सर");
-          addTimetableRow("2", "10:45 - 11:30", "विज्ञान", "वर्मा सर");
-        }
-      } else {
-        ttBox.style.display = "none";
-      }
-    }
-
-    function addTimetableRow(no = "", time = "", sub = "", teacher = "") {
-      const rows = document.getElementById("ttRows");
-      const nextNo = no || (rows.children.length + 1);
-      const rowDiv = document.createElement("div");
-      rowDiv.className = "tt-row";
-      rowDiv.innerHTML = `
-        <input type="text" class="tt-period" placeholder="क्र." value="${nextNo}" title="पीरियड नंबर">
-        <input type="text" class="tt-time" placeholder="समय (उदा. 10:00)" value="${time}">
-        <input type="text" class="tt-sub" placeholder="विषय" value="${sub}">
-        <input type="text" class="tt-teacher" placeholder="शिक्षक" value="${teacher}">
-        <button type="button" class="tt-del" onclick="this.parentElement.remove()">×</button>
-      `;
-      rows.appendChild(rowDiv);
-    }
-
-    function setCategoryFilter(category, element) {
-      selectedCategory = category;
-      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-      element.classList.add('active');
-      renderContent();
-    }
-
-    function renderContent() {
-      const container = document.getElementById("contentList");
-
-      if (!selectedClass) {
-        container.innerHTML = `
-          <div style="text-align: center; padding: 40px 10px; color: var(--text-muted);">
-            <div style="font-size: 2.2rem; margin-bottom: 8px;">👆</div>
-            <p>सामग्री देखने के लिए कृपया ऊपर अपनी कक्षा चुनें।</p>
-          </div>
-        `;
-        return;
-      }
-
-      const filtered = allPostsData.filter(item => {
-        const matchCategory = (selectedCategory === 'all' || item.category === selectedCategory);
-        const matchClass = (item.classGrade === selectedClass || item.classGrade === "सभी कक्षाओं के लिए");
-        return matchCategory && matchClass;
-      });
-
-      if (filtered.length === 0) {
-        container.innerHTML = `
-          <div style="text-align: center; padding: 40px 10px; color: var(--text-muted);">
-            <div style="font-size: 2.2rem; margin-bottom: 8px;">📂</div>
-            <p>आपकी कक्षा (${selectedClass}) के लिए इस श्रेणी में अभी कोई सामग्री नहीं है।</p>
-          </div>
-        `;
-        return;
-      }
-
-      container.innerHTML = "";
-      filtered.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "item-card";
-
-        let tagClass = "tag-homework";
-        if (item.category === "सिलेबस") tagClass = "tag-syllabus";
-        if (item.category === "समय सारणी") tagClass = "tag-timetable";
-        if (item.category === "सूचना") tagClass = "tag-notice";
-
-        let timetableHTML = "";
-        if (item.timetable && item.timetable.length > 0) {
-          timetableHTML = `
-            <div class="timetable-table-wrap">
-              <table class="timetable-table">
-                <thead>
-                  <tr>
-                    <th>क्र.</th>
-                    <th>समय</th>
-                    <th>विषय</th>
-                    <th>शिक्षक</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${item.timetable.map(row => `
+        localStorage.removeI
