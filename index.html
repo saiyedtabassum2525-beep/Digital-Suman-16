@@ -24,7 +24,6 @@
       color: var(--text);
       padding-bottom: 90px;
     }
-    /* मुख्य हेडर */
     header {
       background: linear-gradient(135deg, #1a73e8, #0d47a1);
       color: white;
@@ -36,7 +35,6 @@
     header h1 {
       font-size: 1.45rem;
       font-weight: 700;
-      letter-spacing: 0.5px;
     }
     header p {
       font-size: 0.85rem;
@@ -45,21 +43,25 @@
     }
 
     .container {
-      max-width: 600px;
+      max-width: 650px;
       margin: 0 auto;
       padding: 16px;
     }
 
-    /* कक्षा चयन बार */
-    .class-scroll-container {
-      margin-bottom: 14px;
+    /* कक्षा चुनने का बार */
+    .class-selection-box {
+      background: white;
+      padding: 14px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      margin-bottom: 16px;
     }
-    .class-scroll-container label {
+    .class-selection-box label {
       display: block;
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       font-weight: 700;
       color: var(--text-muted);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       text-transform: uppercase;
     }
     .class-pills {
@@ -75,7 +77,7 @@
     .pill {
       flex: 0 0 auto;
       padding: 8px 16px;
-      background: white;
+      background: #f3f4f6;
       border: 1.5px solid #d1d5db;
       border-radius: 20px;
       font-size: 0.88rem;
@@ -91,7 +93,7 @@
       box-shadow: 0 2px 6px rgba(26,115,232,0.3);
     }
 
-    /* सामग्री कार्ड */
+    /* कार्ड डिजाइन */
     .item-card {
       background: var(--card-bg);
       border-radius: 14px;
@@ -149,6 +151,36 @@
       font-size: 0.85rem;
       font-weight: 600;
     }
+
+    /* टाइम टेबल बॉक्स (टेबल स्टाइल) */
+    .timetable-table-wrap {
+      margin-top: 12px;
+      overflow-x: auto;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+    }
+    .timetable-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+    .timetable-table th {
+      background-color: #f8fafc;
+      color: #374151;
+      padding: 10px;
+      border-bottom: 2px solid #e2e8f0;
+      font-weight: 700;
+    }
+    .timetable-table td {
+      padding: 10px;
+      border-bottom: 1px solid #e2e8f0;
+      color: #4b5563;
+    }
+    .timetable-table tr:last-child td {
+      border-bottom: none;
+    }
+
     .card-footer {
       display: flex;
       justify-content: space-between;
@@ -204,7 +236,7 @@
       font-size: 1.25rem;
     }
 
-    /* शिक्षक के लिए अलग फ़्लोटिंग बटन (साइड में) */
+    /* शिक्षक बटन */
     .teacher-fab {
       position: fixed;
       bottom: 74px;
@@ -224,7 +256,7 @@
       z-index: 99;
     }
 
-    /* शिक्षक मोडल / पॉपअप विंडो */
+    /* मोडल पॉपअप */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -240,7 +272,7 @@
     .modal-content {
       background: white;
       width: 100%;
-      max-width: 600px;
+      max-width: 650px;
       max-height: 88vh;
       overflow-y: auto;
       border-radius: 20px 20px 0 0;
@@ -306,44 +338,86 @@
       cursor: pointer;
       margin-top: 8px;
     }
+
+    /* शिक्षक के टाइम टेबल एडिटर का स्टाइल */
+    .tt-builder {
+      background: #f9fafb;
+      border: 1px dashed #cbd5e1;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 8px;
+    }
+    .tt-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px;
+      align-items: center;
+    }
+    .tt-row input {
+      padding: 6px 8px;
+      font-size: 0.85rem;
+    }
+    .tt-period { width: 45px; text-align: center; }
+    .tt-time { width: 110px; }
+    .tt-sub { flex: 1; }
+    .tt-teacher { flex: 1; }
+    .tt-del {
+      background: #fee2e2;
+      color: #dc2626;
+      border: none;
+      padding: 6px 9px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .add-row-btn {
+      background: #e0e7ff;
+      color: #3730a3;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 4px;
+    }
   </style>
 </head>
 <body>
 
-  <!-- हेडर -->
   <header>
     <h1>डिजिटल सुमन 16</h1>
-    <p>प्राथमिक विद्यालय ई-लर्निंग एवं सूचना पोर्टल</p>
+    <p>विद्यालय ई-लर्निंग एवं सूचना पोर्टल</p>
   </header>
 
   <div class="container">
-    <!-- कक्षा चुनने का फ़िल्टर -->
-    <div class="class-scroll-container">
-      <label>कक्षा चुनें:</label>
+    <!-- 7 कक्षाओं के चयन का बार -->
+    <div class="class-selection-box">
+      <label>अपनी कक्षा चुनें:</label>
       <div class="class-pills">
         <button class="pill active" onclick="setClassFilter('all')">सभी कक्षाएँ</button>
-        <button class="pill" onclick="setClassFilter('कक्षा 1')">कक्षा 1</button>
-        <button class="pill" onclick="setClassFilter('कक्षा 2')">कक्षा 2</button>
-        <button class="pill" onclick="setClassFilter('कक्षा 3')">कक्षा 3</button>
-        <button class="pill" onclick="setClassFilter('कक्षा 4')">कक्षा 4</button>
-        <button class="pill" onclick="setClassFilter('कक्षा 5')">कक्षा 5</button>
-        <button class="pill" onclick="setClassFilter('कक्षा 6')">कक्षा 6</button>
-        <button class="pill" onclick="setClassFilter('कक्षा 7')">कक्षा 7</button>
+        <button class="pill" onclick="setClassFilter('9th A')">9th A</button>
+        <button class="pill" onclick="setClassFilter('9th B')">9th B</button>
+        <button class="pill" onclick="setClassFilter('9th C')">9th C</button>
+        <button class="pill" onclick="setClassFilter('10th A')">10th A</button>
+        <button class="pill" onclick="setClassFilter('10th B')">10th B</button>
+        <button class="pill" onclick="setClassFilter('11th')">11th</button>
+        <button class="pill" onclick="setClassFilter('12th')">12th</button>
       </div>
     </div>
 
-    <!-- मुख्य सूची जहाँ बच्चों को सब दिखेगा -->
+    <!-- सामग्री सूची -->
     <div id="contentList">
       <p style="text-align: center; color: var(--text-muted); padding: 30px;">सामग्री लोड हो रही है...</p>
     </div>
   </div>
 
-  <!-- साइड में शिक्षक लॉगिन का फ़्लोटिंग बटन -->
+  <!-- शिक्षक लॉगिन बटन -->
   <button class="teacher-fab" onclick="openTeacherModal()">
     <span>🔒</span> शिक्षक पैनल
   </button>
 
-  <!-- नीचे का नेविगेशन बार (छात्रों के लिए) -->
+  <!-- नेविगेशन बार -->
   <nav class="bottom-nav">
     <div class="nav-item active" onclick="setCategoryFilter('all', this)">
       <span class="nav-icon">📚</span>
@@ -367,7 +441,7 @@
     </div>
   </nav>
 
-  <!-- शिक्षक मोडल / पॉपअप -->
+  <!-- शिक्षक मोडल / फ़ॉर्म -->
   <div class="modal-overlay" id="teacherModal">
     <div class="modal-content">
       <div class="modal-header">
@@ -375,20 +449,20 @@
         <button class="close-btn" onclick="closeTeacherModal()">×</button>
       </div>
 
-      <!-- 1. पिन स्क्रीन -->
+      <!-- पिन बॉक्स -->
       <div id="pinBox">
-        <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:12px;">नया कार्य पोस्ट करने या प्रबंधित करने हेतु 6 अंकों का गुप्त पिन दर्ज करें:</p>
+        <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:12px;">नया कार्य पोस्ट करने या हटाने के लिए 6 अंकों का गुप्त पिन दर्ज करें:</p>
         <div class="form-group">
           <input type="password" id="inputPin" placeholder="गुप्त पिन दर्ज करें" maxlength="6">
         </div>
         <button class="action-btn" onclick="checkPin()">पोर्टल खोलें</button>
       </div>
 
-      <!-- 2. पोस्टिंग फ़ॉर्म (पिन डालने के बाद) -->
+      <!-- शिक्षक पोस्टिंग फ़ॉर्म -->
       <form id="teacherForm" style="display: none;">
         <div class="form-group">
           <label>प्रकार चुनें:</label>
-          <select id="formCategory" required>
+          <select id="formCategory" onchange="toggleCategoryFields()" required>
             <option value="होमवर्क">होमवर्क (Homework)</option>
             <option value="सिलेबस">सिलेबस (Syllabus)</option>
             <option value="समय सारणी">समय सारणी (Timetable)</option>
@@ -399,29 +473,40 @@
         <div class="form-group">
           <label>कक्षा चुनें:</label>
           <select id="formClass" required>
-            <option value="कक्षा 1">कक्षा 1</option>
-            <option value="कक्षा 2">कक्षा 2</option>
-            <option value="कक्षा 3">कक्षा 3</option>
-            <option value="कक्षा 4">कक्षा 4</option>
-            <option value="कक्षा 5">कक्षा 5</option>
-            <option value="कक्षा 6">कक्षा 6</option>
-            <option value="कक्षा 7">कक्षा 7</option>
+            <option value="9th A">9th A</option>
+            <option value="9th B">9th B</option>
+            <option value="9th C">9th C</option>
+            <option value="10th A">10th A</option>
+            <option value="10th B">10th B</option>
+            <option value="11th">11th</option>
+            <option value="12th">12th</option>
             <option value="सभी कक्षाओं के लिए">सभी कक्षाओं के लिए</option>
           </select>
         </div>
 
         <div class="form-group">
           <label>शीर्षक / विषय:</label>
-          <input type="text" id="formTitle" placeholder="उदा. गणित इकाई 2 या सोमवार समय सारणी" required>
+          <input type="text" id="formTitle" placeholder="उदा. सोमवार समय सारणी या गणित" required>
         </div>
 
-        <div class="form-group">
+        <!-- समय सारणी (टाइम-टेबल बिल्डर) -->
+        <div class="form-group" id="timetableBuilder" style="display: none;">
+          <label>समय सारणी विवरण (पीरियड, समय, विषय, शिक्षक):</label>
+          <div class="tt-builder">
+            <div id="ttRows">
+              <!-- पंक्तियाँ जावास्क्रिप्ट से जुड़ेंगी -->
+            </div>
+            <button type="button" class="add-row-btn" onclick="addTimetableRow()">+ नया पीरियड जोड़ें</button>
+          </div>
+        </div>
+
+        <div class="form-group" id="descGroup">
           <label>विवरण / निर्देश:</label>
-          <textarea id="formDesc" placeholder="निर्देश या पूरा विवरण यहाँ लिखें..." required></textarea>
+          <textarea id="formDesc" placeholder="निर्देश या पूरा विवरण यहाँ लिखें..."></textarea>
         </div>
 
         <div class="form-group">
-          <label>फ़ोटो या PDF फ़ाइल जोड़ें (वैकल्पिक):</label>
+          <label>फ़ोटो या PDF जोड़ें (वैकल्पिक):</label>
           <input type="file" id="formFile" accept="image/*,application/pdf">
         </div>
 
@@ -430,7 +515,6 @@
     </div>
   </div>
 
-  <!-- UI लॉजिक स्क्रिप्ट -->
   <script>
     let isTeacher = false;
     let selectedClass = 'all';
@@ -445,7 +529,6 @@
       document.getElementById('teacherModal').classList.remove('open');
     }
 
-    // आपका सुरक्षित गुप्त पिन 791632
     function checkPin() {
       const pin = document.getElementById("inputPin").value;
       if (pin === "791632") {
@@ -453,10 +536,43 @@
         document.getElementById("pinBox").style.display = "none";
         document.getElementById("teacherForm").style.display = "block";
         document.getElementById("modalTitle").innerText = "नयी सामग्री पोस्ट करें";
+        toggleCategoryFields();
         renderContent();
       } else {
-        alert("गलत पिन! केवल अधिकृत शिक्षक ही इसे खोल सकते हैं।");
+        alert("गलत पिन! केवल शिक्षक ही इसे खोल सकते हैं।");
       }
+    }
+
+    // टाइम-टेबल चुनने पर टेबल एडिटर चालू करना
+    function toggleCategoryFields() {
+      const cat = document.getElementById("formCategory").value;
+      const ttBox = document.getElementById("timetableBuilder");
+      const descInput = document.getElementById("formDesc");
+
+      if (cat === "समय सारणी") {
+        ttBox.style.display = "block";
+        if (document.getElementById("ttRows").children.length === 0) {
+          addTimetableRow("1", "10:00 - 10:45", "गणित", "शर्मा सर");
+          addTimetableRow("2", "10:45 - 11:30", "विज्ञान", "वर्मा सर");
+        }
+      } else {
+        ttBox.style.display = "none";
+      }
+    }
+
+    function addTimetableRow(no = "", time = "", sub = "", teacher = "") {
+      const rows = document.getElementById("ttRows");
+      const nextNo = no || (rows.children.length + 1);
+      const rowDiv = document.createElement("div");
+      rowDiv.className = "tt-row";
+      rowDiv.innerHTML = `
+        <input type="text" class="tt-period" placeholder="क्र." value="${nextNo}" title="पीरियड नंबर">
+        <input type="text" class="tt-time" placeholder="समय (उदा. 10:00)" value="${time}">
+        <input type="text" class="tt-sub" placeholder="विषय" value="${sub}">
+        <input type="text" class="tt-teacher" placeholder="शिक्षक" value="${teacher}">
+        <button type="button" class="tt-del" onclick="this.parentElement.remove()">×</button>
+      `;
+      rows.appendChild(rowDiv);
     }
 
     function setClassFilter(className) {
@@ -486,7 +602,7 @@
         container.innerHTML = `
           <div style="text-align: center; padding: 40px 10px; color: var(--text-muted);">
             <div style="font-size: 2.2rem; margin-bottom: 8px;">📂</div>
-            <p>इस श्रेणी में अभी कोई सामग्री उपलब्ध नहीं है।</p>
+            <p>इस कक्षा या श्रेणी में कोई सामग्री उपलब्ध नहीं है।</p>
           </div>
         `;
         return;
@@ -501,6 +617,35 @@
         if (item.category === "सिलेबस") tagClass = "tag-syllabus";
         if (item.category === "समय सारणी") tagClass = "tag-timetable";
         if (item.category === "सूचना") tagClass = "tag-notice";
+
+        // टाइम टेबल डेटा को बॉक्स/टेबल में रेंडर करना
+        let timetableHTML = "";
+        if (item.timetable && item.timetable.length > 0) {
+          timetableHTML = `
+            <div class="timetable-table-wrap">
+              <table class="timetable-table">
+                <thead>
+                  <tr>
+                    <th>क्र.</th>
+                    <th>समय</th>
+                    <th>विषय</th>
+                    <th>शिक्षक</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${item.timetable.map(row => `
+                    <tr>
+                      <td><strong>${row.period}</strong></td>
+                      <td>${row.time}</td>
+                      <td><strong>${row.subject}</strong></td>
+                      <td>${row.teacher}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          `;
+        }
 
         let fileAttachment = "";
         if (item.fileData) {
@@ -522,7 +667,8 @@
             ${deleteOption}
           </div>
           <h3>${item.title}</h3>
-          <p>${item.description}</p>
+          ${item.description ? `<p>${item.description}</p>` : ""}
+          ${timetableHTML}
           ${fileAttachment}
           <div class="card-footer">
             <span class="timestamp">${item.date || ""}</span>
@@ -533,122 +679,5 @@
     }
   </script>
 
-  <!-- Firebase डेटाबेस एवं ऑफ़लाइन स्क्रिप्ट -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { 
-      getFirestore, 
-      collection, 
-      addDoc, 
-      deleteDoc,
-      doc,
-      onSnapshot, 
-      query, 
-      orderBy, 
-      serverTimestamp,
-      enableIndexedDbPersistence 
-    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCUfzpo3_JTxMECkbRT",
-      authDomain: "digital-suman-16.firebaseapp.com",
-      projectId: "digital-suman-16",
-      storageBucket: "digital-suman-16.firebasestorage.app",
-      messagingSenderId: "9523225964",
-      appId: "1:9523225964:web:8a6c393d",
-      measurementId: "G-8WHH1SPEPY"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    // ऑफ़लाइन सपोर्ट (इंटरनेट न होने पर भी पिछला लोड किया हुआ डेटा सुरक्षित रहेगा)
-    enableIndexedDbPersistence(db).catch(() => {});
-
-    const teacherForm = document.getElementById("teacherForm");
-    const submitPostBtn = document.getElementById("submitPostBtn");
-
-    teacherForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      submitPostBtn.disabled = true;
-      submitPostBtn.innerText = "सेव हो रहा है...";
-
-      const category = document.getElementById("formCategory").value;
-      const classGrade = document.getElementById("formClass").value;
-      const title = document.getElementById("formTitle").value;
-      const description = document.getElementById("formDesc").value;
-      const fileInput = document.getElementById("formFile");
-
-      let fileData = "";
-      let fileType = "";
-      let fileName = "";
-
-      if (fileInput.files && fileInput.files[0]) {
-        const file = fileInput.files[0];
-        fileName = file.name;
-        fileType = file.type.includes("pdf") ? "pdf" : "image";
-        
-        fileData = await new Promise((resolve) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result);
-          reader.readAsDataURL(file);
-        });
-      }
-
-      try {
-        await addDoc(collection(db, "school_data"), {
-          category: category,
-          classGrade: classGrade,
-          title: title,
-          description: description,
-          fileData: fileData,
-          fileType: fileType,
-          fileName: fileName,
-          createdAt: serverTimestamp()
-        });
-
-        alert(category + " सफलतापूर्वक पोस्ट हो गया!");
-        teacherForm.reset();
-        closeTeacherModal();
-      } catch (err) {
-        alert("त्रुटि: " + err.message);
-      } finally {
-        submitPostBtn.disabled = false;
-        submitPostBtn.innerText = "ऑनलाइन पोस्ट करें";
-      }
-    });
-
-    window.deletePost = async function(id) {
-      if (confirm("क्या आप इस पोस्ट को हमेशा के लिए हटाना चाहते हैं?")) {
-        try {
-          await deleteDoc(doc(db, "school_data", id));
-          alert("पोस्ट सफलतापूर्वक हटा दी गई!");
-        } catch (error) {
-          alert("हटाने में समस्या: " + error.message);
-        }
-      }
-    };
-
-    // डेटाबेस लिसनर
-    const q = query(collection(db, "school_data"), orderBy("createdAt", "desc"));
-    onSnapshot(q, (snapshot) => {
-      allPostsData = [];
-      snapshot.forEach((doc) => {
-        const data = doc.data();
-        let dateStr = "";
-        if (data.createdAt && data.createdAt.toDate) {
-          dateStr = data.createdAt.toDate().toLocaleDateString("hi-IN", {
-            day: "numeric", month: "short", hour: "2-digit", minute: "2-digit"
-          });
-        }
-        allPostsData.push({
-          id: doc.id,
-          ...data,
-          date: dateStr
-        });
-      });
-      window.renderContent();
-    });
-  </script>
-</body>
-</html>
+    import { initializeApp } from "https://www
